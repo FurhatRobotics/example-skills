@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flow name="HoundifyFlow" package="iristk.app.Houndify"
+    initial="Idle" xmlns:this="iristk.app.houndify.HoundifyFlow"
+    xmlns="iristk.flow" xmlns:p="iristk.flow.param" xmlns:agent="iristk.situated.SystemAgentFlow"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
+	
+	<import class="iristk.app.Houndify.HoundifySkill.HoundifyFlowClient"/>
+
+    <param name="agent" type="iristk.situated.SystemAgentFlow" />
+    <param name="houndify" type="HoundifyFlowClient" />
+    
+    <var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
+    <var name="query" type="String"/>
+    
+    <state id="Idle" extends="Dialog">
+        <onentry>
+            <if cond="system.hasUsers()">
+                <agent:attendRandom />
+                <goto state="Request"/>
+            <else/>
+                <agent:attendNobody/>
+            </if>
+        </onentry>
+        <onevent name="sense.user.enter">
+            <agent:attend target="event:user"/>
+            <goto state="Request"/>
+        </onevent>
+    </state>
+
+    <state id="Request" extends="Dialog">
+        <onentry>
+            <if cond="count == 1">
+                <agent:say>Hi, what do you want to know?</agent:say>
+            <else/>
+                <agent:say>Anything else?</agent:say>
+            </if>
+            <agent:listen/>
+        </onentry>
+        <onevent name="sense.user.speak" cond="event?:sem:no">
+            <agent:say>Ok, good bye</agent:say>
+            <!-- Todo: add a continuation here -->
+        </onevent>
+        
+        <onevent name="sense.user.speak" cond="!eq(event:text, iristk.speech.RecResult.NOMATCH)"> 
+            <if cond="system.isAttendingAll()">
+                <agent:attend target="event:user"/>
+            </if>
+            <agent:say async="true">
+            	<random>
+            		<block>Let's see</block>
+            		<block>One second</block>
+        		</random>
+            </agent:say>
+           	<agent:say>
+            	<exec>String answer = houndify.answer(asString(event:text))</exec>  
+            	<if cond="!eq(answer, '')">
+            	    <agent:say>
+            	        <expr>answer</expr>
+        	        </agent:say>
+        	    <else/>
+        	        <agent:say>Sorry, I have some problems connecting to Houndify. Please contact my supervisor</agent:say>
+            	</if>
+        	</agent:say>
+            <reentry/>
+        </onevent>
+    </state>
+
+
+
+    <state id="Dialog">
+        <onevent name="sense.user.speech.start"
+            cond="system.isAttending(event) and eq(event:speakers, 1)">
+            <agent:gesture name="'smile'"/>
+        </onevent>
+        
+        <onevent name="sense.user.speak">
+            <agent:say>Sorry, I didn't get that.</agent:say>
+            <reentry/>
+        </onevent>
+        
+        <!-- We don't want to bother about multi-party dialogue in this example, hence we throw a normal speak event when we get a side speak event -->
+		<onevent name="sense.user.speak.side">
+			<send event="sense.user.speak" copy="event"/>
+		</onevent>
+		
+		<!-- We don't want to bother about multi-party dialogue in this example, hence we throw a normal speak event when we get a multi speak event -->
+		<onevent name="sense.user.speak.multi">
+			<send event="sense.user.speak" copy="event"/>
+		</onevent>
+        
+        <onevent name="sense.user.silence">
+            <agent:say>Sorry, I didn't hear anything.</agent:say>
+            <reentry/>
+        </onevent>
+        
+        <onevent name="sense.user.leave" cond="system.isAttending(event)">
+            <if cond="system.hasUsers()">
+                <agent:attendRandom/>
+                <goto state="Request"/>
+            <else />
+                <goto state="Idle"/>
+            </if>
+        </onevent>
+        
+        <onevent name="repeat">
+            <reentry/>
+        </onevent>
+    </state>
+
+</flow>

@@ -37,6 +37,11 @@
 			</random>
 		</onevent>
 		
+		<!-- We don't want to bother about multi-party dialogue in this example, hence we throw a normal speak event when we get a side speak event -->
+		<onevent name="sense.user.speak.side">
+			<send event="sense.user.speak" copy="event"/>
+		</onevent>
+		
 		<onevent name="sense.user.speak" cond="!eq(event:text,'NO_MATCH')">
 		    <agent:say><expr>event:text</expr></agent:say>
 		</onevent>

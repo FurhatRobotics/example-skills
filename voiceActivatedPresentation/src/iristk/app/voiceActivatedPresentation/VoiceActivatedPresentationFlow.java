@@ -304,7 +304,7 @@ public class VoiceActivatedPresentationFlow extends iristk.flow.Flow {
 			// Line: 53
 			try {
 				count = getCount(1490180672) + 1;
-				if (event.triggers("sense.user.speak")) {
+				if (event.triggers("sense.user.speak**")) {
 					if (event.has("sem:trigger")) {
 						incrCount(1490180672);
 						eventResult = EVENT_CONSUMED;
@@ -330,17 +330,17 @@ public class VoiceActivatedPresentationFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 53, 62));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 53, 64));
 			}
 			// Line: 62
 			try {
 				count = getCount(250075633) + 1;
-				if (event.triggers("sense.user.speak")) {
+				if (event.triggers("sense.user.speak**")) {
 					incrCount(250075633);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						iristk.situated.SystemAgentFlow.listen state13 = agent.new listen();
-						if (!flowThread.callState(state13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 62, 36)))) {
+						if (!flowThread.callState(state13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 62, 38)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -348,7 +348,7 @@ public class VoiceActivatedPresentationFlow extends iristk.flow.Flow {
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 62, 36));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\voiceActivatedPresentation\\src\\iristk\\app\\voiceActivatedPresentation\\VoiceActivatedPresentationFlow.xml"), 62, 38));
 			}
 			// Line: 67
 			try {

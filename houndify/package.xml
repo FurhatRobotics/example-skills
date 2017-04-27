@@ -1,0 +1,9 @@
+<package name="Houndify" version="1.1.0">
+	<provide>
+		<class type="iristk.furhat.skill.Skill" name="iristk.app.Houndify.HoundifySkill" />
+	</provide>
+	<classpath>
+		<src path="src" output="bin"/>
+		<lib path="lib/HoundJava/HoundifyJavaSDK.jar"/>
+	</classpath>
+</package>

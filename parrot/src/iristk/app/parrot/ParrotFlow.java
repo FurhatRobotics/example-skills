@@ -241,20 +241,37 @@ public class ParrotFlow extends iristk.flow.Flow {
 			} catch (Exception e) {
 				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 31, 42));
 			}
-			// Line: 40
+			// Line: 41
 			try {
 				count = getCount(183264084) + 1;
+				if (event.triggers("sense.user.speak.side")) {
+					incrCount(183264084);
+					eventResult = EVENT_CONSUMED;
+					EXECUTION: {
+						// Line: 42
+						Event sendEvent16 = new Event("sense.user.speak");
+						sendEvent16.copyParams(event);
+						flowRunner.sendEvent(sendEvent16, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 42, 49)));
+					}
+					if (eventResult != EVENT_IGNORED) return eventResult;
+				}
+			} catch (Exception e) {
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 41, 41));
+			}
+			// Line: 45
+			try {
+				count = getCount(1490180672) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (!eq(event.get("text"),"NO_MATCH")) {
-						incrCount(183264084);
+						incrCount(1490180672);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							iristk.situated.SystemAgentFlow.say state16 = agent.new say();
-							StringCreator string17 = new StringCreator();
-							// Line: 40
-							string17.append(event.get("text"));
-							state16.setText(string17.toString());
-							if (!flowThread.callState(state16, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 40, 70)))) {
+							iristk.situated.SystemAgentFlow.say state17 = agent.new say();
+							StringCreator string18 = new StringCreator();
+							// Line: 45
+							string18.append(event.get("text"));
+							state17.setText(string18.toString());
+							if (!flowThread.callState(state17, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 70)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -263,117 +280,117 @@ public class ParrotFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 40, 70));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 70));
 			}
-			// Line: 44
-			try {
-				count = getCount(476402209) + 1;
-				if (event.triggers("sense.user.silence")) {
-					if (!system.getCurrentUser().isNobody()) {
-						incrCount(476402209);
-						eventResult = EVENT_CONSUMED;
-						EXECUTION: {
-							// Line: 45
-							boolean chosen18 = false;
-							boolean matching19 = true;
-							while (!chosen18 && matching19) {
-								int rand20 = random(1490180672, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-								matching19 = false;
-								if (true) {
-									matching19 = true;
-									if (rand20 >= 0 && rand20 < 1) {
-										chosen18 = true;
-										iristk.situated.SystemAgentFlow.say state21 = agent.new say();
-										StringCreator string22 = new StringCreator();
-										string22.append("Speak or I run away");
-										state21.setText(string22.toString());
-										if (!flowThread.callState(state21, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 12)))) {
-											eventResult = EVENT_ABORTED;
-											break EXECUTION;
-										}
-									}
-								}
-								if (true) {
-									matching19 = true;
-									if (rand20 >= 1 && rand20 < 2) {
-										chosen18 = true;
-										iristk.situated.SystemAgentFlow.say state23 = agent.new say();
-										StringCreator string24 = new StringCreator();
-										string24.append("I have all day to wait!");
-										state23.setText(string24.toString());
-										if (!flowThread.callState(state23, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 12)))) {
-											eventResult = EVENT_ABORTED;
-											break EXECUTION;
-										}
-									}
-								}
-								if (true) {
-									matching19 = true;
-									if (rand20 >= 2 && rand20 < 3) {
-										chosen18 = true;
-										iristk.situated.SystemAgentFlow.say state25 = agent.new say();
-										StringCreator string26 = new StringCreator();
-										string26.append("Are you going to talk or what?");
-										state25.setText(string26.toString());
-										if (!flowThread.callState(state25, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 12)))) {
-											eventResult = EVENT_ABORTED;
-											break EXECUTION;
-										}
-									}
-								}
-								if (true) {
-									matching19 = true;
-									if (rand20 >= 3 && rand20 < 4) {
-										chosen18 = true;
-										iristk.situated.SystemAgentFlow.say state27 = agent.new say();
-										StringCreator string28 = new StringCreator();
-										string28.append("Speak or I will forever hold my peace");
-										state27.setText(string28.toString());
-										if (!flowThread.callState(state27, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 45, 12)))) {
-											eventResult = EVENT_ABORTED;
-											break EXECUTION;
-										}
-									}
-								}
-							}
-						}
-						if (eventResult != EVENT_IGNORED) return eventResult;
-					}
-				}
-			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 44, 81));
-			}
-			// Line: 53
+			// Line: 49
 			try {
 				count = getCount(460332449) + 1;
-				if (event.triggers("sense.user.leave")) {
-					if (system.isAttending(event)) {
+				if (event.triggers("sense.user.silence")) {
+					if (!system.getCurrentUser().isNobody()) {
 						incrCount(460332449);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							// Line: 54
+							// Line: 50
+							boolean chosen19 = false;
+							boolean matching20 = true;
+							while (!chosen19 && matching20) {
+								int rand21 = random(1919892312, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+								matching20 = false;
+								if (true) {
+									matching20 = true;
+									if (rand21 >= 0 && rand21 < 1) {
+										chosen19 = true;
+										iristk.situated.SystemAgentFlow.say state22 = agent.new say();
+										StringCreator string23 = new StringCreator();
+										string23.append("Speak or I run away");
+										state22.setText(string23.toString());
+										if (!flowThread.callState(state22, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 50, 12)))) {
+											eventResult = EVENT_ABORTED;
+											break EXECUTION;
+										}
+									}
+								}
+								if (true) {
+									matching20 = true;
+									if (rand21 >= 1 && rand21 < 2) {
+										chosen19 = true;
+										iristk.situated.SystemAgentFlow.say state24 = agent.new say();
+										StringCreator string25 = new StringCreator();
+										string25.append("I have all day to wait!");
+										state24.setText(string25.toString());
+										if (!flowThread.callState(state24, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 50, 12)))) {
+											eventResult = EVENT_ABORTED;
+											break EXECUTION;
+										}
+									}
+								}
+								if (true) {
+									matching20 = true;
+									if (rand21 >= 2 && rand21 < 3) {
+										chosen19 = true;
+										iristk.situated.SystemAgentFlow.say state26 = agent.new say();
+										StringCreator string27 = new StringCreator();
+										string27.append("Are you going to talk or what?");
+										state26.setText(string27.toString());
+										if (!flowThread.callState(state26, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 50, 12)))) {
+											eventResult = EVENT_ABORTED;
+											break EXECUTION;
+										}
+									}
+								}
+								if (true) {
+									matching20 = true;
+									if (rand21 >= 3 && rand21 < 4) {
+										chosen19 = true;
+										iristk.situated.SystemAgentFlow.say state28 = agent.new say();
+										StringCreator string29 = new StringCreator();
+										string29.append("Speak or I will forever hold my peace");
+										state28.setText(string29.toString());
+										if (!flowThread.callState(state28, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 50, 12)))) {
+											eventResult = EVENT_ABORTED;
+											break EXECUTION;
+										}
+									}
+								}
+							}
+						}
+						if (eventResult != EVENT_IGNORED) return eventResult;
+					}
+				}
+			} catch (Exception e) {
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 49, 81));
+			}
+			// Line: 58
+			try {
+				count = getCount(1143839598) + 1;
+				if (event.triggers("sense.user.leave")) {
+					if (system.isAttending(event)) {
+						incrCount(1143839598);
+						eventResult = EVENT_CONSUMED;
+						EXECUTION: {
+							// Line: 59
 							if (system.hasUsers()) {
-								iristk.situated.SystemAgentFlow.attendRandom state29 = agent.new attendRandom();
-								if (!flowThread.callState(state29, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 54, 33)))) {
+								iristk.situated.SystemAgentFlow.attendRandom state30 = agent.new attendRandom();
+								if (!flowThread.callState(state30, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 59, 33)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
-								// Line: 56
-								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 56, 15)));
+								// Line: 61
+								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 61, 15)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
-								// Line: 57
+								// Line: 62
 							} else {
-								iristk.situated.SystemAgentFlow.say state30 = agent.new say();
-								StringCreator string31 = new StringCreator();
-								string31.append("Bye.");
-								state30.setText(string31.toString());
-								if (!flowThread.callState(state30, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 54, 33)))) {
+								iristk.situated.SystemAgentFlow.say state31 = agent.new say();
+								StringCreator string32 = new StringCreator();
+								string32.append("Bye.");
+								state31.setText(string32.toString());
+								if (!flowThread.callState(state31, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 59, 33)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
-								// Line: 59
-								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 59, 15)));
+								// Line: 64
+								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 64, 15)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -382,23 +399,23 @@ public class ParrotFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 53, 69));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 58, 69));
 			}
-			// Line: 63
+			// Line: 68
 			try {
-				count = getCount(110718392) + 1;
+				count = getCount(2143192188) + 1;
 				if (event.triggers("sense.user.enter")) {
-					incrCount(110718392);
+					incrCount(2143192188);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.attend state32 = agent.new attend();
-						state32.setTarget(event.get("user"));
-						if (!flowThread.callState(state32, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 63, 36)))) {
+						iristk.situated.SystemAgentFlow.attend state33 = agent.new attend();
+						state33.setTarget(event.get("user"));
+						if (!flowThread.callState(state33, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 68, 36)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						iristk.situated.SystemAgentFlow.listen state33 = agent.new listen();
-						if (!flowThread.callState(state33, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 63, 36)))) {
+						iristk.situated.SystemAgentFlow.listen state34 = agent.new listen();
+						if (!flowThread.callState(state34, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 68, 36)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -406,7 +423,7 @@ public class ParrotFlow extends iristk.flow.Flow {
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 63, 36));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 68, 36));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;

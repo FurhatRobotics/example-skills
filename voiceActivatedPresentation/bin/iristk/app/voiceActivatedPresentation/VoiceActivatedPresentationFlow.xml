@@ -50,7 +50,7 @@
 		</onevent>
 	
 		<!-- Checks if the utterance is a trigger and if we are in the right state to trigger it (determined by grammar) -->
-		<onevent name="sense.user.speak" cond="event?:sem:trigger">
+		<onevent name="sense.user.speak**" cond="event?:sem:trigger">
 			<if cond="eq(event:sem:trigger, 'any') or eq(event:sem:trigger, super.getClass().getSimpleName()) or asRecord(event:sem:trigger).has(super.getClass().getSimpleName())">
 			    <raise event="sense.skill.next"/>
 		    <else/>
@@ -59,7 +59,7 @@
 		</onevent>
 		
 		<!-- Fallback, if no hit above we listen again -->
-		<onevent name="sense.user.speak">
+		<onevent name="sense.user.speak**">
 			<agent:listen/>
 		</onevent>
 		
