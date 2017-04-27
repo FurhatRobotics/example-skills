@@ -7,31 +7,49 @@
 	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
 	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()"/> 
 	
+	<state id="Init">
+		<onentry>
+			<if cond="system.hasUsers()">
+				<agent:attendRandom/>
+			<else/>
+				<agent:attendNobody/>
+			</if>
+		    <goto state="Dialog"/>
+		</onentry>
+	</state>
+	
 	<state id="Dialog">
 		<onentry>
 			<agent:listen/>
 			<reentry/>
 		</onentry>
+		
 		<onevent name="sense.user.speech.start" cond="system.isAttending(event) and eq(event:speakers, 1)">
 			<agent:gesture name="'smile'"/>
 		</onevent>
+		
 		<onevent name="sense.user.speak.multi">
 			<random>
 				<agent:say>Hey humans! one at a time</agent:say>
 				<agent:say>Ah! Shut up you guys!</agent:say>
 				<agent:say>Too Loud! You are making it too loud!</agent:say>
-				<agent:say>Don't speak at the same time.</agent:say>
+				<agent:say>Don't speak at the same time</agent:say>
 			</random>
 		</onevent>
+		
 		<onevent name="sense.user.speak" cond="!eq(event:text,'NO_MATCH')">
 		    <agent:say><expr>event:text</expr></agent:say>
 		</onevent>
+		
 		<onevent name="sense.user.silence" cond="!system.getCurrentUser().isNobody()">
 			<random>
-				<agent:say>Talk or I'll kill you</agent:say>
+				<agent:say>Speak or I run away</agent:say>
 				<agent:say>I have all day to wait!</agent:say>
+				<agent:say>Are you going to talk or what?</agent:say>
+				<agent:say>Speak or I will forever hold my peace</agent:say>
 			</random>
 		</onevent>
+		
 		<onevent name="sense.user.leave" cond="system.isAttending(event)">
 			<if cond="system.hasUsers()">
 				<agent:attendRandom/>
@@ -48,20 +66,6 @@
 		</onevent>
 	</state>
 	
-	<state id="Init">
-		<!-- State that ensures state of system on starting skill. Place any initial setting, e.g. voice, here.-->
-		<onentry>
-		<exec>
-			system.setMaxUsers(2);
-			system.setInteractionDistance(2);
-		</exec>
-			<if cond="system.hasUsers()">
-				<agent:attendRandom/>
-			<else/>
-				<agent:attendNobody/>
-			</if>
-		    <goto state="Dialog"/>
-		</onentry>
-	</state>
+	
 	
 </flow>
