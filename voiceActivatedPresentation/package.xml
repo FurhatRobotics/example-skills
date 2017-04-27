@@ -1,0 +1,8 @@
+<package name="voiceActivatedPresentation" version="1.0.0">
+	<provide>
+		<class type="iristk.furhat.skill.Skill" name="iristk.app.voiceActivatedPresentation.VoiceActivatedPresentationSkill" />
+	</provide>
+	<classpath>
+		<src path="src" output="bin"/>
+	</classpath>
+</package>
