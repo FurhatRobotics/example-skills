@@ -1,0 +1,8 @@
+<package name="displayExample" version="0.1.0">
+	<provide>
+		<class type="iristk.furhat.skill.Skill" name="iristk.app.displayExample.DisplayExampleSkill" />
+	</provide>
+	<classpath>
+		<src path="src" output="bin"/>
+	</classpath>
+</package>

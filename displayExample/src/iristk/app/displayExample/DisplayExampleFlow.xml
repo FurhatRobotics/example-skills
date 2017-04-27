@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flow name="DisplayExampleFlow" package="iristk.app.displayExample" 
+	initial="Idle" xmlns:this="iristk.app.displayExample.DisplayExampleFlow" xmlns="iristk.flow" 
+	xmlns:p="iristk.flow.param" xmlns:agent="iristk.situated.SystemAgentFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
+	
+	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
+	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()"/> 
+
+	<state id="Idle">
+		<onentry>
+            <agent:say>I like cats. Here are two of my favourites. Click on them, why dont you?!</agent:say>
+            <send event="action.game.start"/>
+		</onentry>
+		
+		<onevent name="action.game.catclick">
+		    <exec>String cat = asString(event:cat)</exec>
+            <agent:attend target="cat"/>
+			<agent:say ifsilent="true">This is <expr>cat</expr>. Isn't she cute</agent:say>
+		</onevent>
+	</state>
+	
+</flow>
