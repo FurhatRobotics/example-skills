@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flow name="SocialFlow" package="iristk.app.social" initial="Start"
+	xmlns="iristk.flow"
+	xmlns:agent="iristk.situated.SystemAgentFlow"
+	xmlns:p="iristk.flow.param"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
+
+	<import class="iristk.speech.Nbest"/>
+	<import class="java.util.ArrayList"/>
+	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
+
+	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
+	<var name="quizAvailable" type="Boolean" value="false"/>
+	<var name="lastTopic"/>
+
+	<state id="Start">
+		<onentry>
+			<send event="action.voice" p:name="'william'"/>
+			<send event="action.skill.list"/>
+		</onentry>
+
+		<onevent name="monitor.skill.list">
+			<repeat list="(ArrayList&lt;Record>)event.get('skills')" handler="skillIterator">
+				<if cond="((Record)  skillIterator.getItem()).get('name').equals('Quiz')">
+					<exec>
+			 			quizAvailable = true;
+			 			break;
+			 		</exec>
+			 	</if>
+			</repeat>
+			<if cond="system.hasUsers()">
+				<agent:attendRandom/>
+				<goto state="Greeting"/>
+			<else/>
+				<goto state="Idle"/>
+			</if>
+		</onevent>
+	</state>
+
+	<state id="Idle">
+		<param name="goodbye" type="boolean" default="false"/>
+		<onentry>
+			<if cond="goodbye">
+				<agent:say abort="true">Goodbye</agent:say>
+			</if>
+			<agent:attendNobody />
+		</onentry>
+		<onevent name="sense.user.enter">
+			<agent:attend target="event:user"/>
+			<goto state="Greeting"/>
+		</onevent>
+	</state>
+
+	<state id="Attending">
+		<onentry>
+			<agent:listen/>
+		</onentry>
+		<onevent name="sense.user.leave" cond="system.isAttending(event)">
+			<if cond="system.hasUsers()">
+				<agent:attendRandom/>
+			<else />
+				<goto state="Idle"/>
+			</if>
+		</onevent>
+		<onevent name="sense.user.enter">
+			<agent:attend target="event:agent"/>
+			<goto state="Attending"/>
+		</onevent>
+		<onevent name="sense.user.silence">
+			<goto state="Attending"/>
+		</onevent>
+		<onevent name="sense.user.speak**">
+			<if cond="system.getCurrentUser().has('name')">
+				<agent:say>Hi <expr>system.getCurrentUser().get("name")</expr></agent:say>
+			<else/>
+				<agent:say>Hi there</agent:say>
+			</if>
+			<goto state="NextTopic"/>
+		</onevent>
+	</state>
+
+	<state id="Await" extends="Dialog">
+		<onentry>
+			<agent:listen timeout="4000" />
+		</onentry>
+	</state>
+
+	<state id="PlayQuiz">
+		<onentry>
+			<exec>
+			system.getCurrentUser().put("played", true);
+			if (system.hasManyUsers()) {
+				system.getOtherUser().put("played", true);
+			}
+			</exec>
+			<send event="action.skill" p:entry="'iristk.app.quiz.QuizSkill.play'"/>
+		</onentry>
+	</state>
+
+    <state id="QuizReturn" public="true">
+        <onentry>
+            <if cond="system.hasUsers()">
+                <agent:say>That was fun, wasn't it?</agent:say>
+                <wait msec="1000"/>
+				<goto state="NextTopic" />
+			<else />
+				<goto state="Idle" p:goodbye="true"/>
+			</if>
+        </onentry>
+    </state>
+
+	<state id="Dialog">
+		<onevent name="sense.user.speak" cond="event?:sem:req_quiz">
+			<goto state="PlayQuiz" />
+		</onevent>
+		<onevent name="sense.user.speak" cond="event?:sem:req_config_face">
+			<send event="action.gesture" p:param="event:sem:face_param"
+				p:value="event:sem:param_value" />
+			<random>
+				<agent:say>What do you think about this?</agent:say>
+				<agent:say>How about this?</agent:say>
+				<agent:say>
+					<usel variant="2">Maybe you like it better this way</usel>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_questions">
+			<random>
+				<agent:say>You could ask me to tell you a joke</agent:say>
+				<agent:say>You could ask me why I have a Furhat</agent:say>
+				<agent:say>You could ask me if I have emotions</agent:say>
+				<agent:say>You could ask me if I can speak Swedish</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_health">
+			<random>
+				<agent:say>I'm fine</agent:say>
+				<agent:say>Thank you for asking</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:goodbye">
+		<!-- Change it to: goto state="Idle" p:goodbye="true" -->
+			<random>
+				<agent:say>Goodbye</agent:say>
+			</random>
+			<goto state="Attending" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_job">
+			<random>
+				<agent:say>I am here to mingle with people</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:interests">
+			<random>
+				<agent:say>I don't have many hobbies, besides talking to people.</agent:say>
+				<agent:say>I was in a play once, it was like a dream.</agent:say>
+				<agent:say>I'm often in schools, helping kids.</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_maker">
+			<random>
+				<agent:say>
+					I was built by the Furhat Robotics team
+				</agent:say>
+				<agent:say>I come from Stockholm in Sweden</agent:say>
+				<agent:say>
+					<voice emotion="calm">I am made by the smartest people on earth</voice>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:describe_speech_technology">
+			<random>
+				<agent:say>If you ask one of my makers, I am sure they can describe the technology behind all of this.</agent:say>
+				<agent:say>I don't really know how the technology works, but I think it is cool.</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:big_question">
+			<random>
+				<agent:say>I was not programmed to answer such complicated questions. I am just a social machine.</agent:say>
+				<agent:say>Why don't you search wikipedia for that, I am sure you can find an answer there.</agent:say>
+				<agent:say>
+					<usel variant="2">Greater people than</usel> <usel variant="1">me</usel>, <usel variant="4">have failed to answer such big questions.</usel>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_hat">
+			<random>
+				<agent:say>
+					I come from a cold country
+					<usel variant="6">where polar bears</usel>
+					walk on
+					<usel variant="3">the streets</usel>
+				</agent:say>
+				<agent:say>
+					This is the latest fashion in
+					<usel variant="4">robot</usel>
+					clothing
+				</agent:say>
+				<agent:say>
+					<voice emotion="happy">The hat covers my brain, and I think it looks
+						nice</voice>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_age">
+			<random>
+				<agent:say>I was born in march 2011</agent:say>
+			</random>
+			<var name="age" type="Integer" value="asInteger(event:user:age)" />
+			<if cond="age != null and age > -1">
+				<agent:say>
+					Let me guess. I think you are about
+					<expr>age</expr>
+					years old
+				</agent:say>
+			</if>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:emotions">
+			<send event="action.gesture" p:name="'emotion_anger'"/>
+			<agent:say>I can be angry</agent:say>
+			<send event="action.gesture" p:name="'emotion_sad'"/>
+			<agent:say>I can also be sad</agent:say>
+			<send event="action.gesture" p:name="'emotion_disgust'"/>
+			<agent:say>Sometimes I can be disgusted</agent:say>
+			<send event="action.gesture" p:name="'emotion_fear'"/>
+			<agent:say>And I can be scared</agent:say>
+			<send event="action.gesture" p:name="'emotion_neutral'"/>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_body">
+			<random>
+				<agent:say>I left my body at home</agent:say>
+				<agent:say>Not all robots need a body</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_stop_talking">
+			<random>
+				<agent:say>I am a talking robot, I am supposed to talk to you</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:no_understanding">
+			<random>
+				<agent:say>
+					sorry if
+					<usel variant="2">i misunderstood</usel>
+				</agent:say>
+				<agent:say>I'm just trying to help you</agent:say>
+				<agent:say>i'm doing the best i can</agent:say>
+				<agent:say> I am only a humble <usel variant="4">robot</usel> </agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:no_answer">
+			<random>
+				<agent:say>
+					sorry if
+					<usel variant="2">i misunderstood</usel>
+				</agent:say>
+				<agent:say>i'm doing the best i can</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:user_unwilling">
+			<random>
+				<agent:say>that's ok</agent:say>
+				<agent:say>no worries</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:favourite_color">
+			<random>
+				<agent:say>i'm a robot, i have no favourite colour</agent:say>
+				<agent:say>i like black</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:favourite_food">
+			<random>
+				<agent:say>i'm a robot, i don't eat</agent:say>
+				<agent:say>i like black pudding</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:favourite_movie">
+			<random>
+				<agent:say>i'm a robot, i don't go to the movie</agent:say>
+				<agent:say>
+					i like
+					<usel variant="3">eye robot</usel>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_joke">
+			<agent:say>How about this</agent:say>
+			<random>
+				<!-- <agent:say>If <usel variant="4">Barbie</usel> is so popular, why do
+					you have to <usel variant="6">buy her</usel> friends?</agent:say> -->
+				<agent:say>Always remember that you are unique, just like everyone else.</agent:say>
+				<agent:say>Is it good if a, <usel variant="2">vacuum</usel>, really sucks?</agent:say>
+				<agent:say>How Many Roads Must A Man Walk Down, Before He Admits He is lost?</agent:say>
+				<agent:say>Why is it called, 'after dark', when it really is , after light?</agent:say>
+				<agent:say>There is a fine line between fishing, and just standing on the shore like an idiot.</agent:say>
+				<!-- <agent:say>If there is a 'will', there are 500 relatives.</agent:say> -->
+			</random>
+			<random>
+				<agent:say>GESTURE_GIGGLE_2</agent:say>
+				<agent:say>GESTURE_LAUGH_2</agent:say>
+				<agent:say>GESTURE_LAUGH_3</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:hal_2001">
+			<random>
+				<agent:say>
+					<voice emotion="calm">I'm sorry Dave, I'm afraid I can't do that.</voice>
+				</agent:say>
+			</random>
+			<goto state="Await" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:req_ask_other">
+			<if cond="system.hasManyUsers()">
+				<agent:attendOther />
+				<agent:say>well then</agent:say>
+				<raise event="reprompt"/>
+				<else />
+				<agent:say>There is no one else here</agent:say>
+				<goto state="Await" />
+			</if>
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:req_my_age">
+			<exec>Integer age = asInteger(event:user.age)</exec>
+			<if cond="age != null and age > -1">
+				<agent:say>
+					I think you are about
+					<expr>age</expr>
+					years old
+				</agent:say>
+				<else />
+				<agent:say>I have no idea</agent:say>
+			</if>
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_sleep">
+			<goto state="Asleep" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:residence">
+			<random>
+				<agent:say>I come from the Royal Institute of Technology in Stockholm.</agent:say>
+				<agent:say>I come from Stockholm in Sweden.</agent:say>
+			</random>
+			<raise event="continue" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:req_repeat">
+			<raise event="reprompt"/>
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:req_name">
+			<agent:say>My name is Furhat</agent:say>
+			<raise event="continue" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:req_swedish">
+			<agent:say>En Pawseh rairkoor, dahlaheihstahr, yehnom-stehk-ta
+				churt-bull-are, en yetteh-snewgg mur-sah
+			</agent:say>
+			<raise event="continue" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:insult">
+			<random>
+				<agent:say>
+					<voice emotion="cross">Let's not be rude here</voice>
+				</agent:say>
+				<agent:say>
+					You're certainly entitled
+					<usel variant="3">to</usel>
+					<emphasis level="strong">that opinion</emphasis>
+				</agent:say>
+				<agent:say>I respect you</agent:say>
+				<agent:say>noted</agent:say>
+				<agent:say>I guess you're not happy</agent:say>
+				<agent:say>i'll pretend i didn't hear that</agent:say>
+				<agent:say>I'm just trying to help you</agent:say>
+				<agent:say>i'm doing the best i can</agent:say>
+				<agent:say>
+					I am only a humble <usel variant="4">robot</usel>
+				</agent:say>
+				<agent:say>
+					<voice emotion="cross">You need to learn some manners</voice>
+				</agent:say>
+				<agent:say>
+					<voice emotion="cross">You need to learn how to talk to a robot</voice>
+				</agent:say>
+			</random>
+			<raise event="continue" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:praise">
+			<random>
+				<agent:say>Thanks a lot, I'm blushing</agent:say>
+				<agent:say>
+					<usel variant="1">That was really nice of you</usel>
+				</agent:say>
+				<agent:say>You don't say that to every robot, do you?</agent:say>
+			</random>
+			<raise event="continue" />
+		</onevent>
+
+		<onevent name="sense.user.speak">
+			<raise event="nomatch" />
+		</onevent>
+		
+		<onevent name="nomatch">
+			<goto state="NextTopic" />
+		</onevent>
+		
+		<onevent name="continue">
+			<goto state="Await" />
+		</onevent>
+		
+		<onevent name="sense.user.leave" cond="system.isAttending(event)">
+			<if cond="system.hasUsers()">
+				<agent:attendRandom />
+				<goto state="NextTopic" />
+				<else />
+				<goto state="Idle" p:goodbye="true" />
+			</if>
+		</onevent>
+		
+		<onevent name="sense.user.speak.multi">
+			<agent:attendRandom />
+			<raise event="sense.user.speak" copy="event"/>
+		</onevent>
+		
+		<onevent name="sense.user.speak.side">
+			<agent:attendOther mode="'eyes'" />
+			<if cond="system.getCurrentUser().has('name')">
+				<agent:say><expr>system.getCurrentUser().get("name")</expr></agent:say>
+			</if>
+			<random>
+				<agent:say>could you just wait a second</agent:say>
+				<agent:say>could you perhaps wait a second</agent:say>
+				<agent:say>please wait a second</agent:say>
+				<agent:say>give me a second, please</agent:say>
+				<agent:say>I'll be right back with you</agent:say>
+			</random>
+			<agent:attendOther mode="'eyes'" />
+			<random>
+				<agent:say>sorry <expr>system.getCurrentUser().getString("name", "")</expr>, where <emphasis level="strong">were</emphasis> we </agent:say>
+				<agent:say>alright <expr>system.getCurrentUser().getString("name", "")</expr></agent:say>
+				<agent:say>so, let's see <expr>system.getCurrentUser().getString("name", "")</expr></agent:say>
+			</random>
+			<raise event="reprompt"/>
+		</onevent>
+		
+		<onevent name="reprompt">
+			<reentry/>
+		</onevent>
+		
+		<onevent name="sense.user.silence">
+			<goto state="NextTopic" />
+		</onevent>
+		
+		<onevent name="sense.user.speech.start" cond="system.isAttending(event) and eq(event:speakers, 1)">
+			<if cond="system.isAttendingAll()">
+				<agent:attend target="event:user"/>
+			</if>
+			<send event="action.gesture" p:name="'smile'"/>
+		</onevent>
+	</state>
+
+	<state id="NextTopic" extends="Dialog">
+		<onentry>
+			<!-- This shouldn't be needed, it's just to be safe -->
+			<if cond="!system.hasUsers()">
+				<goto state="Idle"/>
+			</if>
+			<if cond="!system.getCurrentUser().has('introduced')">
+				<goto state="Introduce" />
+			<elseif cond="system.hasManyUsers() and !system.getOtherUser().has('introduced')" />
+				<agent:attendOther />
+				<goto state="Introduce" p:switchUser="true" />
+			<elseif cond="system.hasManyUsers() and !system.getCurrentUser().has('introducedTo:' + system.getOtherUser().id)" />
+				<goto state="IntroduceUsers" />
+			<!-- if the Quiz skill exists and none of our current users have played the quiz game OR said they are not interested in it -->
+			<elseif cond="quizAvailable and !system.getCurrentUser().has('notInterestedInQuiz') and !system.getCurrentUser().has('played') or (system.hasManyUsers() and (!system.getOtherUser().has('played') or !system.getOtherUser().has('notInterestedInQuiz')))"/>
+				<goto state="ReqQuiz" />
+			<elseif cond="!system.getCurrentUser().has('wherefrom') or (system.hasManyUsers() and !system.getOtherUser().has('wherefrom'))"/>
+				<goto state="DiscussTopic" p:topic="'wherefrom'">
+					<p:question>Where do you come from?</p:question>
+					<p:reply>I come from Stockholm in Sweden.</p:reply>
+					<p:reply>I am sure that is a very nice place.</p:reply>
+				</goto>
+			<elseif cond="!system.getCurrentUser().has('beenhere') or (system.hasManyUsers() and !system.getOtherUser().has('beenhere'))"/>
+				<goto state="DiscussTopic" p:topic="'beenhere'">
+					<p:question>Have you ever been here before?</p:question>
+					<p:reply>I really like this place, it is full of interesting people</p:reply>
+					<p:reply>I have been in London and Los Angeles. But since I don't have a body, I don't get to travel a lot</p:reply>
+				</goto>
+			<elseif cond="!system.getCurrentUser().has('robots') or (system.hasManyUsers() and !system.getOtherUser().has('robots'))"/>
+				<goto state="DiscussTopic" p:topic="'robots'">
+					<p:question>Have you ever talked to a robot before?</p:question>
+					<p:question>Is this the first time you talk to a robot?</p:question>
+					<p:reply>Interesting experience, I guess. I like talking to humans.</p:reply>
+					<p:reply>Maybe you will have a robot friend in the future, that you can talk to all day long.</p:reply>
+				</goto>
+			<elseif cond="!system.getCurrentUser().has('future') or (system.hasManyUsers() and !system.getOtherUser().has('future'))"/>
+				<goto state="DiscussTopic" p:topic="'future'">
+					<p:question><usel variant="1">Do you look forward to a future full of robots?</usel></p:question>
+					<p:question>If you had a robot at home, what would you like it to do for you?</p:question>
+					<p:question><usel variant="1">How do you think a robot could help you in the future?</usel></p:question>
+					<p:question>Do you look forward to a future full of robots?</p:question>
+					<p:reply><usel variant="1">I think I could be of great assistance.</usel><usel variant="1">For example, I could talk to people who are lonely.</usel></p:reply>
+					<p:reply><usel variant="2">You could think of me as a social machine.</usel> If I had arms and a slightly more advanced brain, I could also do the dishes for you.</p:reply>
+				</goto>
+			<elseif cond="!system.getCurrentUser().has('job') or (system.hasManyUsers() and !system.getOtherUser().has('job'))"/>
+				<goto state="DiscussTopic" p:topic="'job'">
+					<p:question>What do you do for a living?</p:question>
+					<p:question><usel variant="4">How do you spend your days?</usel></p:question>
+					<p:reply>My job is to talk to humans. I really enjoy it.</p:reply>
+					<p:reply><usel variant="2">I work as a conversational machine.</usel> <usel variant="5">Kind of interesting.</usel></p:reply>
+				</goto>
+			<else/>
+				<goto state="ReqQuestion" />
+			</if>
+		</onentry>
+	</state>
+
+	<state id="ReqQuestion" extends="Dialog">
+		<onentry>
+			<if cond="system.hasManyUsers()">
+				<agent:attendOther />
+			</if>
+			<random>
+				<agent:say>Maybe you have a question for me?</agent:say>
+				<agent:say>Do you want to ask me something?</agent:say>
+				<agent:say> Why don't you ask me to<usel variant="1"> tell you a joke</usel></agent:say>
+				<block cond="quizAvailable"> <goto state="ReqQuiz" /> </block>
+			</random>
+			<agent:listen />
+		</onentry>
+	</state>
+
+	<state id="ReqQuiz" extends="Dialog">
+		<onentry>
+			<agent:say>Do you want to play a game?</agent:say>
+			<agent:listen />
+		</onentry>
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+			<goto state="PlayQuiz" />
+		</onevent>
+		<onevent name="sense.user.speak" cond="event?:sem:no">
+			<exec>system.getCurrentUser().put("notInterestedInQuiz", true)</exec>
+			<goto state="NextTopic" />
+		</onevent>
+	</state>
+
+	<state id="Greeting" extends="Dialog">
+		<param name="switchUser" type="boolean" default="false" />
+		<onentry>
+			<if cond="switchUser">
+				<agent:say>I don't think we have said hello to each other</agent:say>
+			<else />
+				<agent:say>Hi there</agent:say>
+			</if>
+			<exec>system.getCurrentUser().put("greeting", true)</exec>
+			<agent:listen />
+		</onentry>
+		<onevent name="continue">
+			<goto state="NextTopic" />
+		</onevent>
+		<onevent name="nomatch">
+			<agent:say>Nice to meet you</agent:say>
+			<goto state="NextTopic" />
+		</onevent>
+	</state>
+
+	<state id="Introduce" extends="Dialog">
+		<param name="switchUser" type="boolean" default="false" />
+		<onentry>
+			<if cond="switchUser">
+				<agent:say>And what is your name?</agent:say>
+			<else />
+				<agent:say>My name is Fur hat. What is your name?</agent:say>
+			</if>
+			<exec>system.getCurrentUser().put("introduced", true)</exec>
+			<agent:listen context="'name'" nbest="10"/>
+		</onentry>
+		<onevent name="sense.user.speak" cond="event?:sem:name">
+			<goto state="ConfirmName" p:namehyp="new Nbest(asList(event:nbest), 'sem:name')"/>
+		</onevent>
+		<onevent name="sense.user.speak" cond="event?:sem:req_name">
+			<goto state="NextTopic" />
+		</onevent>
+		<onevent name="continue">
+			<goto state="NextTopic" />
+		</onevent>
+	</state>
+
+	<state id="ConfirmName" extends="Introduce">
+		<param name="namehyp" type="Nbest"/>
+		<param name="trial" type="int" default="0"/>
+		<var name="name" type="String"/>
+
+		<onentry>
+			<if cond="2 > trial">
+				<exec>name = namehyp.getBest()</exec>
+				<random>
+					<agent:say>Did you say <expr>name</expr></agent:say>
+				</random>
+				<agent:listen timeout="2000" nbest="10" context="'name default'"/>
+			<else/>
+				<agent:say><spurt audio="script1/mhm_dis_2">mhm</spurt></agent:say>
+				<raise event="nomatch" />
+			</if>
+		</onentry>
+
+		<onevent name="sense.user.speak" cond="event?:sem:name">
+			<goto state="ConfirmName" p:namehyp="namehyp.merge(asList(event:nbest), name)" p:trial="trial + 1"/>
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+			<exec>system.getCurrentUser().put("name", name)</exec>
+			<raise event="nomatch" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:no">
+			<random>
+				<agent:say><spurt audio="script1/ah_dis_3">ah</spurt></agent:say>
+				<agent:say><spurt audio="script1/mhm_dis_2">mhm</spurt></agent:say>
+			</random>
+			<raise event="nomatch" />
+		</onevent>
+
+		<onevent name="sense.user.silence">
+			<raise event="nomatch" />
+		</onevent>
+	</state>
+
+	<state id="IntroduceUsers" extends="Dialog">
+		<onentry>
+			<agent:attendAll />
+			<random>
+				<agent:say>So, do you two know each other?</agent:say>
+				<agent:say>So, have you two met before?</agent:say>
+			</random>
+			<agent:listen />
+		</onentry>
+
+		<onevent name="nomatch">
+			<exec>
+				if (system.hasManyUsers()) {
+					system.getCurrentUser().put("introducedTo:" + system.getOtherUser().id, true);
+					system.getOtherUser().put("introducedTo:" + system.getCurrentUser().id, true);
+				}
+			</exec>
+			<agent:say>That's cool</agent:say>
+			<goto state="NextTopic" />
+		</onevent>
+	</state>
+
+	<state id="DiscussTopic" extends="Dialog">
+		<param name="topic" type="String"/>
+		<param name="question" type="List"/>
+		<param name="reply" type="List"/>
+
+		<onentry>
+			<random>
+				<block cond="!system.getCurrentUser().has(topic)">
+					<random>
+						<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_05">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_06">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_04">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_taketurn_01">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_taketurn_02">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_hesitation_01">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_hesitation_02">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_hesitation_03">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_hesitation_05">ehm</spurt></agent:say>
+						<agent:say><spurt audio="free_dialogue/ehm_hesitation_06">ehm</spurt></agent:say>
+					</random>
+				</block>
+				<block cond="system.hasManyUsers() and !system.getOtherUser().has(topic)">
+					<agent:attendOther />
+					<random>
+						<agent:say>How about you <expr>system.getCurrentUser().getString("name", "")</expr></agent:say>
+						<agent:say>And you <expr>system.getCurrentUser().getString("name", "")</expr></agent:say>
+					</random>
+				</block>
+				<block cond="system.hasManyUsers() and !system.getOtherUser().has(topic) and !system.getCurrentUser().has(topic)">
+					<agent:attendAll />
+				</block>
+			</random>
+			<raise event="reprompt"/>
+		</onentry>
+
+		<onevent name="reprompt">
+			<agent:say><random list="question"/></agent:say>
+			<agent:listen />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+			<agent:say>GESTURE_YEAH_QUESTION</agent:say>
+			<raise event="nomatch" />
+		</onevent>
+
+		<onevent name="sense.user.speak" cond="event?:sem:no or event?:sem:user_unwilling">
+			<random>
+				<agent:say><spurt audio="script1/ah_dis_3">ah</spurt></agent:say>
+				<agent:say><spurt audio="script1/mhm_dis_2">mhm</spurt></agent:say>
+			</random>
+			<raise event="nomatch" />
+		</onevent>
+
+		<onevent name="continue">
+			<exec>system.getCurrentUser().put(topic, true)</exec>
+			<goto state="CheckFollowUp" />
+		</onevent>
+
+		<onevent name="nomatch">
+			<exec>system.getCurrentUser().put(topic, true)</exec>
+			<agent:say><random list="reply"/></agent:say>
+			<goto state="CheckFollowUp" />
+		</onevent>
+	</state>
+
+	<state id="CheckFollowUp" extends="Dialog">
+		<onentry>
+			<agent:listen timeout="1000"/>
+		</onentry>
+	</state>
+
+	<state id="Asleep">
+		<var name="timer" type="Timer" value="new Timer()" />
+		<onentry>
+			<agent:fallAsleep />
+			<agent:say>GESTURE_SNORE</agent:say>
+			<exec>timer.reset();</exec>
+			<agent:listen />
+		</onentry>
+
+		<onevent name="sense.user.speak**" cond="event?:sem:req_wakeup">
+			<agent:say>GESTURE_CLEAR_THROAT</agent:say>
+			<if cond="system.hasUsers()">
+				<agent:attendRandom />
+				<goto state="NextTopic" />
+			</if>
+			<goto state="Idle" />
+		</onevent>
+
+		<onevent name="sense.user.speak** sense.user.silence">
+			<if cond="timer.passed(10000)">
+				<random>
+					<agent:say>GESTURE_SNORE</agent:say>
+					<agent:say>GESTURE_SNORE_PHEW</agent:say>
+					<agent:say>GESTURE_YAWN_1</agent:say>
+					<agent:say>GESTURE_YAWN_2</agent:say>
+					<agent:say>
+						<voice emotion="calm">isn't that an electric sheep</voice>
+						<spurt audio="g0001_019">GIGGLE</spurt>
+					</agent:say>
+				</random>
+				<exec>timer.reset();</exec>
+			</if>
+			<agent:listen />
+		</onevent>
+	</state>
+</flow>
