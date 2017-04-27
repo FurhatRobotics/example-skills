@@ -1,0 +1,8 @@
+<package name="parrot" version="0.1.1">
+	<provide>
+		<class type="iristk.furhat.skill.Skill" name="iristk.app.parrot.ParrotSkill" />
+	</provide>
+	<classpath>
+		<src path="src" output="bin"/>
+	</classpath>
+</package>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" root="root"
+	xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar http://www.iristk.net/xml/srgs.xsd"
+	tag-format="semantics/1.0">
+
+	<rule id="root" scope="public">
+		<one-of>
+			<item> parrot 
+				<tag> out="This skill has that as a name"</tag>
+			</item>
+		</one-of>
+	</rule>
+</grammar>
