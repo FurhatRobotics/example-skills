@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flow name="QuizFlow" package="iristk.app.quiz" 
+	initial="Idle" xmlns="iristk.flow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:agent="iristk.situated.SystemAgentFlow"
+	xmlns:p="iristk.flow.param"
+	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
+	
+	<param name="questions" type="QuestionSet"/>
+	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
+	
+	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()"/>
+	<var name="question" type="Question"/>
+	<var name="guess" type="int" value="0"/>
+	<var name="winningScore" type="int" value="3"/>
+	<var name="startedFromSkill" type="boolean" value="false"/>
+	<var name="allowBargein" type="boolean" value="false"/>
+	<var name="targetSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
+	
+		<!-- TODO: Add checks to go into Idle when there are no users left. -->
+	<state id="Idle">
+		<onentry>
+			<if cond="system.hasUsers()">
+				<goto state="StartGame"/>
+			</if>
+		</onentry>
+		
+		<onevent name="sense.user.enter">
+			<goto state="StartGame"/>
+		</onevent>
+	</state>
+	
+	<!-- State used when starting the Quiz from other skills -->
+	<state id="play" public="true">
+		<onentry>
+			<exec> startedFromSkill = true</exec>
+			<exec> targetSkill = "iristk.app.social.SocialSkill.QuizReturn" </exec>
+			<goto state="StartGame"/>
+		</onentry>
+	</state>
+	
+	<state id="StartGame" extends="Dialog">
+		<onentry>
+		    <agent:say> Let's play, the Fur hat quiz.</agent:say>
+		    <exec>system.putUsers("score", 0)</exec>
+			<if cond="system.getNumUsers() > 1">
+			    <agent:say>The first to reach <expr>winningScore</expr> points is the winner</agent:say>
+		    <else/>
+		        <agent:say>You win if you reach <expr>winningScore</expr> points!</agent:say>
+			</if>
+			
+			<agent:say>Here comes the first question</agent:say>
+			<exec>question = questions.next()</exec>
+			<goto state="ReadQuestion"/>
+		</onentry>
+	</state>
+	
+	<state id="EndGame">
+		<onentry>
+			<agent:say> Would you like to play again?</agent:say>
+			<raise event="keepListening"/>
+		</onentry>
+		
+		<onevent name="keepListening">
+		    <agent:listen/>
+		    <raise event="keepListening"/>
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+		    <agent:say>Great</agent:say>
+		    <goto state="StartGame"/>
+		</onevent>
+		
+        <onevent name="sense.user.speak" cond="event?:sem:no or event?:sem:goodbye">
+            <agent:say> Okay, goodbye.</agent:say>
+            <send event="action.skill" p:entry="targetSkill"/>
+        </onevent>	
+	</state>
+	
+	<state id="Dialog">
+		<onevent name="sense.user.leave"  cond="system.isAttending(event) or !system.hasUsers()">
+			<if cond="system.hasUsers()">
+				<agent:attendRandom/>
+				<goto state="NextQuestion" />
+			<else />
+				<agent:say> Goodbye </agent:say>
+				<goto state="Idle"/>
+			</if>
+		</onevent>
+		
+		<onevent name="sense.user.speech.start" cond="system.isAttending(event) and eq(event:speakers, 1)">
+			<send event="action.gesture" p:name="'smile'"/>
+		</onevent>
+	</state>
+	
+	<state id="NextQuestion" extends="Dialog">
+		<onentry>
+			<exec>question = questions.next(); guess = 0</exec>
+			<random>
+				<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_05">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_06">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_exh_hesitation_04">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_taketurn_01">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_taketurn_02">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_hesitation_01">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_hesitation_02">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_hesitation_03">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_hesitation_05">ehm</spurt></agent:say>
+				<agent:say><spurt audio="free_dialogue/ehm_hesitation_06">ehm</spurt></agent:say>
+			</random>
+			<if cond="system.hasManyUsers()">
+				<random>
+					<block>
+						<agent:attendAll/>
+						<agent:say>The next category is <expr>question.getCategory()</expr></agent:say>
+						<agent:say>Let's see who answers first</agent:say>
+					</block>
+					<block>
+						<agent:attendOther/>
+						<if cond="system.getCurrentUser().has('name')">
+							<agent:say>The next one is for you <expr>system.getCurrentUser().get("name")</expr></agent:say>
+						</if>
+						<agent:say>Let's see what you know about <expr>question.getCategory()</expr></agent:say>
+					</block>
+				</random>
+			<else/>
+				<agent:say>The next category is <expr>question.getCategory()</expr></agent:say>
+			</if>
+			<goto state="ReadQuestion"/>
+		</onentry>
+	</state>
+	
+	<state id="ReadQuestion" extends="AwaitAnswer">
+		<onentry>
+			<if cond="allowBargein">
+				<agent:prompt text="question.getFullQuestion()" context="'default ' + question.getId()"/>
+			<else/>
+				<agent:say text="question.getFullQuestion()"/>
+				<agent:listen context="'quiz ' + question.getId()"/>
+			</if>
+		</onentry>
+	</state>
+	
+	<state id="ReadOptions" extends="AwaitAnswer">
+		<onentry>
+			<if cond="allowBargein">
+				<agent:prompt text="question.getOptions()" context="'default ' + question.getId()"/>
+			<else/>
+				<agent:say text="question.getOptions()"/>
+				<agent:listen context="'quiz ' + question.getId()"/>
+			</if>
+		</onentry>
+	</state>
+	
+	<state id="AwaitAnswer" extends="Dialog">
+		<onentry>
+			<agent:listen context="'quiz ' + question.getId()"/>
+		</onentry>
+		
+		<!-- TODO: Fix the dead-end for users when the skill is started stand-alone, i.e the following if-clause is not true -->
+        <onevent name="sense.user.speak" cond="event?:sem:goodbye">
+            <agent:say> Okay, goodbye.</agent:say>
+            <if cond="startedFromSkill">
+                <send event="action.skill" p:entry="targetSkill"/>
+            </if>
+        </onevent>	
+        
+		<onevent name="sense.user.speak.multi">
+			<if cond="question.isCorrect(event:all:0:sem:answer)">
+				<agent:attend target="event:all:0:user"/>
+				<goto state="CorrectAnswer"/>
+			<elseif cond="question.isCorrect(event:all:1:sem:answer)"/>
+				<agent:attend target="event:all:1:user"/>
+				<goto state="CorrectAnswer"/>
+			<else/>
+				<agent:say>None of you were correct, let's try another question.</agent:say>
+				<goto state="NextQuestion"/>
+			</if>
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+			<random>
+				<agent:say>So, what is your guess?</agent:say>
+			</random>
+			<goto state="AwaitAnswer"/>
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:dontknow or event?:sem:no">
+			<raise event="skip"/>
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_repeat">
+			<agent:say>Okay</agent:say>
+			<goto state="ReadQuestion"/>
+		</onevent>
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_repeat_options">
+			<agent:say>Okay, here are the options</agent:say>
+			<goto state="ReadOptions"/>
+		</onevent>		
+		
+		<onevent name="sense.user.speak" cond="event?:sem:req_quiz_stop">
+			<agent:say>Okay, let's stop playing</agent:say>
+			<goto state="EndGame"/>
+		</onevent>
+	
+		<onevent name="sense.user.speak">
+			<if cond="system.isAttendingAll()">
+				<agent:attend target="event:user"/>
+			</if>
+			<if cond="question.isCorrect(event:sem:answer)">
+				<goto state="CorrectAnswer"/>
+			<else/>
+				<goto state="IncorrectAnswer"/>
+			</if>
+		</onevent>
+	
+		<onevent name="sense.user.speak.side">
+			<agent:attendOther mode="'eyes'"/>
+			<send event="action.gesture" p:name="'express_disgust'"/>
+			<agent:say>You were not supposed to answer that</agent:say>
+			<if cond="question.isCorrect(event:sem:answer)">
+				<agent:say>You also gave away the answer, which is not so smart</agent:say>
+			</if>
+			<agent:attendOther mode="'eyes'"/>
+			<agent:say>So, what is your answer?</agent:say>
+			<goto state="AwaitAnswer"/>
+		</onevent>
+	
+		<onevent name="sense.user.silence">
+			<raise event="skip"/>
+		</onevent>
+	
+		<onevent name="skip">
+			<if cond="system.hasManyUsers()">
+				<agent:attendOther/>
+				<agent:say>Maybe you know the answer?</agent:say>
+				<goto state="AwaitAnswer"/>
+			<else/>
+				<random>
+					<agent:say>Come on, make an educated guess</agent:say>
+					<agent:say>You could at least try</agent:say>
+					<agent:say>Why don't you make a guess</agent:say>
+				</random>
+				<goto state="AwaitAnswer"/>
+			</if>
+		</onevent>
+	</state>
+	
+	<state id="CorrectAnswer" extends="Dialog">
+		<var name="score" type="int" value="system.getCurrentUser().incrInteger('score')"/>
+		<onentry>
+			<exec>system.getCurrentUser():score = score</exec>
+			<agent:say>That is correct, you now have a score of <expr>score</expr></agent:say>
+			<if cond="score &gt;= winningScore">
+				<goto state="Winner"/>
+			<elseif cond="score == winningScore - 1"/>
+				<random>
+					<agent:say>You are only one score from winning now</agent:say>
+					<agent:say>You only need one point more, and you will win</agent:say>
+				</random>
+				<goto state="CloseToWinning"/>
+			<else/>
+				<goto state="NextQuestion"/>
+			</if>
+		</onentry>
+	</state>
+	
+	<state id="IncorrectAnswer" extends="Dialog">
+		<onentry>
+			<agent:say>That was wrong</agent:say>
+			<if cond="system.hasManyUsers() and guess == 0">
+				<exec>guess++</exec>
+				<agent:attendOther/>
+				<random>
+					<agent:say>Maybe you know the answer?</agent:say>
+					<agent:say>Do you have a better guess?</agent:say>
+					<agent:say>What do you think?</agent:say>
+				</random>
+				<goto state="AwaitAnswer"/>
+			</if>
+			<agent:say>The correct answer was <expr>question.getCorrectAnswer()</expr></agent:say>
+			<goto state="NextQuestion"/>
+		</onentry>
+	</state>
+	
+	<state id="CloseToWinning" extends="Dialog">
+		<onentry>
+			<random>
+				<agent:say>Do you feel nervous?</agent:say>
+				<agent:say>Are you nervous?</agent:say>
+			</random>
+			<agent:listen/>
+		</onentry>
+		<onevent name="sense.user.speak**">
+			<random>
+				<agent:say>I think you are doing great</agent:say>
+				<agent:say>I think this is really exciting</agent:say>
+			</random>
+			<goto state="NextQuestion"/>
+		</onevent>
+	</state>
+	
+	<state id="Winner" extends="Dialog">
+		<onentry>
+			<exec>system.putUsers("score", 0)</exec>
+			<exec>system.getCurrentUser():score = 0</exec>
+			<agent:say>Congratulations, you are the winner</agent:say>
+			<if cond="system.hasManyUsers()">
+				<agent:attendOther/>
+				<agent:say>I am sorry, but you lost.</agent:say>
+			</if>
+			<goto state="EndGame"/>
+		</onentry>
+	</state>
+
+</flow>

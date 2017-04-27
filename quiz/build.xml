@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." name="IrisTK-Quiz" default="build-flow">
+	
+	<target name="build-flow">
+		<exec executable="cmd">
+			<arg value="/c"/>
+			<arg value="iristk"/>
+			<arg value="cflow"/>
+			<arg value="QuizFlow.xml"/>
+		</exec>
+	</target>
+	
+</project>

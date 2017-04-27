@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" root="srgs_root"
+	xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar srgs.xsd"
+	tag-format="semantics/1.0">
+
+	<rule id="srgs_root" scope="public">
+		<one-of>
+		    <item>
+		        <one-of>
+        			<item>goodbye</item>
+        			<item>goodbye furhat</item>
+        			<item>see you later</item>
+        			<item>bye bye</item>
+        			<item>goodbye take care</item>
+        			<item>take care goodbye</item>
+        		</one-of>
+        		<tag>out.goodbye=1</tag>
+		    </item>
+			<item>
+				<one-of>
+					<item>yes</item>
+					<item>sure</item>
+					<item>absolutely</item>
+				</one-of>
+				<tag>out.yes=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>no</item>
+					<item>I don't think so</item>
+				</one-of>
+				<tag>out.no=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>i don't know</item>
+					<item>i have no idea</item>
+				</one-of>
+				<tag>out.dontknow=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>i don't want to play anymore</item>
+					<item>can we stop playing</item>
+					<item>can we stop playing this game</item>
+					<item>stop playing</item>
+					<item>stop the quiz</item>
+				</one-of>
+				<tag>out.req_quiz_stop=1</tag>
+			</item>
+			<item>
+				<one-of>
+					<item>say that again</item>
+					<item>what did you say</item>
+					<item>sorry</item>
+					<item>what was that</item>
+					<item>did not get that</item>
+					<item>beg your pardon</item>
+					<item>again please</item>
+					<item>repeat</item>
+					<item>could you repeat</item>
+					<item>could you read the question again</item>
+					<item>could you read the question</item>
+					<item>could you repeat the question</item>
+				</one-of>
+				<tag>out.req_repeat=1</tag>
+			</item>
+			<item>
+				<item repeat="0-1">
+					<one-of>
+						<item>could you</item>
+						<item>can you</item>
+						<item>can you please</item>
+					</one-of>
+				</item>
+				<item repeat="0-1">
+					<one-of>
+						<item>repeat the options</item>
+						<item>repeat the alternatives</item>
+						<item>read the alternatives</item>
+						<item>take the alternatives</item>
+					</one-of>
+				</item>
+				<item repeat="0-1">
+					<one-of>
+						<item>again</item>
+						<item>once more</item>
+						<item>again please</item>
+					</one-of>
+				</item>
+				<tag>out.req_repeat_options=1</tag>
+			</item>
+		</one-of>
+	</rule>
+
+</grammar>
