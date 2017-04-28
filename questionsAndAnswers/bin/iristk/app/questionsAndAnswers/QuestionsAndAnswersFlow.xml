@@ -44,32 +44,59 @@
 
 		<!-- if the user says something that we have an answer for (see grammar 
 			file), we reply with the answer -->
-		<onevent name="sense.user.speak" cond="event?:sem:answer">
-			<agent:say>
-				<expr>event:sem:answer</expr>
-			</agent:say>
+		<onevent name="sense.user.speak" cond="event?:sem:question">
+			
+			<var name="question" type="String" value="asString(event:sem:question)"/>
+			
+			<if cond="question.equals('whatsYourName')">
+				<agent:say>My name is Fur hat</agent:say>
+			
+			<elseif cond="question.equals('whatsUp')"/>
+				<agent:say>Nothing, just chilling here</agent:say>
+			
+			<elseif cond="question.equals('howAreYou')"/>
+				<agent:say>Good, thanks!</agent:say>
+				<agent:gesture name="'smile'"/>
+			
+			<elseif cond="question.equals('howOldAreYou')"/>
+				<agent:say>I'm two years old</agent:say>
+			
+			<elseif cond="question.equals('whoMadeYou')"/>
+				<agent:say>Fur hat Robotics made me</agent:say>
+			
+			<elseif cond="question.equals('whatCanYouDo')"/>
+				<agent:say>I can answer questions</agent:say>
+			
+			<elseif cond="question.equals('whatAreYou')"/>
+		    	<agent:say>I am a social robot</agent:say>
+			</if>
+			
 			<agent:say>Anything else?</agent:say>
 			<agent:listen />
 		</onevent>
 		
 		<!-- This catches any speak event that starts with any of the specified question start words -->
 	    <onevent name="sense.user.speak" cond="event?:sem:questionstart">
-	        <!-- Sends the text as a query. We will catch it asyncronously -->
-	        <send event="action.skill.query" p:text="event:text"/>
 	        
-	        <!-- logs the question -->
-	        <log>Question: <expr>event:text</expr></log>
-            <call state="PendingQueryAnswer"/>
+	        <!-- Async since we want the flow to continue instantly -->
+	        <agent:say async="true">Lets see</agent:say>
+            <send event="action.gesture" p:name="'gaze_away'" />
+            <!-- Go to a query state to query other skills, passing on our event -->
+            <call state="PendingQueryAnswer" p:queryEvent="event"/>
             <agent:listen />
 		</onevent>
 
 	</state>
 	
+	<!-- State to query other skills using the action.skill.query event. Returning when a monitor-event is received -->
 	<state id="PendingQueryAnswer">
+	    <param name="queryEvent" type="iristk.system.Event"/>
+		
 		<onentry>
-          <!-- Some filler sounds and gestures -->	
-            <agent:say>Lets see</agent:say>
-	        <send event="action.gesture" p:name="'gaze_away'" />
+            <!-- Sends the text as a query. We will catch it asyncronously -->
+	        <send event="action.skill.query" p:text="queryEvent:text"/>
+	        <!-- logs the question -->
+	        <log>Question: <expr>queryEvent:text</expr></log>
 		</onentry>
 		
 		<!-- This catches a continue event returned when an answer to our query is received -->
@@ -82,8 +109,7 @@
 		        <agent:say><expr>event:answer</expr></agent:say>
 		        <agent:say>Anything else?</agent:say>
 	        <else/>
-	        <!-- TODO: fix bug that forces this async to be true -->
-	            <agent:say async="true">
+	            <agent:say>
 	                Sorry, I can't answer that. Please ask something else
                 </agent:say>
 		    </if>
@@ -105,7 +131,7 @@
 				<random>
 					<block>Oh, you think so?</block>
 					<block>Okay</block>
-					<block>Interesting</block>
+					<block>That doesn't sound like a question to me</block>
 					<block>Try to ask me a question</block>
 				</random>
 			</agent:say>

@@ -23,7 +23,7 @@
 			</item>
 			<item>
 				<ruleref uri="#questions" />
-				<tag>out.answer = rules.questions</tag>
+				<tag>out.question = rules.questions</tag>
 			</item>
 			<item>
 				<ruleref uri="#questionstart" />
@@ -81,13 +81,13 @@
 	  		        <item>what is your name?</item>
 	  		        <item>what's your name?</item>
   		        </one-of>
-	  		    <tag>out = "my name is fur hat"</tag></item>
+	  		    <tag>out = "whatsYourName"</tag></item>
 	  		<item>
 	  		    <one-of>
 	  		        <item>what is up</item>
 	  		        <item>what's up</item>
   		        </one-of>
-	  		    <tag>out = "nothing, just chilling here"</tag></item>
+	  		    <tag>out = "whatsUp"</tag></item>
 	  		    <item>
 	  		    <one-of>
 	  		        <item>how are you</item>
@@ -96,19 +96,22 @@
 	  		        <item>how are you doing</item>
 	  		        <item>how you doing</item>
   		        </one-of>
-	  		    <tag>out = "not to shabby, thanks"</tag></item>
-	   		<item>how old are you?<tag>out = "I am 2 years old"</tag></item>
-	   		<item>who made you?<tag>out = "Furhat Robotics created me"</tag></item>
+	  		    <tag>out = "howAreYou"</tag></item>
+	   		<item>how old are you?<tag>out = "howOldAreYou"</tag></item>
+	   		<item>
+	   			<one-of>
+	   				<item>Who built you</item>
+	   				<item>who made you?</item>
+   				</one-of>
+	   			<tag>out = "whoMadeYou"</tag></item>
 	   		<item>
    		    	<one-of>
         			<item>What can you do?</item>
         			<item>What can I ask</item>
         			<item>Help me</item>
         		</one-of>
-        		<tag>out = "I can answer questions and send messages to people on Slack"</tag>
-	   		</item>
-	  		<item>Who built you<tag>out = "Furhat robotics made me"</tag></item>
-  			<item>What are you?<tag>out = "I am a socially intelligent robot"</tag></item>
+        		<tag>out = "whatCanYouDo"</tag></item>
+  			<item>What are you?<tag>out = "whatAreYou"</tag></item>
 		</one-of>
 	</rule>
 	
@@ -123,7 +126,7 @@
 	   		<item>where's</item>
 	   		<item>what's</item>
 	   		<item>do you</item>
-	   		<item>can you</item>
+	   		<item>can you tell me</item>
 	   		<item>will</item>
 	   		<item>would</item>
 	   		<item>does</item>
