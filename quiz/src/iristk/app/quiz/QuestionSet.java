@@ -15,6 +15,7 @@ import iristk.util.RandomList;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 
@@ -26,7 +27,7 @@ public class QuestionSet extends ArrayList<Question> {
 	
 	public QuestionSet(InputStream questionFile) throws IOException {
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(questionFile));
+			BufferedReader br = new BufferedReader(new InputStreamReader(questionFile, "UTF-8"));
 			String line = br.readLine();
 			int qn = 0;
 			int ln = 0;
@@ -49,8 +50,10 @@ public class QuestionSet extends ArrayList<Question> {
 		}
 	}
 	
+	private static final Pattern VALID_INPUT_PATTERN = Pattern.compile("[A-Za-z0-9ÅåÄäÖö,\\.;\\?'\\- ]*", Pattern.UNICODE_CHARACTER_CLASS);
+	
 	public static void checkLine(String line) throws Exception {
-		if (!line.matches("[A-Za-z0-9,\\.;\\?'\\- ]*")) {
+		if (!VALID_INPUT_PATTERN.matcher(line).matches()) {
 			throw new Exception("Illegal characters");
 		}
 		String[] cols = line.split(";");
