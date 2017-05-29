@@ -146,7 +146,7 @@ public class HoundifySkill extends Skill implements Queryable {
 				conversationState = (ConversationStateJSON) answerRecord.get("conversationState");				
 			}
 			queryResponse.answer = answerRecord.getString("answer");
-			queryResponse.confidence = 0.6; // dummy value for now, just to indicate that an answer is received
+			queryResponse.confidence = 0.3; // dummy value for now, just to indicate that an answer is received
 		}
 		
 		return queryResponse;
