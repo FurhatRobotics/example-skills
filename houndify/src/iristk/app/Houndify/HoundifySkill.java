@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 
 import com.Hound.HoundJSON.ConversationStateJSON;
 
+import iristk.cfg.ParseResult;
+import iristk.cfg.Parser;
 import iristk.cfg.SRGSGrammar;
 import iristk.furhat.Queryable;
 import iristk.furhat.skill.FlowResource;
@@ -46,6 +48,10 @@ public class HoundifySkill extends Skill implements Queryable {
     private String location_city;
     private String location_state;
     private String location_country;
+    
+	private SRGSGrammar entryGrammar;
+	private Parser entryParser;
+	private Record querySemantics; 
 	
 	public HoundifySkill() {
 		propertiesFile = getPackageFile("skill.properties");
@@ -71,6 +77,7 @@ public class HoundifySkill extends Skill implements Queryable {
 			location_city = credentials.getString("location_city");
 			location_state = credentials.getString("location_state");
 			location_country = credentials.getString("location_country");
+			entryGrammar = new SRGSGrammar(getPackageFile("EntryGrammar.xml"));
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -95,6 +102,9 @@ public class HoundifySkill extends Skill implements Queryable {
 					);
 		}
     	
+		entryParser = new Parser();
+        entryParser.loadGrammar("entry", entryGrammar);
+        entryParser.activateGrammar("entry");
 	}
 	
 	@Override
@@ -111,14 +121,11 @@ public class HoundifySkill extends Skill implements Queryable {
 	@Override
 	public void init() throws Exception {
 		SkillHandler handler = getSkillHandler();
-		if (recognizer.equals(RECOGNIZER_GRAMMAR))  {
-			handler.loadContext("default", new SpeechGrammarContext(new SRGSGrammar(getPackageFile("HoundifyGrammar.xml"))));
-			handler.setDefaultContext("default");
-		} else if (recognizer.equals(RECOGNIZER_OPEN)) {
-			handler.loadContext("default", new OpenVocabularyContext(language));
-			handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("HoundifyGrammar.xml"))));
-			handler.setDefaultContext("default");
-		}
+		
+		handler.loadContext("default", new OpenVocabularyContext(language));
+		handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("HoundifyGrammar.xml"))));
+		handler.setDefaultContext("default");
+
 		flow = new HoundifyFlow(handler.getSystemAgentFlow(), new HoundifyFlowClient());
 	}
 
@@ -133,11 +140,14 @@ public class HoundifySkill extends Skill implements Queryable {
 	public QueryResponse query(String text) {
 		
 		QueryResponse queryResponse = new QueryResponse();
-
-		// If client is not defined, we do nothing
-		if (houndifyClient == null) {
-			return queryResponse;
-		}
+		
+		// Check entryGrammar to make sure we don't query on everything
+		//  client is not defined, we do nothing
+		ParseResult result = entryParser.parse(text);
+		
+	    if (result.getSemCoverage() == 0 || houndifyClient == null) {
+			return queryResponse;			
+	    }
 
 		Record answerRecord = houndifyClient.query(text, conversationState);
 		
@@ -146,7 +156,7 @@ public class HoundifySkill extends Skill implements Queryable {
 				conversationState = (ConversationStateJSON) answerRecord.get("conversationState");				
 			}
 			queryResponse.answer = answerRecord.getString("answer");
-			queryResponse.confidence = 0.3; // dummy value for now, just to indicate that an answer is received
+			queryResponse.confidence = 0.1; // dummy value for now, just to indicate that an answer is received
 		}
 		
 		return queryResponse;
