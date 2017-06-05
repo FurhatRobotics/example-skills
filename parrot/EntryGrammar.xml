@@ -6,9 +6,12 @@
 
 	<rule id="root" scope="public">
 		<one-of>
-			<item> parrot 
-				<tag> out="This skill has that as a name"</tag>
-			</item>
+			<item>parrot</item>
+			<item>mimic me</item>
+			<item>parrot skill</item>
+			<item>copying parrot</item>
+			<item>repeat after me</item>
+			<item>repeat me</item>
 		</one-of>
 	</rule>
 </grammar>

@@ -8,12 +8,15 @@
 
 	<import class="iristk.furhat.util.Localizer"/>
 	
+	<param name="initialParameters" type="Record"/>
 	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
 	<param name="translator" type="Localizer"/><!-- Param used to call localizer object -->
 
 	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
     <var name="defaultVoice" type="String"/>
     <var name="femaleVoice" type="String"/>
+   	<var name="startedFromSkill" type="boolean" value="false"/>
+	<var name="originSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
 
     <state id="init">
         <onentry>
@@ -23,6 +26,18 @@
             </exec>
             <goto state="part1"/>
         </onentry>
+    </state>
+    
+    <state id="hotStart" public="true">
+    	<onentry>
+			<if cond="initialParameters != null and initialParameters?:originSkill">
+		        <exec> 
+		            originSkill = asString(initialParameters.get("originSkill"));
+		        </exec>
+		    </if>    
+		    <exec>startedFromSkill = true</exec>		
+		    <goto state="init"/>
+    	</onentry>
     </state>
     
 	<state id="part1" extends="IdleMoves">
@@ -88,6 +103,9 @@
 			
 			<send event="action.gesture" p:name="'smile'" />
 			<agent:say text="translator.get('HAPPY_TO_BE_HERE')"/>
+			<if cond="startedFromSkill">
+				<send event="action.skill" p:entry="originSkill"/>
+			</if>
 		</onentry>
 	</state>
 	 

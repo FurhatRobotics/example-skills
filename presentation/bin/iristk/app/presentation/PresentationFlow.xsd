@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema elementFormDefault="qualified"
     targetNamespace="iristk.app.presentation.PresentationFlow"
-    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow">
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow" xmlns:tns="iristk.app.presentation.PresentationFlow">
     <import namespace="iristk.flow" schemaLocation="flow.xsd"/>
-    <element name="part1">
-        <complexType>
-            <sequence>
-                <any maxOccurs="unbounded" minOccurs="0"
-                    namespace="##any" processContents="lax"/>
-            </sequence>
-        </complexType>
+    <element name="hotStart">
+        <complexType/>
     </element>
 </schema>

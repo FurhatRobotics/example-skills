@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" root="root"
+	xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar http://www.iristk.net/xml/srgs.xsd"
+	tag-format="semantics/1.0">
+
+	<rule id="root" scope="public">
+		<one-of>
+			<item>
+				<ruleref uri="#questionstart"/>  
+			</item>
+		</one-of>
+	</rule>
+
+	<rule id="questionstart">	
+	  <one-of>
+	   		<item>how</item>
+	   		<item>who</item>
+	   		<item>where</item>
+	   		<item>what</item>
+	   		<item>how's</item>
+	   		<item>who's</item>
+	   		<item>where's</item>
+	   		<item>what's</item>
+	   		<item>do you</item>
+	   		<item>can you tell me</item>
+	   		<item>will</item>
+	   		<item>would</item>
+	   		<item>does</item>
+	   		<item>do</item>
+	   		<item>did</item>
+		</one-of>
+	</rule>
+</grammar>

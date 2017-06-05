@@ -4,7 +4,10 @@
 	xmlns:p="iristk.flow.param" xmlns:agent="iristk.situated.SystemAgentFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
 	
+	<param name="initialParameters" type="Record"/>
 	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
+	
+	<var name="originSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
 	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()"/> 
 	
 	<state id="Init">
@@ -15,6 +18,18 @@
 				<agent:attendNobody/>
 			</if>
 		    <goto state="Dialog"/>
+		</onentry>
+	</state>
+	
+	<state id="HotStart" public="true">
+		<onentry>
+			<if cond="initialParameters != null and initialParameters?:originSkill">
+		        <exec> 
+		            originSkill = initialParameters.getString("originSkill");
+		        </exec>
+            </if>
+			<agent:say>say something then</agent:say>
+			<goto state="Dialog"/>
 		</onentry>
 	</state>
 	
@@ -42,8 +57,13 @@
 			<send event="sense.user.speak" copy="event"/>
 		</onevent>
 		
+        <onevent name="sense.user.speak" cond="event?:sem:goodbye">
+            <goto state="Exit"/>
+        </onevent>	
+		
 		<onevent name="sense.user.speak" cond="!eq(event:text,'NO_MATCH')">
 		    <agent:say><expr>event:text</expr></agent:say>
+		    <reentry/>
 		</onevent>
 		
 		<onevent name="sense.user.silence" cond="!system.getCurrentUser().isNobody()">
@@ -53,6 +73,7 @@
 				<agent:say>Are you going to talk or what?</agent:say>
 				<agent:say>Speak or I will forever hold my peace</agent:say>
 			</random>
+		    <reentry/>
 		</onevent>
 		
 		<onevent name="sense.user.leave" cond="system.isAttending(event)">
@@ -60,8 +81,7 @@
 				<agent:attendRandom/>
 				<reentry/>
 			<else />
-				<agent:say>Bye.</agent:say>
-				<reentry/>
+				<goto state="Exit"/>
 			</if>
 		</onevent>
 		
@@ -69,6 +89,17 @@
 			<agent:attend target="event:user"/>
 			<agent:listen/>
 		</onevent>
+	</state>
+	
+	<state id="Exit">
+		<onentry>
+			<agent:say> Okay, goodbye.</agent:say>
+			<if cond="initialParameters != null">
+            	<send event="action.skill" p:entry="originSkill"/>
+        	<else/>
+        		<goto state="Init"/>
+        	</if>
+		</onentry>
 	</state>
 	
 	

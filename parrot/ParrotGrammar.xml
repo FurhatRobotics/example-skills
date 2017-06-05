@@ -8,8 +8,25 @@
   		<item> parrot <tag> out="This skill has that as a name"</tag> </item>
   		<item>yes<tag>out.yes=1</tag></item>
    		<item>no<tag>out.no=1</tag></item>
+   		<item>
+   			<ruleref uri="#goodbye"/>
+      		<tag>out.goodbye = 1</tag>
+   		</item>
       </one-of>
   </rule>
 
+	<rule id="goodbye">
+		<item>
+	    	<one-of>
+	    		<item>bye</item>
+	    		<item>goodbye</item>
+	    		<item>goodbye furhat</item>
+	    		<item>see you later</item>
+	    		<item>bye bye</item>
+				<item>goodbye take care</item>
+			    <item>take care goodbye</item>
+	    	</one-of>
+        </item>
+    </rule>
   
 </grammar>

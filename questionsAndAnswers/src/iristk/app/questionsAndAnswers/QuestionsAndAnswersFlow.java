@@ -64,8 +64,8 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			// Line: 11
 			try {
 				EXECUTION: {
-					int count = getCount(492770444) + 1;
-					incrCount(492770444);
+					int count = getCount(414641417) + 1;
+					incrCount(414641417);
 					// Line: 12
 					if (system.hasUsers()) {
 						iristk.situated.SystemAgentFlow.attendRandom state0 = agent.new attendRandom();
@@ -98,9 +98,9 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			int count;
 			// Line: 21
 			try {
-				count = getCount(438148952) + 1;
+				count = getCount(1452763915) + 1;
 				if (event.triggers("sense.user.enter")) {
-					incrCount(438148952);
+					incrCount(1452763915);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						iristk.situated.SystemAgentFlow.attend state3 = agent.new attend();
@@ -147,8 +147,8 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			// Line: 29
 			try {
 				EXECUTION: {
-					int count = getCount(1083460586) + 1;
-					incrCount(1083460586);
+					int count = getCount(1292556171) + 1;
+					incrCount(1292556171);
 					iristk.situated.SystemAgentFlow.say state5 = agent.new say();
 					StringCreator string6 = new StringCreator();
 					string6.append("Hi, do you have any question for me?");
@@ -174,10 +174,10 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			int count;
 			// Line: 34
 			try {
-				count = getCount(906357759) + 1;
+				count = getCount(547889682) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:yes")) {
-						incrCount(906357759);
+						incrCount(547889682);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							iristk.situated.SystemAgentFlow.say state8 = agent.new say();
@@ -202,10 +202,10 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			}
 			// Line: 41
 			try {
-				count = getCount(691554088) + 1;
+				count = getCount(1598531794) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:no")) {
-						incrCount(691554088);
+						incrCount(1598531794);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							iristk.situated.SystemAgentFlow.say state11 = agent.new say();
@@ -225,10 +225,10 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			}
 			// Line: 47
 			try {
-				count = getCount(1594499026) + 1;
+				count = getCount(2033711381) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:question")) {
-						incrCount(1594499026);
+						incrCount(2033711381);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							// Line: 49
@@ -340,10 +340,10 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			}
 			// Line: 84
 			try {
-				count = getCount(343639609) + 1;
+				count = getCount(1499122613) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:questionstart")) {
-						incrCount(343639609);
+						incrCount(1499122613);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							iristk.situated.SystemAgentFlow.say state32 = agent.new say();
@@ -413,8 +413,8 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			// Line: 100
 			try {
 				EXECUTION: {
-					int count = getCount(1098798122) + 1;
-					incrCount(1098798122);
+					int count = getCount(55940606) + 1;
+					incrCount(55940606);
 					// Line: 102
 					Event sendEvent37 = new Event("action.skill.query");
 					sendEvent37.putIfNotNull("text", queryEvent.get("text"));
@@ -437,25 +437,25 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			int count;
 			// Line: 108
 			try {
-				count = getCount(2026208323) + 1;
+				count = getCount(597730606) + 1;
 				if (event.triggers("monitor.skill.query")) {
-					incrCount(2026208323);
+					incrCount(597730606);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						// Line: 110
+						// Line: 111
 						if (event.has("answer")) {
-							// Line: 112
+							// Line: 113
 							StringCreator string39 = new StringCreator();
 							string39.append("Answer:");
-							// Line: 112
+							// Line: 113
 							string39.append(event.get("answer"));
 							log(string39.toString());
 							iristk.situated.SystemAgentFlow.say state40 = agent.new say();
 							StringCreator string41 = new StringCreator();
-							// Line: 112
+							// Line: 113
 							string41.append(event.get("answer"));
 							state40.setText(string41.toString());
-							if (!flowThread.callState(state40, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 110, 32)))) {
+							if (!flowThread.callState(state40, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 111, 32)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -463,23 +463,32 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 							StringCreator string43 = new StringCreator();
 							string43.append("Anything else?");
 							state42.setText(string43.toString());
-							if (!flowThread.callState(state42, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 110, 32)))) {
+							if (!flowThread.callState(state42, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 111, 32)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
-							// Line: 116
+							// Line: 117
+						} else if (eq(event.get("status"), "MATCH")) {
+							// Line: 118
+							QueryParser state44 = new QueryParser();
+							state44.setSkills(asList(event.get("skills")));
+							if (!flowThread.callState(state44, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 118, 83)))) {
+								eventResult = EVENT_ABORTED;
+								break EXECUTION;
+							}
+							// Line: 119
 						} else {
-							iristk.situated.SystemAgentFlow.say state44 = agent.new say();
-							StringCreator string45 = new StringCreator();
-							string45.append("Sorry, I can't answer that. Please ask something else");
-							state44.setText(string45.toString());
-							if (!flowThread.callState(state44, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 110, 32)))) {
+							iristk.situated.SystemAgentFlow.say state45 = agent.new say();
+							StringCreator string46 = new StringCreator();
+							string46.append("Sorry, I can't answer that. Please ask something else");
+							state45.setText(string46.toString());
+							if (!flowThread.callState(state45, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 111, 32)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
 						}
-						// Line: 121
-						flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 121, 19)));
+						// Line: 124
+						flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 124, 19)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
@@ -488,6 +497,96 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 			} catch (Exception e) {
 				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 108, 39));
 			}
+			eventResult = super.onFlowEvent(event);
+			if (eventResult != EVENT_IGNORED) return eventResult;
+			eventResult = callerHandlers(event);
+			if (eventResult != EVENT_IGNORED) return eventResult;
+			return EVENT_IGNORED;
+		}
+
+	}
+
+
+	private class QueryParser extends Dialog {
+
+		final State currentState = this;
+		public List skills = null;
+
+		public void setSkills(Object value) {
+			if (value != null) {
+				skills = asList(value);
+				params.put("skills", value);
+			}
+		}
+
+		public Record skill;
+		public String message;
+
+		@Override
+		public void setFlowThread(FlowRunner.FlowThread flowThread) {
+			super.setFlowThread(flowThread);
+		}
+
+		@Override
+		public void onentry() throws Exception {
+			int eventResult;
+			Event event = new Event("state.enter");
+			// Line: 133
+			try {
+				EXECUTION: {
+					int count = getCount(1433361711) + 1;
+					incrCount(1433361711);
+					// Line: 134
+					skill = asRecord(skills.remove(0));
+					message = asString(skill.get("answer"));
+					// Line: 138
+					StringCreator string47 = new StringCreator();
+					// Line: 138
+					string47.append(skill.get("name"));
+					log(string47.toString());
+					// Line: 139
+					if (eq(skill.get("name"), "Houndify")) {
+						iristk.situated.SystemAgentFlow.say state48 = agent.new say();
+						StringCreator string49 = new StringCreator();
+						// Line: 139
+						string49.append(message);
+						state48.setText(string49.toString());
+						if (!flowThread.callState(state48, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 139, 51)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
+						// Line: 141
+						flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 141, 26)));
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+						// Line: 142
+					} else {
+						// Line: 143
+						if (skills.isEmpty()) {
+							// Line: 144
+							flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 144, 30)));
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+							// Line: 145
+						} else {
+							// Line: 146
+							QueryParser state50 = new QueryParser();
+							state50.setSkills(skills);
+							flowThread.gotoState(state50, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 146, 66)));
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
+					}
+				}
+			} catch (Exception e) {
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 133, 18));
+			}
+		}
+
+		@Override
+		public int onFlowEvent(Event event) throws Exception {
+			int eventResult;
+			int count;
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;
 			eventResult = callerHandlers(event);
@@ -518,17 +617,17 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 		public int onFlowEvent(Event event) throws Exception {
 			int eventResult;
 			int count;
-			// Line: 129
+			// Line: 156
 			try {
-				count = getCount(167215781) + 1;
+				count = getCount(1831924809) + 1;
 				if (event.triggers("sense.user.speech.start")) {
 					if (system.isAttending(event) && eq(event.get("speakers"), 1)) {
-						incrCount(167215781);
+						incrCount(1831924809);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							iristk.situated.SystemAgentFlow.gesture state46 = agent.new gesture();
-							state46.setName("smile");
-							if (!flowThread.callState(state46, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 129, 63)))) {
+							iristk.situated.SystemAgentFlow.gesture state51 = agent.new gesture();
+							state51.setName("smile");
+							if (!flowThread.callState(state51, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 156, 63)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -537,60 +636,60 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 129, 63));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 156, 63));
 			}
-			// Line: 134
+			// Line: 161
 			try {
-				count = getCount(1702316378) + 1;
+				count = getCount(1033739133) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (!eq(event.get("text"), iristk.speech.RecResult.NOMATCH)) {
-						incrCount(1702316378);
+						incrCount(1033739133);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							iristk.situated.SystemAgentFlow.say state47 = agent.new say();
-							StringCreator string48 = new StringCreator();
-							// Line: 134
-							boolean chosen49 = false;
-							boolean matching50 = true;
-							while (!chosen49 && matching50) {
-								int rand51 = random(932821913, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-								matching50 = false;
+							iristk.situated.SystemAgentFlow.say state52 = agent.new say();
+							StringCreator string53 = new StringCreator();
+							// Line: 161
+							boolean chosen54 = false;
+							boolean matching55 = true;
+							while (!chosen54 && matching55) {
+								int rand56 = random(1528177151, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+								matching55 = false;
 								if (true) {
-									matching50 = true;
-									if (rand51 >= 0 && rand51 < 1) {
-										chosen49 = true;
-										string48.append("Oh, you think so?");
+									matching55 = true;
+									if (rand56 >= 0 && rand56 < 1) {
+										chosen54 = true;
+										string53.append("Oh, you think so?");
 									}
 								}
 								if (true) {
-									matching50 = true;
-									if (rand51 >= 1 && rand51 < 2) {
-										chosen49 = true;
-										string48.append("Okay");
+									matching55 = true;
+									if (rand56 >= 1 && rand56 < 2) {
+										chosen54 = true;
+										string53.append("Okay");
 									}
 								}
 								if (true) {
-									matching50 = true;
-									if (rand51 >= 2 && rand51 < 3) {
-										chosen49 = true;
-										string48.append("That doesn't sound like a question to me");
+									matching55 = true;
+									if (rand56 >= 2 && rand56 < 3) {
+										chosen54 = true;
+										string53.append("That doesn't sound like a question to me");
 									}
 								}
 								if (true) {
-									matching50 = true;
-									if (rand51 >= 3 && rand51 < 4) {
-										chosen49 = true;
-										string48.append("Try to ask me a question");
+									matching55 = true;
+									if (rand56 >= 3 && rand56 < 4) {
+										chosen54 = true;
+										string53.append("Try to ask me a question");
 									}
 								}
 							}
-							state47.setText(string48.toString());
-							if (!flowThread.callState(state47, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 134, 92)))) {
+							state52.setText(string53.toString());
+							if (!flowThread.callState(state52, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 161, 92)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
-							iristk.situated.SystemAgentFlow.listen state52 = agent.new listen();
-							if (!flowThread.callState(state52, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 134, 92)))) {
+							iristk.situated.SystemAgentFlow.listen state57 = agent.new listen();
+							if (!flowThread.callState(state57, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 161, 92)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -599,25 +698,25 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 134, 92));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 161, 92));
 			}
-			// Line: 148
+			// Line: 175
 			try {
-				count = getCount(1606719658) + 1;
+				count = getCount(1885113518) + 1;
 				if (event.triggers("sense.user.speak")) {
-					incrCount(1606719658);
+					incrCount(1885113518);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.say state53 = agent.new say();
-						StringCreator string54 = new StringCreator();
-						string54.append("Sorry, I didn't get that.");
-						state53.setText(string54.toString());
-						if (!flowThread.callState(state53, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 148, 36)))) {
+						iristk.situated.SystemAgentFlow.say state58 = agent.new say();
+						StringCreator string59 = new StringCreator();
+						string59.append("Sorry, I didn't get that.");
+						state58.setText(string59.toString());
+						if (!flowThread.callState(state58, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 175, 36)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						iristk.situated.SystemAgentFlow.listen state55 = agent.new listen();
-						if (!flowThread.callState(state55, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 148, 36)))) {
+						iristk.situated.SystemAgentFlow.listen state60 = agent.new listen();
+						if (!flowThread.callState(state60, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 175, 36)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -625,51 +724,51 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 148, 36));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 175, 36));
 			}
-			// Line: 154
+			// Line: 181
 			try {
-				count = getCount(742791577) + 1;
+				count = getCount(1947381066) + 1;
 				if (event.triggers("sense.user.speak.side")) {
-					incrCount(742791577);
+					incrCount(1947381066);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						// Line: 155
-						Event sendEvent56 = new Event("sense.user.speak");
-						sendEvent56.copyParams(event);
-						flowRunner.sendEvent(sendEvent56, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 155, 49)));
+						// Line: 182
+						Event sendEvent61 = new Event("sense.user.speak");
+						sendEvent61.copyParams(event);
+						flowRunner.sendEvent(sendEvent61, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 182, 49)));
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 154, 41));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 181, 41));
 			}
-			// Line: 159
+			// Line: 186
 			try {
-				count = getCount(1182004207) + 1;
+				count = getCount(1333636094) + 1;
 				if (event.triggers("sense.user.speak.multi")) {
-					incrCount(1182004207);
+					incrCount(1333636094);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						// Line: 160
-						Event sendEvent57 = new Event("sense.user.speak");
-						sendEvent57.copyParams(event);
-						flowRunner.sendEvent(sendEvent57, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 160, 49)));
+						// Line: 187
+						Event sendEvent62 = new Event("sense.user.speak");
+						sendEvent62.copyParams(event);
+						flowRunner.sendEvent(sendEvent62, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 187, 49)));
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 159, 42));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 186, 42));
 			}
-			// Line: 164
+			// Line: 191
 			try {
-				count = getCount(564096682) + 1;
+				count = getCount(986311070) + 1;
 				if (event.triggers("sense.user.silence")) {
-					incrCount(564096682);
+					incrCount(986311070);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.listen state58 = agent.new listen();
-						if (!flowThread.callState(state58, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 164, 38)))) {
+						iristk.situated.SystemAgentFlow.listen state63 = agent.new listen();
+						if (!flowThread.callState(state63, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 191, 38)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -677,32 +776,32 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 164, 38));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 191, 38));
 			}
-			// Line: 169
+			// Line: 196
 			try {
-				count = getCount(842919715) + 1;
+				count = getCount(1879083167) + 1;
 				if (event.triggers("sense.user.leave")) {
 					if (system.isAttending(event)) {
-						incrCount(842919715);
+						incrCount(1879083167);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							// Line: 170
+							// Line: 197
 							if (system.hasUsers()) {
-								iristk.situated.SystemAgentFlow.attendRandom state59 = agent.new attendRandom();
-								if (!flowThread.callState(state59, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 170, 33)))) {
+								iristk.situated.SystemAgentFlow.attendRandom state64 = agent.new attendRandom();
+								if (!flowThread.callState(state64, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 197, 33)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
-								// Line: 172
-								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 172, 16)));
+								// Line: 199
+								flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 199, 16)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
-								// Line: 173
+								// Line: 200
 							} else {
-								// Line: 174
-								Idle state60 = new Idle();
-								flowThread.gotoState(state60, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 174, 26)));
+								// Line: 201
+								Idle state65 = new Idle();
+								flowThread.gotoState(state65, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 201, 26)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -711,7 +810,7 @@ public class QuestionsAndAnswersFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 169, 69));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\questionsAndAnswers\\src\\iristk\\app\\questionsAndAnswers\\QuestionsAndAnswersFlow.xml"), 196, 69));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;

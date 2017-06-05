@@ -4,8 +4,12 @@ import java.io.File;
 
 import org.slf4j.Logger;
 
+import iristk.cfg.ParseResult;
+import iristk.cfg.Parser;
 import iristk.cfg.SRGSGrammar;
 import iristk.flow.FlowReturner;
+import iristk.furhat.QueryResponse;
+import iristk.furhat.Queryable;
 import iristk.furhat.skill.FlowResource;
 import iristk.furhat.skill.Skill;
 import iristk.furhat.skill.SkillEntry;
@@ -21,7 +25,7 @@ import iristk.util.Language;
 import iristk.util.Record;
 import iristk.flow.State;
 
-public class QuizSkill extends Skill {
+public class QuizSkill extends Skill implements Queryable {
 
 	private static final String RECOGNIZER_GRAMMAR  = "grammar";
 	private static final String RECOGNIZER_OPEN 	= "open";
@@ -33,6 +37,8 @@ public class QuizSkill extends Skill {
 	private Language language = Language.ENGLISH_US;
 	private QuizFlow flow;
 	private File propertiesFile;
+	private SRGSGrammar entryGrammar;
+	private Parser entryParser;
 
 	public QuizSkill() {
 		this.propertiesFile = getPackageFile("skill.properties");
@@ -42,6 +48,7 @@ public class QuizSkill extends Skill {
 			name = config.getString("name", name);
 			language = new Language(config.getString("language", language.getCode()));
 			recognizer = config.getString("recognizer", recognizer);
+			entryGrammar = new SRGSGrammar(getPackageFile("EntryGrammar.xml"));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -50,6 +57,7 @@ public class QuizSkill extends Skill {
 		addResource(new TextFileResource(this, "Properties", propertiesFile));
 		addResource(new FlowResource(this, "Flow", getSrcFile("QuizFlow.xml")));
 		addResource(new XmlResource(this, "Grammar", getPackageFile("QuizGrammar.xml")));
+		addResource(new XmlResource(this, "EntryGrammar", getPackageFile("EntryGrammar.xml")));
 		addResource(new QuestionResource(this, "Questions", getPackageFile("resources/questions.txt")));
 		//Sets up requirements for this class.
 		SkillRequirements requirements = getRequirements();
@@ -57,7 +65,11 @@ public class QuizSkill extends Skill {
 		requirements.setSpeechGrammar(recognizer.equals(RECOGNIZER_GRAMMAR));
 		requirements.setOpenVocabulary(recognizer.equals(RECOGNIZER_OPEN));
 		//addEntriesFromFlow(QuizFlow.class, () -> flow);
-
+		
+		entryParser = new Parser();
+        entryParser.loadGrammar("entry", entryGrammar);
+        entryParser.activateGrammar("entry");
+		
 		FlowReturner returner = ()->flow;
 		addEntry(new SkillEntry() {
 			@Override
@@ -101,9 +113,26 @@ public class QuizSkill extends Skill {
 			handler.setDefaultContext("quiz");
 		}
 
-		Long totalTime = System.currentTimeMillis()-startTime;
-		logger.warn("------------Took "+totalTime+ "milliseconds---------------" );
-		flow = new QuizFlow(questions, getSkillHandler().getSystemAgentFlow());
+//		Long totalTime = System.currentTimeMillis()-startTime;
+//		logger.warn("------------Took "+totalTime+ "milliseconds---------------" );
+		flow = new QuizFlow(initialParameters, questions, getSkillHandler().getSystemAgentFlow());
 	}
-
+	
+	@Override
+    public QueryResponse query(String text){
+		QueryResponse response = new QueryResponse();
+//		response.confidence = 0.5;
+//		response.startState = "Play";
+	    ParseResult result = entryParser.parse(text);
+	
+	    if (result.getSemCoverage() > 0) {
+	        response.confidence = result.getSemCoverage();
+	        response.startState = "play";
+			response.answer = "a quiz game";
+	        if (result.getSem() != null)
+	                response.sem = result.getSem();
+	    }
+	
+	    return response;
+    }
 }

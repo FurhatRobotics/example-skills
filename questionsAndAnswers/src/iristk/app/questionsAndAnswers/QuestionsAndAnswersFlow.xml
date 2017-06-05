@@ -6,7 +6,7 @@
 	
 	<param name="agent" type="iristk.situated.SystemAgentFlow" />
 	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
-
+    
 	<state id="Idle">
 	 	<onentry>
             <if cond="system.hasUsers()">
@@ -107,13 +107,16 @@
 		<!-- This catches a continue event returned when an answer to our query is received -->
 		<onevent name="monitor.skill.query">
 	        <!-- Check if we have an answer -->
-		    <if cond="event?:answer">
+		    
+		    <if cond="event?:answer"> <!-- To support firmware <= 1.1.1 -->
 		        <!-- logs the answer -->
 		        <log>Answer: <expr>event:answer</expr></log>
 		        <!-- reads up the answer -->
 		        <agent:say><expr>event:answer</expr></agent:say>
 		        <agent:say>Anything else?</agent:say>
-	        <else/>
+	        <elseif cond="eq(event:status, 'MATCH')"/>  <!-- To support firmware > 1.1.1 -->
+                <call state="QueryParser" p:skills="asList(event.get('skills'))"/>
+            <else/>
 	            <agent:say>
 	                Sorry, I can't answer that. Please ask something else
                 </agent:say>
@@ -121,6 +124,30 @@
 	        <return/>
 		</onevent>
 	</state>
+	
+	 <state id="QueryParser" extends="Dialog">     
+        <param name="skills" type="List"/>
+        <var name="skill" type="Record"/>
+        <var name="message" type="String"/>
+
+        <onentry>  
+            <exec>
+                skill = asRecord(skills.remove(0));
+                message = asString(skill.get("answer"));
+            </exec>
+            <log><expr>skill:name</expr></log>
+            <if cond="eq(skill:name, 'Houndify')">
+                <agent:say><expr>message</expr></agent:say>
+                <return/>
+            <else/>
+                <if cond="skills.isEmpty()">
+                    <return/>
+                <else/>
+                    <goto state="QueryParser" p:skills="skills"/>
+                </if>
+            </if>
+        </onentry>              
+    </state>      
 
 	<state id="Dialog">
 

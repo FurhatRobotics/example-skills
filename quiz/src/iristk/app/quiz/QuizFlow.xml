@@ -6,6 +6,7 @@
 	xmlns:p="iristk.flow.param"
 	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
 	
+	<param name="initialParameters" type="Record"/>
 	<param name="questions" type="QuestionSet"/>
 	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
 	
@@ -15,7 +16,7 @@
 	<var name="winningScore" type="int" value="3"/>
 	<var name="startedFromSkill" type="boolean" value="false"/>
 	<var name="allowBargein" type="boolean" value="false"/>
-	<var name="targetSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
+	<var name="originSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
 	
 		<!-- TODO: Add checks to go into Idle when there are no users left. -->
 	<state id="Idle">
@@ -33,8 +34,14 @@
 	<!-- State used when starting the Quiz from other skills -->
 	<state id="play" public="true">
 		<onentry>
-			<exec> startedFromSkill = true</exec>
-			<exec> targetSkill = "iristk.app.social.SocialSkill.QuizReturn" </exec>
+		    <if cond="initialParameters != null and initialParameters?:originSkill">
+		        <exec> 
+		            originSkill = asString(initialParameters.get("originSkill"));
+		        </exec>
+		    </if>
+		    <exec>
+		        startedFromSkill = true;
+	        </exec>
 			<goto state="StartGame"/>
 		</onentry>
 	</state>
@@ -73,7 +80,7 @@
 		
         <onevent name="sense.user.speak" cond="event?:sem:no or event?:sem:goodbye">
             <agent:say> Okay, goodbye.</agent:say>
-            <send event="action.skill" p:entry="targetSkill"/>
+            <send event="action.skill" p:entry="originSkill"/>
         </onevent>	
 	</state>
 	
@@ -161,7 +168,7 @@
         <onevent name="sense.user.speak" cond="event?:sem:goodbye">
             <agent:say> Okay, goodbye.</agent:say>
             <if cond="startedFromSkill">
-                <send event="action.skill" p:entry="targetSkill"/>
+                <send event="action.skill" p:entry="originSkill"/>
             </if>
         </onevent>	
         

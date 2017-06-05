@@ -1,4 +1,4 @@
-<package name="questionsAndAnswers" version="1.0.0">
+<package name="questionsAndAnswers" version="1.0.1">
 	<provide>
 		<class type="iristk.furhat.skill.Skill" name="iristk.app.questionsAndAnswers.QuestionsAndAnswersSkill" />
 	</provide>

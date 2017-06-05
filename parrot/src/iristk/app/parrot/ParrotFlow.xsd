@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+    targetNamespace="iristk.app.parrot.ParrotFlow"
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow" xmlns:tns="iristk.app.parrot.ParrotFlow">
+    <import namespace="iristk.flow" schemaLocation="flow.xsd"/>
+    <element name="HotStart">
+        <complexType/>
+    </element>
+</schema>

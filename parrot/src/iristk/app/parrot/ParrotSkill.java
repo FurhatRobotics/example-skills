@@ -4,7 +4,11 @@ import java.io.File;
 
 import org.slf4j.Logger;
 
+import iristk.cfg.ParseResult;
+import iristk.cfg.Parser;
 import iristk.cfg.SRGSGrammar;
+import iristk.furhat.QueryResponse;
+import iristk.furhat.Queryable;
 import iristk.furhat.server.EntryGramResponder;
 import iristk.furhat.skill.FlowResource;
 import iristk.furhat.skill.Skill;
@@ -19,7 +23,7 @@ import iristk.system.IrisUtils;
 import iristk.util.Language;
 import iristk.util.Record;
 
-public class ParrotSkill extends Skill {
+public class ParrotSkill extends Skill implements Queryable {
 
 	private static final String RECOGNIZER_GRAMMAR = "grammar";
 	private static final String RECOGNIZER_OPEN = "open";
@@ -32,6 +36,9 @@ public class ParrotSkill extends Skill {
 	private Language language = Language.ENGLISH_US;
 	private String recognizer = "grammar";
 	private EntryGramResponder responder;
+	private SRGSGrammar entryGrammar;
+	private Parser entryParser;
+	private Record querySemantics; 
 	
 	public ParrotSkill() {
 		this.propertiesFile = getPackageFile("skill.properties");
@@ -44,6 +51,7 @@ public class ParrotSkill extends Skill {
 			name = config.getString("name", name);
 			language = new Language(config.getString("language", language.getCode()));
 			recognizer = config.getString("recognizer", recognizer);
+			entryGrammar = new SRGSGrammar(getPackageFile("EntryGrammar.xml"));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -59,6 +67,10 @@ public class ParrotSkill extends Skill {
 		requirements.setSpeechGrammar(recognizer.equals(RECOGNIZER_GRAMMAR));
 		requirements.setOpenVocabulary(recognizer.equals(RECOGNIZER_OPEN));
 		
+		entryParser = new Parser();
+        entryParser.loadGrammar("entry", entryGrammar);
+        entryParser.activateGrammar("entry");
+		
 		addEntriesFromFlow(ParrotFlow.class, () -> flow);
 	}
 	
@@ -67,7 +79,6 @@ public class ParrotSkill extends Skill {
 		return name;
 	}
 
-	@Override
 	public void init() throws Exception {
 		SkillHandler handler = getSkillHandler();
 		if (recognizer.equals(RECOGNIZER_GRAMMAR))  {
@@ -78,10 +89,33 @@ public class ParrotSkill extends Skill {
 			handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("ParrotGrammar.xml"))));
 			handler.setDefaultContext("default");
 		}
-		flow = new ParrotFlow(handler.getSystemAgentFlow());
+		flow = new ParrotFlow(initialParameters, handler.getSystemAgentFlow());
 	}
 
 	@Override
 	public void stop() throws Exception {
+	}
+
+	@Override
+	public QueryResponse query(String text) {
+		
+		QueryResponse response = new QueryResponse();
+	    ParseResult result = entryParser.parse(text);
+	
+	    if (result.getSemCoverage() > 0) {
+	        response.confidence = result.getSemCoverage();
+	        response.startState = "HotStart";
+			response.answer = "a mimicing parrot";
+			System.out.println(result.getSem());
+
+			if (result.getSem() != null) {
+	        	response.sem = result.getSem();
+	        	querySemantics = new Record();
+	        	querySemantics.put("sem", response.sem);
+	        }
+	    }
+	
+	    return response;
+	    
 	}
 }
