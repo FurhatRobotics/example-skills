@@ -52,16 +52,14 @@
             		<block>One second</block>
         		</random>
             </agent:say>
-           	<agent:say>
+            <agent:say>
             	<exec>String answer = houndify.answer(asString(event:text))</exec>  
             	<if cond="!eq(answer, '')">
-            	    <agent:say>
-            	        <expr>answer</expr>
-        	        </agent:say>
-        	    <else/>
-        	        <agent:say>Sorry, I have some problems connecting to Houndify. Please contact my supervisor</agent:say>
+		    <expr>answer</expr>
+        	<else/>
+        	    Sorry, I have some problems connecting to Houndify. Please contact my supervisor
             	</if>
-        	</agent:say>
+            </agent:say>
             <reentry/>
         </onevent>
     </state>
