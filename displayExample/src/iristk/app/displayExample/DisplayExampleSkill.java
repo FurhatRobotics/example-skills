@@ -44,7 +44,7 @@ public class DisplayExampleSkill extends Skill {
 			language = new Language(config.getString("language", language.getCode()));
 			recognizer = config.getString("recognizer", recognizer);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage(),e);
 		}
 		
 		//Adds these resources as links in FurhatOS webserver.

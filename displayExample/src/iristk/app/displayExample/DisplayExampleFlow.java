@@ -2,6 +2,7 @@ package iristk.app.displayExample;
 
 import java.util.List;
 import java.io.File;
+import java.net.URL;
 import iristk.xml.XmlMarshaller.XMLLocation;
 import iristk.system.Event;
 import iristk.flow.*;
@@ -13,6 +14,8 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 
 	private iristk.situated.SystemAgentFlow agent;
 	private iristk.situated.SystemAgent system;
+	
+	private static final String DISPLAYEXAMPLEFLOWLOCATION = "DisplayExampleFlow.xml";
 
 	private void initVariables() {
 		system = (iristk.situated.SystemAgent) agent.getSystemAgent();
@@ -70,16 +73,16 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 					StringCreator string1 = new StringCreator();
 					string1.append("I like cats. Here are two of my favourites. Click on them, why dont you?!");
 					state0.setText(string1.toString());
-					if (!flowThread.callState(state0, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 11, 12)))) {
+					if (!flowThread.callState(state0, new FlowEventInfo(currentState, event, new XMLLocation(getFlowXml(), 11, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 13
 					Event sendEvent2 = new Event("action.game.start");
-					flowRunner.sendEvent(sendEvent2, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 13, 46)));
+					flowRunner.sendEvent(sendEvent2, new FlowEventInfo(currentState, event, new XMLLocation(getFlowXml(), 13, 46)));
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 11, 12));
+				throw new FlowException(e, currentState, event, new XMLLocation(getFlowXml(), 11, 12));
 			}
 		}
 
@@ -98,7 +101,7 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 						String cat = asString(event.get("cat"));
 						iristk.situated.SystemAgentFlow.attend state3 = agent.new attend();
 						state3.setTarget(cat);
-						if (!flowThread.callState(state3, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 16, 40)))) {
+						if (!flowThread.callState(state3, new FlowEventInfo(currentState, event, new XMLLocation(getFlowXml(), 16, 40)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -110,7 +113,7 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 						string5.append(". Isn't she cute");
 						state4.setText(string5.toString());
 						state4.setIfsilent(true);
-						if (!flowThread.callState(state4, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 16, 40)))) {
+						if (!flowThread.callState(state4, new FlowEventInfo(currentState, event, new XMLLocation(getFlowXml(), 16, 40)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -118,7 +121,7 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\DisplayExample\\src\\iristk\\app\\displayExample\\DisplayExampleFlow.xml"), 16, 40));
+				throw new FlowException(e, currentState, event, new XMLLocation(getFlowXml(), 16, 40));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;
@@ -128,6 +131,11 @@ public class DisplayExampleFlow extends iristk.flow.Flow {
 		}
 
 	}
-
+	
+	private static File getFlowXml(){
+		URL url = new Filecheck().getClass().getResource(DISPLAYEXAMPLEFLOWLOCATION);
+		return new File(url.getPath());
+	}
+	
 
 }
