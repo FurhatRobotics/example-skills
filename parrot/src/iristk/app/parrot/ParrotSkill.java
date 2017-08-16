@@ -81,14 +81,11 @@ public class ParrotSkill extends Skill implements Queryable {
 
 	public void init() throws Exception {
 		SkillHandler handler = getSkillHandler();
-		if (recognizer.equals(RECOGNIZER_GRAMMAR))  {
-			handler.loadContext("default", new SpeechGrammarContext(new SRGSGrammar(getPackageFile("ParrotGrammar.xml"))));
-			handler.setDefaultContext("default");
-		} else if (recognizer.equals(RECOGNIZER_OPEN)) {
-			handler.loadContext("default", new OpenVocabularyContext(language));
-			handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("ParrotGrammar.xml"))));
-			handler.setDefaultContext("default");
-		}
+		
+		handler.loadContext("default", new OpenVocabularyContext(language));
+		handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("ParrotGrammar.xml"))));
+		handler.setDefaultContext("default");
+		
 		flow = new ParrotFlow(initialParameters, handler.getSystemAgentFlow());
 	}
 

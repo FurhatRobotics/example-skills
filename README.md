@@ -14,6 +14,25 @@ Questions And Answers | A skill with hardcoded question and answers and the abil
 Social                | A chit-chat skill with question and answers and that eventually tries to get the user to go to the Quiz skill | Advanced input/output, grammar, follow-up questions, launching external skills (Quiz)
 Quiz                  | A multi-answer quiz with a content editor for quiz-questions/answers, startable from other skills | Input output, launchable from other skills (Social)
 
+# Running skills
+
+## If you want to run a skill on a Furhat robot:
+
+The skills are preconfigured to run on a Furhat. To install them;
+
+1. Downdload the latest zipped file in the /distr folder of the specific skill
+2. Upload the zip in the web interface's **packages** page under **Uploaded packages**.
+
+^ Note: If the skill does not show up in the skills list, restart the Mode. If it still does not show up, review the Console output.
+
+## If you want to run a skill on your developer machine;
+
+1. Clone this repository
+2. Start the Furhat dev-server
+3. Go to **packages** page and enter the full path of the skill folder in **Development packages**.
+4. Restart the mode
+5. If you want to develop in Eclipse, please see [our tutorial on Eclipse development](https://docs.myfurhat.com/tutorials/tutorial_eclipse/)
+
 # Documentation
 
 See [docs.myfurhat.com](https://docs.myfurhat.com).

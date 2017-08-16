@@ -82,31 +82,31 @@ public class HoundifyFlow extends iristk.flow.Flow {
 			// Line: 17
 			try {
 				EXECUTION: {
-					int count = getCount(1607460018) + 1;
-					incrCount(1607460018);
+					int count = getCount(1069020202) + 1;
+					incrCount(1069020202);
 					// Line: 18
 					if (system.hasUsers()) {
 						iristk.situated.SystemAgentFlow.attendRandom state0 = agent.new attendRandom();
-						if (!flowThread.callState(state0, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 18, 42)))) {
+						if (!flowThread.callState(state0, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 18, 42)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
 						// Line: 20
 						Request state1 = new Request();
-						flowThread.gotoState(state1, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 20, 40)));
+						flowThread.gotoState(state1, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 20, 40)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 						// Line: 21
 					} else {
 						iristk.situated.SystemAgentFlow.attendNobody state2 = agent.new attendNobody();
-						if (!flowThread.callState(state2, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 18, 42)))) {
+						if (!flowThread.callState(state2, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 18, 42)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 17, 18));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 17, 18));
 			}
 		}
 
@@ -114,29 +114,34 @@ public class HoundifyFlow extends iristk.flow.Flow {
 		public int onFlowEvent(Event event) throws Exception {
 			int eventResult;
 			int count;
-			// Line: 25
+			// Line: 26
 			try {
-				count = getCount(245565335) + 1;
+				count = getCount(508416458) + 1;
 				if (event.triggers("sense.user.enter")) {
-					incrCount(245565335);
+					incrCount(508416458);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.attend state3 = agent.new attend();
-						state3.setTarget(event.get("user"));
-						if (!flowThread.callState(state3, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 25, 42)))) {
+						// Line: 27
+						StringCreator string3 = new StringCreator();
+						// Line: 27
+						string3.append(event);
+						log(string3.toString());
+						iristk.situated.SystemAgentFlow.attend state4 = agent.new attend();
+						state4.setTarget(event.get("user"));
+						if (!flowThread.callState(state4, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 26, 42)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						// Line: 27
-						Request state4 = new Request();
-						flowThread.gotoState(state4, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 27, 36)));
+						// Line: 29
+						Request state5 = new Request();
+						flowThread.gotoState(state5, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 29, 36)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 25, 42));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 26, 42));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;
@@ -162,40 +167,40 @@ public class HoundifyFlow extends iristk.flow.Flow {
 		public void onentry() throws Exception {
 			int eventResult;
 			Event event = new Event("state.enter");
-			// Line: 32
+			// Line: 34
 			try {
 				EXECUTION: {
-					int count = getCount(183264084) + 1;
-					incrCount(183264084);
-					// Line: 33
+					int count = getCount(728619661) + 1;
+					incrCount(728619661);
+					// Line: 35
 					if (count == 1) {
-						iristk.situated.SystemAgentFlow.say state5 = agent.new say();
-						StringCreator string6 = new StringCreator();
-						string6.append("Hi, what do you want to know?");
-						state5.setText(string6.toString());
-						if (!flowThread.callState(state5, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 33, 35)))) {
+						iristk.situated.SystemAgentFlow.say state6 = agent.new say();
+						StringCreator string7 = new StringCreator();
+						string7.append("Hi, what do you want to know?");
+						state6.setText(string7.toString());
+						if (!flowThread.callState(state6, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 35, 35)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						// Line: 35
+						// Line: 37
 					} else {
-						iristk.situated.SystemAgentFlow.say state7 = agent.new say();
-						StringCreator string8 = new StringCreator();
-						string8.append("Anything else?");
-						state7.setText(string8.toString());
-						if (!flowThread.callState(state7, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 33, 35)))) {
+						iristk.situated.SystemAgentFlow.say state8 = agent.new say();
+						StringCreator string9 = new StringCreator();
+						string9.append("Anything else?");
+						state8.setText(string9.toString());
+						if (!flowThread.callState(state8, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 35, 35)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
 					}
-					iristk.situated.SystemAgentFlow.listen state9 = agent.new listen();
-					if (!flowThread.callState(state9, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 32, 18)))) {
+					iristk.situated.SystemAgentFlow.listen state10 = agent.new listen();
+					if (!flowThread.callState(state10, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 34, 18)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 32, 18));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 34, 18));
 			}
 		}
 
@@ -203,19 +208,19 @@ public class HoundifyFlow extends iristk.flow.Flow {
 		public int onFlowEvent(Event event) throws Exception {
 			int eventResult;
 			int count;
-			// Line: 40
+			// Line: 42
 			try {
-				count = getCount(460332449) + 1;
+				count = getCount(917216285) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:no")) {
-						incrCount(460332449);
+						incrCount(917216285);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							iristk.situated.SystemAgentFlow.say state10 = agent.new say();
-							StringCreator string11 = new StringCreator();
-							string11.append("Ok, good bye");
-							state10.setText(string11.toString());
-							if (!flowThread.callState(state10, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 40, 63)))) {
+							iristk.situated.SystemAgentFlow.say state11 = agent.new say();
+							StringCreator string12 = new StringCreator();
+							string12.append("Ok, good bye");
+							state11.setText(string12.toString());
+							if (!flowThread.callState(state11, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 42, 63)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -224,81 +229,73 @@ public class HoundifyFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 40, 63));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 42, 63));
 			}
-			// Line: 45
+			// Line: 47
 			try {
-				count = getCount(1919892312) + 1;
+				count = getCount(1943507447) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (!eq(event.get("text"), iristk.speech.RecResult.NOMATCH)) {
-						incrCount(1919892312);
+						incrCount(1943507447);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							// Line: 46
+							// Line: 48
 							if (system.isAttendingAll()) {
-								iristk.situated.SystemAgentFlow.attend state12 = agent.new attend();
-								state12.setTarget(event.get("user"));
-								if (!flowThread.callState(state12, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 46, 48)))) {
+								iristk.situated.SystemAgentFlow.attend state13 = agent.new attend();
+								state13.setTarget(event.get("user"));
+								if (!flowThread.callState(state13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 48, 48)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
-							iristk.situated.SystemAgentFlow.say state13 = agent.new say();
-							StringCreator string14 = new StringCreator();
-							// Line: 46
-							boolean chosen15 = false;
-							boolean matching16 = true;
-							while (!chosen15 && matching16) {
-								int rand17 = random(2104457164, 2, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-								matching16 = false;
+							iristk.situated.SystemAgentFlow.say state14 = agent.new say();
+							StringCreator string15 = new StringCreator();
+							// Line: 48
+							boolean chosen16 = false;
+							boolean matching17 = true;
+							while (!chosen16 && matching17) {
+								int rand18 = random(330069759, 2, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+								matching17 = false;
 								if (true) {
-									matching16 = true;
-									if (rand17 >= 0 && rand17 < 1) {
-										chosen15 = true;
-										string14.append("Let's see");
+									matching17 = true;
+									if (rand18 >= 0 && rand18 < 1) {
+										chosen16 = true;
+										string15.append("Let's see");
 									}
 								}
 								if (true) {
-									matching16 = true;
-									if (rand17 >= 1 && rand17 < 2) {
-										chosen15 = true;
-										string14.append("One second");
+									matching17 = true;
+									if (rand18 >= 1 && rand18 < 2) {
+										chosen16 = true;
+										string15.append("One second");
 									}
 								}
 							}
-							state13.setAsync(true);
-							state13.setText(string14.toString());
-							if (!flowThread.callState(state13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 45, 98)))) {
+							state14.setAsync(true);
+							state14.setText(string15.toString());
+							if (!flowThread.callState(state14, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 47, 98)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
-							iristk.situated.SystemAgentFlow.say state18 = agent.new say();
-							StringCreator string19 = new StringCreator();
-							// Line: 46
+							iristk.situated.SystemAgentFlow.say state19 = agent.new say();
+							StringCreator string20 = new StringCreator();
+							// Line: 48
 							String answer = houndify.answer(asString(event.get("text")));
-							// Line: 46
+							// Line: 48
 							if (!eq(answer, "")) {
-								StringCreator string20 = new StringCreator();
-								string20.append("<say>");
-								// Line: 46
+								// Line: 48
 								string20.append(answer);
-								string20.append("</say>");
-								string19.append(string20.toString());
-								// Line: 46
+								// Line: 48
 							} else {
-								StringCreator string21 = new StringCreator();
-								string21.append("<say>");
-								string21.append("Sorry, I have some problems connecting to Houndify. Please contact my supervisor");
-								string21.append("</say>");
-								string19.append(string21.toString());
+								string20.append("Sorry, I have some problems connecting to Houndify. Please contact my supervisor");
 							}
-							state18.setText(string19.toString());
-							if (!flowThread.callState(state18, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 45, 98)))) {
+							state19.setText(string20.toString());
+							if (!flowThread.callState(state19, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 47, 98)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
 							// Line: 65
-							flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 65, 23)));
+							flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 65, 23)));
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
@@ -306,7 +303,7 @@ public class HoundifyFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 45, 98));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 47, 98));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;
@@ -340,15 +337,15 @@ public class HoundifyFlow extends iristk.flow.Flow {
 			int count;
 			// Line: 73
 			try {
-				count = getCount(517938326) + 1;
+				count = getCount(1696111156) + 1;
 				if (event.triggers("sense.user.speech.start")) {
 					if (system.isAttending(event) && eq(event.get("speakers"), 1)) {
-						incrCount(517938326);
+						incrCount(1696111156);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
-							iristk.situated.SystemAgentFlow.gesture state22 = agent.new gesture();
-							state22.setName("smile");
-							if (!flowThread.callState(state22, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 73, 72)))) {
+							iristk.situated.SystemAgentFlow.gesture state21 = agent.new gesture();
+							state21.setName("smile");
+							if (!flowThread.callState(state21, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 73, 72)))) {
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -357,117 +354,117 @@ public class HoundifyFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 73, 72));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 73, 72));
 			}
 			// Line: 77
 			try {
-				count = getCount(110718392) + 1;
+				count = getCount(1694743330) + 1;
 				if (event.triggers("sense.user.speak")) {
-					incrCount(110718392);
+					incrCount(1694743330);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.say state23 = agent.new say();
-						StringCreator string24 = new StringCreator();
-						string24.append("Sorry, I didn't get that.");
-						state23.setText(string24.toString());
-						if (!flowThread.callState(state23, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 77, 42)))) {
+						iristk.situated.SystemAgentFlow.say state22 = agent.new say();
+						StringCreator string23 = new StringCreator();
+						string23.append("Sorry, I didn't get that.");
+						state22.setText(string23.toString());
+						if (!flowThread.callState(state22, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 77, 42)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
 						// Line: 79
-						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 79, 23)));
+						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 79, 23)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 77, 42));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 77, 42));
 			}
 			// Line: 83
 			try {
-				count = getCount(2143192188) + 1;
+				count = getCount(663884546) + 1;
 				if (event.triggers("sense.user.speak.side")) {
-					incrCount(2143192188);
+					incrCount(663884546);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						// Line: 84
-						Event sendEvent25 = new Event("sense.user.speak");
-						sendEvent25.copyParams(event);
-						flowRunner.sendEvent(sendEvent25, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 84, 49)));
+						Event sendEvent24 = new Event("sense.user.speak");
+						sendEvent24.copyParams(event);
+						flowRunner.sendEvent(sendEvent24, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 84, 49)));
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 83, 41));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 83, 41));
 			}
 			// Line: 88
 			try {
-				count = getCount(204349222) + 1;
+				count = getCount(556702637) + 1;
 				if (event.triggers("sense.user.speak.multi")) {
-					incrCount(204349222);
+					incrCount(556702637);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						// Line: 89
-						Event sendEvent26 = new Event("sense.user.speak");
-						sendEvent26.copyParams(event);
-						flowRunner.sendEvent(sendEvent26, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 89, 49)));
+						Event sendEvent25 = new Event("sense.user.speak");
+						sendEvent25.copyParams(event);
+						flowRunner.sendEvent(sendEvent25, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 89, 49)));
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 88, 42));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 88, 42));
 			}
 			// Line: 92
 			try {
-				count = getCount(114935352) + 1;
+				count = getCount(1203670194) + 1;
 				if (event.triggers("sense.user.silence")) {
-					incrCount(114935352);
+					incrCount(1203670194);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
-						iristk.situated.SystemAgentFlow.say state27 = agent.new say();
-						StringCreator string28 = new StringCreator();
-						string28.append("Sorry, I didn't hear anything.");
-						state27.setText(string28.toString());
-						if (!flowThread.callState(state27, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 92, 44)))) {
+						iristk.situated.SystemAgentFlow.say state26 = agent.new say();
+						StringCreator string27 = new StringCreator();
+						string27.append("Sorry, I didn't hear anything.");
+						state26.setText(string27.toString());
+						if (!flowThread.callState(state26, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 92, 44)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
 						// Line: 94
-						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 94, 23)));
+						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 94, 23)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 92, 44));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 92, 44));
 			}
 			// Line: 97
 			try {
-				count = getCount(32374789) + 1;
+				count = getCount(1313286832) + 1;
 				if (event.triggers("sense.user.leave")) {
 					if (system.isAttending(event)) {
-						incrCount(32374789);
+						incrCount(1313286832);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							// Line: 98
 							if (system.hasUsers()) {
-								iristk.situated.SystemAgentFlow.attendRandom state29 = agent.new attendRandom();
-								if (!flowThread.callState(state29, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 98, 42)))) {
+								iristk.situated.SystemAgentFlow.attendRandom state28 = agent.new attendRandom();
+								if (!flowThread.callState(state28, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 98, 42)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 								// Line: 100
-								Request state30 = new Request();
-								flowThread.gotoState(state30, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 100, 40)));
+								Request state29 = new Request();
+								flowThread.gotoState(state29, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 100, 40)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 								// Line: 101
 							} else {
 								// Line: 102
-								Idle state31 = new Idle();
-								flowThread.gotoState(state31, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 102, 37)));
+								Idle state30 = new Idle();
+								flowThread.gotoState(state30, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 102, 37)));
 								eventResult = EVENT_ABORTED;
 								break EXECUTION;
 							}
@@ -476,24 +473,24 @@ public class HoundifyFlow extends iristk.flow.Flow {
 					}
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 97, 75));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 97, 75));
 			}
 			// Line: 106
 			try {
-				count = getCount(1694819250) + 1;
+				count = getCount(2043491488) + 1;
 				if (event.triggers("repeat")) {
-					incrCount(1694819250);
+					incrCount(2043491488);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						// Line: 107
-						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 107, 23)));
+						flowThread.reentryState(this, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 107, 23)));
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					if (eventResult != EVENT_IGNORED) return eventResult;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 106, 32));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\houndify\\src\\iristk\\app\\Houndify\\HoundifyFlow.xml"), 106, 32));
 			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;

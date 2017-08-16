@@ -71,6 +71,7 @@ public class QuestionsAndAnswersSkill extends Skill {
 		SkillHandler handler = getSkillHandler();
 		handler.loadContext("default", new OpenVocabularyContext(language, phrases));
 		handler.loadContext("default", new SemanticGrammarContext(new SRGSGrammar(getPackageFile("QuestionsAndAnswersGrammar.xml"))));
+		
 		handler.setDefaultContext("default");
 		
 		flow = new QuestionsAndAnswersFlow(handler.getSystemAgentFlow());

@@ -34,11 +34,11 @@
 	<!-- State used when starting the Quiz from other skills -->
 	<state id="play" public="true">
 		<onentry>
-		    <if cond="initialParameters != null and initialParameters?:originSkill">
+			<if cond="initialParameters != null and initialParameters?:originSkill">
 		        <exec> 
-		            originSkill = asString(initialParameters.get("originSkill"));
+		            originSkill = initialParameters.getString("originSkill");
 		        </exec>
-		    </if>
+            </if>
 		    <exec>
 		        startedFromSkill = true;
 	        </exec>

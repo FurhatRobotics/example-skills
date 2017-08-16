@@ -82,8 +82,8 @@ public class ParrotFlow extends iristk.flow.Flow {
 			// Line: 14
 			try {
 				EXECUTION: {
-					int count = getCount(1035943655) + 1;
-					incrCount(1035943655);
+					int count = getCount(1973336893) + 1;
+					incrCount(1973336893);
 					// Line: 15
 					if (system.hasUsers()) {
 						iristk.situated.SystemAgentFlow.attendRandom state0 = agent.new attendRandom();
@@ -141,8 +141,8 @@ public class ParrotFlow extends iristk.flow.Flow {
 			// Line: 25
 			try {
 				EXECUTION: {
-					int count = getCount(436680855) + 1;
-					incrCount(436680855);
+					int count = getCount(1811075214) + 1;
+					incrCount(1811075214);
 					// Line: 26
 					if (initialParameters != null && initialParameters.has("originSkill")) {
 						// Line: 27
@@ -198,8 +198,8 @@ public class ParrotFlow extends iristk.flow.Flow {
 			// Line: 37
 			try {
 				EXECUTION: {
-					int count = getCount(987590606) + 1;
-					incrCount(987590606);
+					int count = getCount(2121744517) + 1;
+					incrCount(2121744517);
 					iristk.situated.SystemAgentFlow.listen state6 = agent.new listen();
 					if (!flowThread.callState(state6, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\parrot\\src\\iristk\\app\\parrot\\ParrotFlow.xml"), 37, 12)))) {
 						eventResult = EVENT_ABORTED;
@@ -221,10 +221,10 @@ public class ParrotFlow extends iristk.flow.Flow {
 			int count;
 			// Line: 42
 			try {
-				count = getCount(18694320) + 1;
+				count = getCount(183264084) + 1;
 				if (event.triggers("sense.user.speech.start")) {
 					if (system.isAttending(event) && eq(event.get("speakers"), 1)) {
-						incrCount(18694320);
+						incrCount(183264084);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							iristk.situated.SystemAgentFlow.gesture state7 = agent.new gesture();
@@ -242,16 +242,16 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 46
 			try {
-				count = getCount(857472513) + 1;
+				count = getCount(476402209) + 1;
 				if (event.triggers("sense.user.speak.multi")) {
-					incrCount(857472513);
+					incrCount(476402209);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						// Line: 47
 						boolean chosen8 = false;
 						boolean matching9 = true;
 						while (!chosen8 && matching9) {
-							int rand10 = random(1651066035, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+							int rand10 = random(1490180672, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
 							matching9 = false;
 							if (true) {
 								matching9 = true;
@@ -318,9 +318,9 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 56
 			try {
-				count = getCount(2052292834) + 1;
+				count = getCount(460332449) + 1;
 				if (event.triggers("sense.user.speak.side")) {
-					incrCount(2052292834);
+					incrCount(460332449);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						// Line: 57
@@ -335,10 +335,10 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 60
 			try {
-				count = getCount(2108119067) + 1;
+				count = getCount(1143839598) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (event.has("sem:goodbye")) {
-						incrCount(2108119067);
+						incrCount(1143839598);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							// Line: 61
@@ -355,10 +355,10 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 64
 			try {
-				count = getCount(871438618) + 1;
+				count = getCount(517938326) + 1;
 				if (event.triggers("sense.user.speak")) {
 					if (!eq(event.get("text"),"NO_MATCH")) {
-						incrCount(871438618);
+						incrCount(517938326);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							iristk.situated.SystemAgentFlow.say state21 = agent.new say();
@@ -383,17 +383,17 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 69
 			try {
-				count = getCount(1734108607) + 1;
+				count = getCount(110718392) + 1;
 				if (event.triggers("sense.user.silence")) {
 					if (!system.getCurrentUser().isNobody()) {
-						incrCount(1734108607);
+						incrCount(110718392);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							// Line: 70
 							boolean chosen23 = false;
 							boolean matching24 = true;
 							while (!chosen23 && matching24) {
-								int rand25 = random(753582931, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+								int rand25 = random(425918570, 4, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
 								matching24 = false;
 								if (true) {
 									matching24 = true;
@@ -465,10 +465,10 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 79
 			try {
-				count = getCount(1469370699) + 1;
+				count = getCount(1100439041) + 1;
 				if (event.triggers("sense.user.leave")) {
 					if (system.isAttending(event)) {
-						incrCount(1469370699);
+						incrCount(1100439041);
 						eventResult = EVENT_CONSUMED;
 						EXECUTION: {
 							// Line: 80
@@ -499,9 +499,9 @@ public class ParrotFlow extends iristk.flow.Flow {
 			}
 			// Line: 88
 			try {
-				count = getCount(238633119) + 1;
+				count = getCount(1973538135) + 1;
 				if (event.triggers("sense.user.enter")) {
-					incrCount(238633119);
+					incrCount(1973538135);
 					eventResult = EVENT_CONSUMED;
 					EXECUTION: {
 						iristk.situated.SystemAgentFlow.attend state36 = agent.new attend();
@@ -548,8 +548,8 @@ public class ParrotFlow extends iristk.flow.Flow {
 			// Line: 95
 			try {
 				EXECUTION: {
-					int count = getCount(2066927646) + 1;
-					incrCount(2066927646);
+					int count = getCount(515132998) + 1;
+					incrCount(515132998);
 					iristk.situated.SystemAgentFlow.say state38 = agent.new say();
 					StringCreator string39 = new StringCreator();
 					string39.append("Okay, goodbye.");
@@ -559,7 +559,7 @@ public class ParrotFlow extends iristk.flow.Flow {
 						break EXECUTION;
 					}
 					// Line: 97
-					if (initialParameters != null) {
+					if (initialParameters != null && !initialParameters.empty() ) {
 						// Line: 98
 						Event sendEvent40 = new Event("action.skill");
 						sendEvent40.putIfNotNull("entry", originSkill);

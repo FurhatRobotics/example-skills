@@ -22,7 +22,9 @@
                 <agent:attendNobody/>
             </if>
         </onentry>
+        
         <onevent name="sense.user.enter">
+            <log><expr>event</expr></log>
             <agent:attend target="event:user"/>
             <goto state="Request"/>
         </onevent>
@@ -55,11 +57,9 @@
            	<agent:say>
             	<exec>String answer = houndify.answer(asString(event:text))</exec>  
             	<if cond="!eq(answer, '')">
-            	    <agent:say>
-            	        <expr>answer</expr>
-        	        </agent:say>
+        	        <expr>answer</expr>
         	    <else/>
-        	        <agent:say>Sorry, I have some problems connecting to Houndify. Please contact my supervisor</agent:say>
+        	       Sorry, I have some problems connecting to Houndify. Please contact my supervisor
             	</if>
         	</agent:say>
             <reentry/>

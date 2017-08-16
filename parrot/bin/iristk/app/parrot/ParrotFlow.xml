@@ -94,7 +94,7 @@
 	<state id="Exit">
 		<onentry>
 			<agent:say> Okay, goodbye.</agent:say>
-			<if cond="initialParameters != null">
+			<if cond="initialParameters != null and !initialParameters.empty() ">
             	<send event="action.skill" p:entry="originSkill"/>
         	<else/>
         		<goto state="Init"/>

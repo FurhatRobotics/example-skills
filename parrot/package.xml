@@ -1,4 +1,4 @@
-<package name="parrot" version="0.2.0">
+<package name="parrot" version="0.2.1">
 	<provide>
 		<class type="iristk.furhat.skill.Skill" name="iristk.app.parrot.ParrotSkill" />
 	</provide>
