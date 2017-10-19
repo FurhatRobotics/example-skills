@@ -8,36 +8,27 @@
 
 	<import class="iristk.furhat.util.Localizer"/>
 	
-	<param name="initialParameters" type="Record"/>
 	<param name="agent" type="iristk.situated.SystemAgentFlow"/>
 	<param name="translator" type="Localizer"/><!-- Param used to call localizer object -->
+	<param name="settings" type="Record"/><!-- Param used to fetch some settings -->
 
 	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
-    <var name="defaultVoice" type="String"/>
-    <var name="femaleVoice" type="String"/>
-   	<var name="startedFromSkill" type="boolean" value="false"/>
-	<var name="originSkill" type="String" value="'iristk.furhat.server.IdleSkill'"/>
+	<var name="defaultVoice" type="String"/>
+	<var name="femaleVoice" type="String"/>
+	<var name="femaleTexture" type="String"/>
+	<var name="avatarTexture" type="String"/>
 
     <state id="init">
         <onentry>
             <exec>
                 defaultVoice = translator.get("MALE_VOICE");
                 femaleVoice = translator.get("FEMALE_VOICE");
+                femaleTexture = "Anne";
+                avatarTexture = "Avatar";
             </exec>
+
             <goto state="part1"/>
         </onentry>
-    </state>
-    
-    <state id="hotStart" public="true">
-    	<onentry>
-			<if cond="initialParameters != null and initialParameters?:originSkill">
-		        <exec> 
-		            originSkill = asString(initialParameters.get("originSkill"));
-		        </exec>
-		    </if>    
-		    <exec>startedFromSkill = true</exec>		
-		    <goto state="init"/>
-    	</onentry>
     </state>
     
 	<state id="part1" extends="IdleMoves">
@@ -62,7 +53,7 @@
 			<call state="lookAtRandomPerson" />
 			<send event="action.gesture" p:name="'emotion_neutral'"/>
 			<agent:say text="translator.get('I_CAN_HAVE_PERSONALITIES')"/>
-			<send event="action.face.texture" p:name="'female'" />
+			<send event="action.face.texture" p:name="femaleTexture" />
 			<agent:say text="translator.get('I_CAN_LOOK_FEMALE')"/>
 			<call state="lookAtRandomPerson" />
 			<send event="action.voice" p:name="femaleVoice" />
@@ -71,61 +62,73 @@
 			<send event="action.voice" p:name="defaultVoice" />
 			<agent:say text="translator.get('OR_LIKE_ANYONE_ELSE')"/>
 			<call state="lookAtRandomPerson" />
-			<send event="action.face.texture" p:name="'avatar'" />
+			<send event="action.face.texture" p:name="avatarTexture" />
 			<agent:say text="translator.get('LIKE_AN_AVATAR')"/>
 			<send event="action.voice" p:name="defaultVoice" />
 			<if cond="eq(defaultVoice, 'william')">
     			<agent:say>GESTURE_GIGGLE_2</agent:say>
 			<else/>
-				<agent:say text="translator.get('GESTURE_GIGGLE_FALLBACK')"/>
+				<agent:say text="translator.get('GESTURE_BREATH_IN')"/>
 			</if>
 			<call state="lookAtRandomPerson" />
 			<send event="action.face.texture" p:name="'default'" />
 			<wait msec="500" />			
-			
 			<call state="lookAtRandomPerson" />
 			<agent:say text="translator.get('INSIDE_MY_CHEST_FURHATOS')"/>
 			<call state="lookAtRandomPerson" />
 			<agent:say text="translator.get('IT_CONNECTS_ME_TO_SENSORS')"/>
-			<wait msec="1000" />
+			<wait msec="1200" />
 			
 			<call state="lookAtRandomPerson" />
+			<agent:say>GESTURE_SIGH_HAPPY</agent:say>
+			<wait msec="300" />
+
 			<agent:say text="translator.get('EXCITING_TIMES')"/>
-			<agent:say text="translator.get('HAPPY_TO_BE_HERE')"/>
-			<agent:say text="translator.get('LOOKING_FORWARD_TO_GET_TO_KNOW_YOU')"/>
-			<call state="lookAtRandomPerson" />
 			<wait msec="100" />
-			
 			<agent:say text="translator.get('I_BELIEVE_GREAT_THINGS_ARE_HAPPENING')"/>
 			<agent:say text="translator.get('BETWEEN_ROBOTS_AND_HUMANS')"/>
 			<call state="lookAtRandomPerson" />
 			<wait msec="200" />			
-			
-			<send event="action.gesture" p:name="'smile'" />
 			<agent:say text="translator.get('HAPPY_TO_BE_HERE')"/>
-			<if cond="startedFromSkill">
-				<send event="action.skill" p:entry="originSkill"/>
+			<agent:say text="translator.get('LOOKING_FORWARD_TO_GET_TO_KNOW_YOU')"/>
+			<if cond="settings?:personToPassOverTo">
+				<wait msec="500" />			
+				<send event="action.gesture" p:name="'wink'"/>
+				<agent:say>Thanks for me, over to you <expr>settings:personToPassOverTo</expr></agent:say>
 			</if>
+			<send event="action.gesture" p:name="'smile'" />
+			<goto state="PostPres"/>
 		</onentry>
 	</state>
 	 
+	<state id="PostPres" extends="IdleMoves">
+	    <ontime interval="16000-32000">
+			<if cond="settings?:shouldCough and eq(defaultVoice, 'william')">
+		        <random>
+		            <agent:say>GESTURE_SNIFF_1</agent:say>
+		            <agent:say>GESTURE_COUGH_2</agent:say>
+		        </random> 
+	        </if>
+	    </ontime>
+	</state>
+	
 	<state id="lookAtRandomPerson">
-	<onentry>
-		<if cond="system.hasUsers()">
-			<!-- The system has a camera and users in front, let's attend to one of them  -->
-			<agent:attendOther/>
-		<else />
-			<!-- The system has no camera or no users in front, let's attend random point  -->
-			<random>
-				<agent:attend x="0.5" y="0" z="1"/>
-				<agent:attend x="0.2" y="0" z="1"/>
-				<agent:attend x="-0.5" y="0.1" z="1"/>
-				<agent:attend x="-0.2" y="-0.1" z="1"/>	
-				<agent:attend x="0" y="0" z="1"/>	
-			</random>
-		</if>			
-		<return />
-	</onentry>
+		<onentry>
+			<if cond="system.hasUsers()">
+				<!-- The system has a camera and users in front, let's attend to one of them  -->
+				<agent:attendOther/>
+			<else />
+				<!-- The system has no camera or no users in front, let's attend random point  -->
+				<random>
+					<agent:attend x="0.5" y="0" z="1"/>
+					<agent:attend x="0.2" y="0" z="1"/>
+					<agent:attend x="-0.5" y="0.1" z="1"/>
+					<agent:attend x="-0.2" y="-0.1" z="1"/>	
+					<agent:attend x="0" y="0" z="1"/>	
+				</random>
+			</if>			
+			<return />
+		</onentry>
 	</state>
 
 	<state id="IdleMoves">

@@ -12,19 +12,13 @@ import iristk.furhat.util.Localizer;
 
 public class PresentationFlow extends iristk.flow.Flow {
 
-	private Record initialParameters;
 	private iristk.situated.SystemAgentFlow agent;
 	private Localizer translator;
+	private Record settings;
 	private iristk.situated.SystemAgent system;
-	private String defaultVoice;
-	private String femaleVoice;
-	private boolean startedFromSkill;
-	private String originSkill;
 
 	private void initVariables() {
 		system = (iristk.situated.SystemAgent) agent.getSystemAgent();
-		startedFromSkill = (boolean) false;
-		originSkill = asString("iristk.furhat.server.IdleSkill");
 	}
 
 	public iristk.situated.SystemAgent getSystem() {
@@ -35,42 +29,6 @@ public class PresentationFlow extends iristk.flow.Flow {
 		this.system = value;
 	}
 
-	public String getDefaultVoice() {
-		return this.defaultVoice;
-	}
-
-	public void setDefaultVoice(String value) {
-		this.defaultVoice = value;
-	}
-
-	public String getFemaleVoice() {
-		return this.femaleVoice;
-	}
-
-	public void setFemaleVoice(String value) {
-		this.femaleVoice = value;
-	}
-
-	public boolean getStartedFromSkill() {
-		return this.startedFromSkill;
-	}
-
-	public void setStartedFromSkill(boolean value) {
-		this.startedFromSkill = value;
-	}
-
-	public String getOriginSkill() {
-		return this.originSkill;
-	}
-
-	public void setOriginSkill(String value) {
-		this.originSkill = value;
-	}
-
-	public Record getInitialParameters() {
-		return this.initialParameters;
-	}
-
 	public iristk.situated.SystemAgentFlow getAgent() {
 		return this.agent;
 	}
@@ -79,24 +37,24 @@ public class PresentationFlow extends iristk.flow.Flow {
 		return this.translator;
 	}
 
+	public Record getSettings() {
+		return this.settings;
+	}
+
 	@Override
 	public Object getVariable(String name) {
 		if (name.equals("system")) return this.system;
-		if (name.equals("defaultVoice")) return this.defaultVoice;
-		if (name.equals("femaleVoice")) return this.femaleVoice;
-		if (name.equals("startedFromSkill")) return this.startedFromSkill;
-		if (name.equals("originSkill")) return this.originSkill;
-		if (name.equals("initialParameters")) return this.initialParameters;
 		if (name.equals("agent")) return this.agent;
 		if (name.equals("translator")) return this.translator;
+		if (name.equals("settings")) return this.settings;
 		return null;
 	}
 
 
-	public PresentationFlow(Record initialParameters, iristk.situated.SystemAgentFlow agent, Localizer translator) {
-		this.initialParameters = initialParameters;
+	public PresentationFlow(iristk.situated.SystemAgentFlow agent, Localizer translator, Record settings) {
 		this.agent = agent;
 		this.translator = translator;
+		this.settings = settings;
 		initVariables();
 	}
 
@@ -118,73 +76,19 @@ public class PresentationFlow extends iristk.flow.Flow {
 		public void onentry() throws Exception {
 			int eventResult;
 			Event event = new Event("state.enter");
-			// Line: 22
+			// Line: 18
 			try {
 				EXECUTION: {
-					int count = getCount(2121744517) + 1;
-					incrCount(2121744517);
-					// Line: 23
-					defaultVoice = translator.get("MALE_VOICE");
-					femaleVoice = translator.get("FEMALE_VOICE");
-					// Line: 27
+					int count = getCount(1305427130) + 1;
+					incrCount(1305427130);
+					// Line: 19
 					part1 state0 = new part1();
-					flowThread.gotoState(state0, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 27, 34)));
+					flowThread.gotoState(state0, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 19, 34)));
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 22, 18));
-			}
-		}
-
-		@Override
-		public int onFlowEvent(Event event) throws Exception {
-			int eventResult;
-			int count;
-			eventResult = super.onFlowEvent(event);
-			if (eventResult != EVENT_IGNORED) return eventResult;
-			eventResult = callerHandlers(event);
-			if (eventResult != EVENT_IGNORED) return eventResult;
-			return EVENT_IGNORED;
-		}
-
-	}
-
-
-	public class hotStart extends State {
-
-		final State currentState = this;
-
-
-		@Override
-		public void setFlowThread(FlowRunner.FlowThread flowThread) {
-			super.setFlowThread(flowThread);
-		}
-
-		@Override
-		public void onentry() throws Exception {
-			int eventResult;
-			Event event = new Event("state.enter");
-			// Line: 32
-			try {
-				EXECUTION: {
-					int count = getCount(1490180672) + 1;
-					incrCount(1490180672);
-					// Line: 33
-					if (initialParameters != null && initialParameters.has("originSkill")) {
-						// Line: 34
-						originSkill = asString(initialParameters.get("originSkill"));
-					}
-					// Line: 38
-					startedFromSkill = true;
-					// Line: 39
-					init state1 = new init();
-					flowThread.gotoState(state1, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 39, 27)));
-					eventResult = EVENT_ABORTED;
-					break EXECUTION;
-				}
-			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 32, 15));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 18, 18));
 			}
 		}
 
@@ -216,315 +120,339 @@ public class PresentationFlow extends iristk.flow.Flow {
 		public void onentry() throws Exception {
 			int eventResult;
 			Event event = new Event("state.enter");
-			// Line: 44
+			// Line: 24
 			try {
 				EXECUTION: {
-					int count = getCount(517938326) + 1;
-					incrCount(517938326);
+					int count = getCount(2067846577) + 1;
+					incrCount(2067846577);
+					// Line: 25
+					Event sendEvent1 = new Event("action.voice");
+					sendEvent1.putIfNotNull("name", settings.get("maleVoice"));
+					flowRunner.sendEvent(sendEvent1, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 25, 61)));
+					// Line: 26
+					Event sendEvent2 = new Event("action.face.texture");
+					sendEvent2.putIfNotNull("name", settings.get("defaultTexture"));
+					flowRunner.sendEvent(sendEvent2, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 26, 73)));
+					// Line: 27
+					lookAtRandomPerson state3 = new lookAtRandomPerson();
+					if (!flowThread.callState(state3, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 27, 39)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 28
+					iristk.flow.DialogFlow.wait waitState4 = new iristk.flow.DialogFlow.wait();
+					waitState4.setMsec(500);
+					if (!flowThread.callState(waitState4, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 28, 23)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 30
+					lookAtRandomPerson state5 = new lookAtRandomPerson();
+					if (!flowThread.callState(state5, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 30, 39)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					iristk.situated.SystemAgentFlow.say state6 = agent.new say();
+					state6.setText(translator.get("HELLO_THERE"));
+					if (!flowThread.callState(state6, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 32
+					iristk.flow.DialogFlow.wait waitState7 = new iristk.flow.DialogFlow.wait();
+					waitState7.setMsec(100);
+					if (!flowThread.callState(waitState7, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 32, 23)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 34
+					Event sendEvent8 = new Event("action.gesture");
+					sendEvent8.putIfNotNull("name", "smile");
+					flowRunner.sendEvent(sendEvent8, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 34, 52)));
+					iristk.situated.SystemAgentFlow.say state9 = agent.new say();
+					state9.setText(translator.get("MY_NAME_IS_FURHAT"));
+					if (!flowThread.callState(state9, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 36
+					Event sendEvent10 = new Event("action.gesture");
+					sendEvent10.putIfNotNull("name", "smile");
+					flowRunner.sendEvent(sendEvent10, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 36, 52)));
+					// Line: 37
+					lookAtRandomPerson state11 = new lookAtRandomPerson();
+					if (!flowThread.callState(state11, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 37, 39)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					iristk.situated.SystemAgentFlow.say state12 = agent.new say();
+					state12.setText(translator.get("I_CAN_SHOW_EMOTIONS"));
+					if (!flowThread.callState(state12, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 39
+					Event sendEvent13 = new Event("action.gesture");
+					sendEvent13.putIfNotNull("name", "emotion_anger");
+					flowRunner.sendEvent(sendEvent13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 39, 60)));
+					// Line: 40
+					iristk.flow.DialogFlow.wait waitState14 = new iristk.flow.DialogFlow.wait();
+					waitState14.setMsec(1000);
+					if (!flowThread.callState(waitState14, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 40, 24)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 42
+					lookAtRandomPerson state15 = new lookAtRandomPerson();
+					if (!flowThread.callState(state15, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 42, 39)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
+					// Line: 43
+					Event sendEvent16 = new Event("action.gesture");
+					sendEvent16.putIfNotNull("name", "emotion_neutral");
+					flowRunner.sendEvent(sendEvent16, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 43, 61)));
+					iristk.situated.SystemAgentFlow.say state17 = agent.new say();
+					state17.setText(translator.get("I_CAN_HAVE_PERSONALITIES"));
+					if (!flowThread.callState(state17, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
 					// Line: 45
-					Event sendEvent2 = new Event("action.voice");
-					sendEvent2.putIfNotNull("name", defaultVoice);
-					flowRunner.sendEvent(sendEvent2, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 45, 55)));
-					// Line: 46
-					Event sendEvent3 = new Event("action.face.texture");
-					sendEvent3.putIfNotNull("name", "default");
-					flowRunner.sendEvent(sendEvent3, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 46, 59)));
+					Event sendEvent18 = new Event("action.face.texture");
+					sendEvent18.putIfNotNull("name", settings.get("femaleTexture"));
+					flowRunner.sendEvent(sendEvent18, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 45, 72)));
+					iristk.situated.SystemAgentFlow.say state19 = agent.new say();
+					state19.setText(translator.get("I_CAN_LOOK_FEMALE"));
+					if (!flowThread.callState(state19, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
+						eventResult = EVENT_ABORTED;
+						break EXECUTION;
+					}
 					// Line: 47
-					lookAtRandomPerson state4 = new lookAtRandomPerson();
-					if (!flowThread.callState(state4, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 47, 39)))) {
+					lookAtRandomPerson state20 = new lookAtRandomPerson();
+					if (!flowThread.callState(state20, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 47, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 48
-					iristk.flow.DialogFlow.wait waitState5 = new iristk.flow.DialogFlow.wait();
-					waitState5.setMsec(500);
-					if (!flowThread.callState(waitState5, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 48, 23)))) {
+					Event sendEvent21 = new Event("action.voice");
+					sendEvent21.putIfNotNull("name", settings.get("femaleVoice"));
+					flowRunner.sendEvent(sendEvent21, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 48, 63)));
+					iristk.situated.SystemAgentFlow.say state22 = agent.new say();
+					state22.setText(translator.get("AND_SOUND_FEMALE"));
+					if (!flowThread.callState(state22, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 50
-					lookAtRandomPerson state6 = new lookAtRandomPerson();
-					if (!flowThread.callState(state6, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 50, 39)))) {
+					lookAtRandomPerson state23 = new lookAtRandomPerson();
+					if (!flowThread.callState(state23, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 50, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					iristk.situated.SystemAgentFlow.say state7 = agent.new say();
-					state7.setText(translator.get("HELLO_THERE"));
-					if (!flowThread.callState(state7, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 51
+					Event sendEvent24 = new Event("action.voice");
+					sendEvent24.putIfNotNull("name", settings.get("maleVoice"));
+					flowRunner.sendEvent(sendEvent24, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 51, 61)));
+					iristk.situated.SystemAgentFlow.say state25 = agent.new say();
+					state25.setText(translator.get("OR_LIKE_ANYONE_ELSE"));
+					if (!flowThread.callState(state25, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 52
-					iristk.flow.DialogFlow.wait waitState8 = new iristk.flow.DialogFlow.wait();
-					waitState8.setMsec(100);
-					if (!flowThread.callState(waitState8, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 52, 23)))) {
+					// Line: 53
+					lookAtRandomPerson state26 = new lookAtRandomPerson();
+					if (!flowThread.callState(state26, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 53, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 54
-					Event sendEvent9 = new Event("action.gesture");
-					sendEvent9.putIfNotNull("name", "smile");
-					flowRunner.sendEvent(sendEvent9, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 54, 52)));
-					iristk.situated.SystemAgentFlow.say state10 = agent.new say();
-					state10.setText(translator.get("MY_NAME_IS_FURHAT"));
-					if (!flowThread.callState(state10, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					Event sendEvent27 = new Event("action.face.texture");
+					sendEvent27.putIfNotNull("name", settings.get("avatarTexture"));
+					flowRunner.sendEvent(sendEvent27, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 54, 72)));
+					iristk.situated.SystemAgentFlow.say state28 = agent.new say();
+					state28.setText(translator.get("LIKE_AN_AVATAR"));
+					if (!flowThread.callState(state28, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 56
-					Event sendEvent11 = new Event("action.gesture");
-					sendEvent11.putIfNotNull("name", "smile");
-					flowRunner.sendEvent(sendEvent11, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 56, 52)));
-					// Line: 57
-					lookAtRandomPerson state12 = new lookAtRandomPerson();
-					if (!flowThread.callState(state12, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 57, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
+					if (eq(settings.get("maleVoice"), "william")) {
+						iristk.situated.SystemAgentFlow.say state29 = agent.new say();
+						StringCreator string30 = new StringCreator();
+						string30.append("GESTURE_GIGGLE_2");
+						state29.setText(string30.toString());
+						if (!flowThread.callState(state29, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 56, 49)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
+						// Line: 58
+					} else {
+						iristk.situated.SystemAgentFlow.say state31 = agent.new say();
+						state31.setText(translator.get("GESTURE_BREATH_IN"));
+						if (!flowThread.callState(state31, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 56, 49)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
 					}
-					iristk.situated.SystemAgentFlow.say state13 = agent.new say();
-					state13.setText(translator.get("I_CAN_SHOW_EMOTIONS"));
-					if (!flowThread.callState(state13, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 59
-					Event sendEvent14 = new Event("action.gesture");
-					sendEvent14.putIfNotNull("name", "emotion_anger");
-					flowRunner.sendEvent(sendEvent14, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 59, 60)));
-					// Line: 60
-					iristk.flow.DialogFlow.wait waitState15 = new iristk.flow.DialogFlow.wait();
-					waitState15.setMsec(1000);
-					if (!flowThread.callState(waitState15, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 60, 24)))) {
+					// Line: 61
+					lookAtRandomPerson state32 = new lookAtRandomPerson();
+					if (!flowThread.callState(state32, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 61, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					// Line: 62
-					lookAtRandomPerson state16 = new lookAtRandomPerson();
-					if (!flowThread.callState(state16, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 62, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
+					Event sendEvent33 = new Event("action.face.texture");
+					sendEvent33.putIfNotNull("name", settings.get("defaultTexture"));
+					flowRunner.sendEvent(sendEvent33, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 62, 73)));
 					// Line: 63
-					Event sendEvent17 = new Event("action.gesture");
-					sendEvent17.putIfNotNull("name", "emotion_neutral");
-					flowRunner.sendEvent(sendEvent17, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 63, 61)));
-					iristk.situated.SystemAgentFlow.say state18 = agent.new say();
-					state18.setText(translator.get("I_CAN_HAVE_PERSONALITIES"));
-					if (!flowThread.callState(state18, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					iristk.flow.DialogFlow.wait waitState34 = new iristk.flow.DialogFlow.wait();
+					waitState34.setMsec(500);
+					if (!flowThread.callState(waitState34, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 63, 23)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 65
-					Event sendEvent19 = new Event("action.face.texture");
-					sendEvent19.putIfNotNull("name", "female");
-					flowRunner.sendEvent(sendEvent19, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 65, 58)));
-					iristk.situated.SystemAgentFlow.say state20 = agent.new say();
-					state20.setText(translator.get("I_CAN_LOOK_FEMALE"));
-					if (!flowThread.callState(state20, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 64
+					lookAtRandomPerson state35 = new lookAtRandomPerson();
+					if (!flowThread.callState(state35, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 64, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 67
-					lookAtRandomPerson state21 = new lookAtRandomPerson();
-					if (!flowThread.callState(state21, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 67, 39)))) {
+					iristk.situated.SystemAgentFlow.say state36 = agent.new say();
+					state36.setText(translator.get("INSIDE_MY_CHEST_FURHATOS"));
+					if (!flowThread.callState(state36, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 68
-					Event sendEvent22 = new Event("action.voice");
-					sendEvent22.putIfNotNull("name", femaleVoice);
-					flowRunner.sendEvent(sendEvent22, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 68, 54)));
-					iristk.situated.SystemAgentFlow.say state23 = agent.new say();
-					state23.setText(translator.get("AND_SOUND_FEMALE"));
-					if (!flowThread.callState(state23, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 70
-					lookAtRandomPerson state24 = new lookAtRandomPerson();
-					if (!flowThread.callState(state24, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 70, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 71
-					Event sendEvent25 = new Event("action.voice");
-					sendEvent25.putIfNotNull("name", defaultVoice);
-					flowRunner.sendEvent(sendEvent25, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 71, 55)));
-					iristk.situated.SystemAgentFlow.say state26 = agent.new say();
-					state26.setText(translator.get("OR_LIKE_ANYONE_ELSE"));
-					if (!flowThread.callState(state26, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 73
-					lookAtRandomPerson state27 = new lookAtRandomPerson();
-					if (!flowThread.callState(state27, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 73, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 74
-					Event sendEvent28 = new Event("action.face.texture");
-					sendEvent28.putIfNotNull("name", "avatar");
-					flowRunner.sendEvent(sendEvent28, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 74, 58)));
-					iristk.situated.SystemAgentFlow.say state29 = agent.new say();
-					state29.setText(translator.get("LIKE_AN_AVATAR"));
-					if (!flowThread.callState(state29, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 76
-					Event sendEvent30 = new Event("action.voice");
-					sendEvent30.putIfNotNull("name", defaultVoice);
-					flowRunner.sendEvent(sendEvent30, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 76, 55)));
-					// Line: 77
-					if (eq(defaultVoice, "william")) {
-						iristk.situated.SystemAgentFlow.say state31 = agent.new say();
-						StringCreator string32 = new StringCreator();
-						string32.append("GESTURE_GIGGLE_2");
-						state31.setText(string32.toString());
-						if (!flowThread.callState(state31, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 77, 43)))) {
-							eventResult = EVENT_ABORTED;
-							break EXECUTION;
-						}
-						// Line: 79
-					} else {
-						iristk.situated.SystemAgentFlow.say state33 = agent.new say();
-						state33.setText(translator.get("GESTURE_GIGGLE_FALLBACK"));
-						if (!flowThread.callState(state33, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 77, 43)))) {
-							eventResult = EVENT_ABORTED;
-							break EXECUTION;
-						}
-					}
-					// Line: 82
-					lookAtRandomPerson state34 = new lookAtRandomPerson();
-					if (!flowThread.callState(state34, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 82, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 83
-					Event sendEvent35 = new Event("action.face.texture");
-					sendEvent35.putIfNotNull("name", "default");
-					flowRunner.sendEvent(sendEvent35, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 83, 59)));
-					// Line: 84
-					iristk.flow.DialogFlow.wait waitState36 = new iristk.flow.DialogFlow.wait();
-					waitState36.setMsec(500);
-					if (!flowThread.callState(waitState36, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 84, 23)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					// Line: 86
+					// Line: 66
 					lookAtRandomPerson state37 = new lookAtRandomPerson();
-					if (!flowThread.callState(state37, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 86, 39)))) {
+					if (!flowThread.callState(state37, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 66, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					iristk.situated.SystemAgentFlow.say state38 = agent.new say();
-					state38.setText(translator.get("INSIDE_MY_CHEST_FURHATOS"));
-					if (!flowThread.callState(state38, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					state38.setText(translator.get("IT_CONNECTS_ME_TO_SENSORS"));
+					if (!flowThread.callState(state38, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 88
-					lookAtRandomPerson state39 = new lookAtRandomPerson();
-					if (!flowThread.callState(state39, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 88, 39)))) {
+					// Line: 68
+					iristk.flow.DialogFlow.wait waitState39 = new iristk.flow.DialogFlow.wait();
+					waitState39.setMsec(1200);
+					if (!flowThread.callState(waitState39, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 68, 24)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					iristk.situated.SystemAgentFlow.say state40 = agent.new say();
-					state40.setText(translator.get("IT_CONNECTS_ME_TO_SENSORS"));
-					if (!flowThread.callState(state40, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 70
+					lookAtRandomPerson state40 = new lookAtRandomPerson();
+					if (!flowThread.callState(state40, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 70, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 90
-					iristk.flow.DialogFlow.wait waitState41 = new iristk.flow.DialogFlow.wait();
-					waitState41.setMsec(1000);
-					if (!flowThread.callState(waitState41, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 90, 24)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
+					// Line: 71
+					if (eq(settings.get("maleVoice"), "william")) {
+						iristk.situated.SystemAgentFlow.say state41 = agent.new say();
+						StringCreator string42 = new StringCreator();
+						string42.append("GESTURE_SIGH_HAPPY");
+						state41.setText(string42.toString());
+						if (!flowThread.callState(state41, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 71, 49)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
 					}
-					// Line: 92
-					lookAtRandomPerson state42 = new lookAtRandomPerson();
-					if (!flowThread.callState(state42, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 92, 39)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
-					}
-					iristk.situated.SystemAgentFlow.say state43 = agent.new say();
-					state43.setText(translator.get("EXCITING_TIMES"));
-					if (!flowThread.callState(state43, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 74
+					iristk.flow.DialogFlow.wait waitState43 = new iristk.flow.DialogFlow.wait();
+					waitState43.setMsec(300);
+					if (!flowThread.callState(waitState43, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 74, 23)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
 					iristk.situated.SystemAgentFlow.say state44 = agent.new say();
-					state44.setText(translator.get("HAPPY_TO_BE_HERE"));
-					if (!flowThread.callState(state44, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					state44.setText(translator.get("EXCITING_TIMES"));
+					if (!flowThread.callState(state44, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					iristk.situated.SystemAgentFlow.say state45 = agent.new say();
-					state45.setText(translator.get("LOOKING_FORWARD_TO_GET_TO_KNOW_YOU"));
-					if (!flowThread.callState(state45, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 77
+					iristk.flow.DialogFlow.wait waitState45 = new iristk.flow.DialogFlow.wait();
+					waitState45.setMsec(100);
+					if (!flowThread.callState(waitState45, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 77, 23)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 96
-					lookAtRandomPerson state46 = new lookAtRandomPerson();
-					if (!flowThread.callState(state46, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 96, 39)))) {
+					iristk.situated.SystemAgentFlow.say state46 = agent.new say();
+					state46.setText(translator.get("I_BELIEVE_GREAT_THINGS_ARE_HAPPENING"));
+					if (!flowThread.callState(state46, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 97
-					iristk.flow.DialogFlow.wait waitState47 = new iristk.flow.DialogFlow.wait();
-					waitState47.setMsec(100);
-					if (!flowThread.callState(waitState47, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 97, 23)))) {
+					iristk.situated.SystemAgentFlow.say state47 = agent.new say();
+					state47.setText(translator.get("BETWEEN_ROBOTS_AND_HUMANS"));
+					if (!flowThread.callState(state47, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					iristk.situated.SystemAgentFlow.say state48 = agent.new say();
-					state48.setText(translator.get("I_BELIEVE_GREAT_THINGS_ARE_HAPPENING"));
-					if (!flowThread.callState(state48, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 80
+					lookAtRandomPerson state48 = new lookAtRandomPerson();
+					if (!flowThread.callState(state48, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 80, 39)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					iristk.situated.SystemAgentFlow.say state49 = agent.new say();
-					state49.setText(translator.get("BETWEEN_ROBOTS_AND_HUMANS"));
-					if (!flowThread.callState(state49, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
+					// Line: 81
+					iristk.flow.DialogFlow.wait waitState49 = new iristk.flow.DialogFlow.wait();
+					waitState49.setMsec(200);
+					if (!flowThread.callState(waitState49, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 81, 23)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 101
-					lookAtRandomPerson state50 = new lookAtRandomPerson();
-					if (!flowThread.callState(state50, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 101, 39)))) {
+					iristk.situated.SystemAgentFlow.say state50 = agent.new say();
+					state50.setText(translator.get("HAPPY_TO_BE_HERE"));
+					if (!flowThread.callState(state50, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 102
-					iristk.flow.DialogFlow.wait waitState51 = new iristk.flow.DialogFlow.wait();
-					waitState51.setMsec(200);
-					if (!flowThread.callState(waitState51, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 102, 23)))) {
+					iristk.situated.SystemAgentFlow.say state51 = agent.new say();
+					state51.setText(translator.get("LOOKING_FORWARD_TO_GET_TO_KNOW_YOU"));
+					if (!flowThread.callState(state51, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
-					// Line: 104
-					Event sendEvent52 = new Event("action.gesture");
-					sendEvent52.putIfNotNull("name", "smile");
-					flowRunner.sendEvent(sendEvent52, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 104, 52)));
-					iristk.situated.SystemAgentFlow.say state53 = agent.new say();
-					state53.setText(translator.get("HAPPY_TO_BE_HERE"));
-					if (!flowThread.callState(state53, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12)))) {
-						eventResult = EVENT_ABORTED;
-						break EXECUTION;
+					// Line: 84
+					if (settings.has("personToPassOverTo")) {
+						// Line: 85
+						iristk.flow.DialogFlow.wait waitState52 = new iristk.flow.DialogFlow.wait();
+						waitState52.setMsec(500);
+						if (!flowThread.callState(waitState52, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 85, 24)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
+						// Line: 86
+						Event sendEvent53 = new Event("action.gesture");
+						sendEvent53.putIfNotNull("name", "wink");
+						flowRunner.sendEvent(sendEvent53, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 86, 51)));
+						iristk.situated.SystemAgentFlow.say state54 = agent.new say();
+						StringCreator string55 = new StringCreator();
+						string55.append("Thanks for me, over to you");
+						// Line: 86
+						string55.append(settings.get("personToPassOverTo"));
+						state54.setText(string55.toString());
+						if (!flowThread.callState(state54, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 84, 44)))) {
+							eventResult = EVENT_ABORTED;
+							break EXECUTION;
+						}
 					}
-					// Line: 106
-					if (startedFromSkill) {
-						// Line: 107
-						Event sendEvent54 = new Event("action.skill");
-						sendEvent54.putIfNotNull("entry", originSkill);
-						flowRunner.sendEvent(sendEvent54, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 107, 55)));
-					}
+					// Line: 89
+					Event sendEvent56 = new Event("action.gesture");
+					sendEvent56.putIfNotNull("name", "smile");
+					flowRunner.sendEvent(sendEvent56, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 89, 52)));
+					// Line: 90
+					PostPres state57 = new PostPres();
+					flowThread.gotoState(state57, currentState, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 90, 28)));
+					eventResult = EVENT_ABORTED;
+					break EXECUTION;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 44, 12));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 24, 12));
 			}
 		}
 
@@ -532,6 +460,84 @@ public class PresentationFlow extends iristk.flow.Flow {
 		public int onFlowEvent(Event event) throws Exception {
 			int eventResult;
 			int count;
+			eventResult = super.onFlowEvent(event);
+			if (eventResult != EVENT_IGNORED) return eventResult;
+			eventResult = callerHandlers(event);
+			if (eventResult != EVENT_IGNORED) return eventResult;
+			return EVENT_IGNORED;
+		}
+
+	}
+
+
+	private class PostPres extends IdleMoves {
+
+		final State currentState = this;
+
+
+		@Override
+		public void setFlowThread(FlowRunner.FlowThread flowThread) {
+			super.setFlowThread(flowThread);
+			flowThread.addEventClock(16000, 32000, "timer_1176383635");
+		}
+
+		@Override
+		public void onentry() throws Exception {
+			int eventResult;
+			Event event = new Event("state.enter");
+		}
+
+		@Override
+		public int onFlowEvent(Event event) throws Exception {
+			int eventResult;
+			int count;
+			// Line: 95
+			count = getCount(1176383635) + 1;
+			if (event.triggers("timer_1176383635")) {
+				incrCount(1176383635);
+				eventResult = EVENT_CONSUMED;
+				EXECUTION: {
+					// Line: 96
+					if (settings.has("shouldCough") && eq(settings.get("maleVoice"), "william")) {
+						// Line: 97
+						boolean chosen58 = false;
+						boolean matching59 = true;
+						while (!chosen58 && matching59) {
+							int rand60 = random(946927394, 2, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+							matching59 = false;
+							if (true) {
+								matching59 = true;
+								if (rand60 >= 0 && rand60 < 1) {
+									chosen58 = true;
+									iristk.situated.SystemAgentFlow.say state61 = agent.new say();
+									StringCreator string62 = new StringCreator();
+									string62.append("GESTURE_SNIFF_1");
+									state61.setText(string62.toString());
+									if (!flowThread.callState(state61, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 97, 19)))) {
+										eventResult = EVENT_ABORTED;
+										break EXECUTION;
+									}
+								}
+							}
+							if (true) {
+								matching59 = true;
+								if (rand60 >= 1 && rand60 < 2) {
+									chosen58 = true;
+									iristk.situated.SystemAgentFlow.say state63 = agent.new say();
+									StringCreator string64 = new StringCreator();
+									string64.append("GESTURE_COUGH_2");
+									state63.setText(string64.toString());
+									if (!flowThread.callState(state63, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 97, 19)))) {
+										eventResult = EVENT_ABORTED;
+										break EXECUTION;
+									}
+								}
+							}
+						}
+					}
+				}
+				if (eventResult != EVENT_IGNORED) return eventResult;
+			}
 			eventResult = super.onFlowEvent(event);
 			if (eventResult != EVENT_IGNORED) return eventResult;
 			eventResult = callerHandlers(event);
@@ -556,91 +562,91 @@ public class PresentationFlow extends iristk.flow.Flow {
 		public void onentry() throws Exception {
 			int eventResult;
 			Event event = new Event("state.enter");
-			// Line: 113
+			// Line: 106
 			try {
 				EXECUTION: {
-					int count = getCount(305623748) + 1;
-					incrCount(305623748);
-					// Line: 114
+					int count = getCount(278016223) + 1;
+					incrCount(278016223);
+					// Line: 107
 					if (system.hasUsers()) {
-						iristk.situated.SystemAgentFlow.attendOther state55 = agent.new attendOther();
-						if (!flowThread.callState(state55, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 114, 32)))) {
+						iristk.situated.SystemAgentFlow.attendOther state65 = agent.new attendOther();
+						if (!flowThread.callState(state65, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 107, 33)))) {
 							eventResult = EVENT_ABORTED;
 							break EXECUTION;
 						}
-						// Line: 117
+						// Line: 110
 					} else {
-						// Line: 119
-						boolean chosen56 = false;
-						boolean matching57 = true;
-						while (!chosen56 && matching57) {
-							int rand58 = random(1521118594, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-							matching57 = false;
+						// Line: 112
+						boolean chosen66 = false;
+						boolean matching67 = true;
+						while (!chosen66 && matching67) {
+							int rand68 = random(360855489, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+							matching67 = false;
 							if (true) {
-								matching57 = true;
-								if (rand58 >= 0 && rand58 < 1) {
-									chosen56 = true;
-									iristk.situated.SystemAgentFlow.attend state59 = agent.new attend();
-									state59.setX(0.5);
-									state59.setY(0);
-									state59.setZ(1);
-									if (!flowThread.callState(state59, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 119, 12)))) {
+								matching67 = true;
+								if (rand68 >= 0 && rand68 < 1) {
+									chosen66 = true;
+									iristk.situated.SystemAgentFlow.attend state69 = agent.new attend();
+									state69.setX(0.5);
+									state69.setY(0);
+									state69.setZ(1);
+									if (!flowThread.callState(state69, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 112, 13)))) {
 										eventResult = EVENT_ABORTED;
 										break EXECUTION;
 									}
 								}
 							}
 							if (true) {
-								matching57 = true;
-								if (rand58 >= 1 && rand58 < 2) {
-									chosen56 = true;
-									iristk.situated.SystemAgentFlow.attend state60 = agent.new attend();
-									state60.setX(0.2);
-									state60.setY(0);
-									state60.setZ(1);
-									if (!flowThread.callState(state60, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 119, 12)))) {
+								matching67 = true;
+								if (rand68 >= 1 && rand68 < 2) {
+									chosen66 = true;
+									iristk.situated.SystemAgentFlow.attend state70 = agent.new attend();
+									state70.setX(0.2);
+									state70.setY(0);
+									state70.setZ(1);
+									if (!flowThread.callState(state70, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 112, 13)))) {
 										eventResult = EVENT_ABORTED;
 										break EXECUTION;
 									}
 								}
 							}
 							if (true) {
-								matching57 = true;
-								if (rand58 >= 2 && rand58 < 3) {
-									chosen56 = true;
-									iristk.situated.SystemAgentFlow.attend state61 = agent.new attend();
-									state61.setX(-0.5);
-									state61.setY(0.1);
-									state61.setZ(1);
-									if (!flowThread.callState(state61, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 119, 12)))) {
+								matching67 = true;
+								if (rand68 >= 2 && rand68 < 3) {
+									chosen66 = true;
+									iristk.situated.SystemAgentFlow.attend state71 = agent.new attend();
+									state71.setX(-0.5);
+									state71.setY(0.1);
+									state71.setZ(1);
+									if (!flowThread.callState(state71, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 112, 13)))) {
 										eventResult = EVENT_ABORTED;
 										break EXECUTION;
 									}
 								}
 							}
 							if (true) {
-								matching57 = true;
-								if (rand58 >= 3 && rand58 < 4) {
-									chosen56 = true;
-									iristk.situated.SystemAgentFlow.attend state62 = agent.new attend();
-									state62.setX(-0.2);
-									state62.setY(-0.1);
-									state62.setZ(1);
-									if (!flowThread.callState(state62, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 119, 12)))) {
+								matching67 = true;
+								if (rand68 >= 3 && rand68 < 4) {
+									chosen66 = true;
+									iristk.situated.SystemAgentFlow.attend state72 = agent.new attend();
+									state72.setX(-0.2);
+									state72.setY(-0.1);
+									state72.setZ(1);
+									if (!flowThread.callState(state72, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 112, 13)))) {
 										eventResult = EVENT_ABORTED;
 										break EXECUTION;
 									}
 								}
 							}
 							if (true) {
-								matching57 = true;
-								if (rand58 >= 4 && rand58 < 5) {
-									chosen56 = true;
-									iristk.situated.SystemAgentFlow.attend state63 = agent.new attend();
-									state63.setX(0);
-									state63.setY(0);
-									state63.setZ(1);
-									if (!flowThread.callState(state63, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 119, 12)))) {
+								matching67 = true;
+								if (rand68 >= 4 && rand68 < 5) {
+									chosen66 = true;
+									iristk.situated.SystemAgentFlow.attend state73 = agent.new attend();
+									state73.setX(0);
+									state73.setY(0);
+									state73.setZ(1);
+									if (!flowThread.callState(state73, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 112, 13)))) {
 										eventResult = EVENT_ABORTED;
 										break EXECUTION;
 									}
@@ -648,13 +654,13 @@ public class PresentationFlow extends iristk.flow.Flow {
 							}
 						}
 					}
-					// Line: 127
-					flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 13)));
+					// Line: 120
+					flowThread.returnFromCall(this, null, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 120, 14)));
 					eventResult = EVENT_ABORTED;
 					break EXECUTION;
 				}
 			} catch (Exception e) {
-				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 113, 11));
+				throw new FlowException(e, currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 106, 12));
 			}
 		}
 
@@ -680,8 +686,8 @@ public class PresentationFlow extends iristk.flow.Flow {
 		@Override
 		public void setFlowThread(FlowRunner.FlowThread flowThread) {
 			super.setFlowThread(flowThread);
-			flowThread.addEventClock(4000, 8000, "timer_1617791695");
-			flowThread.addEventClock(3000, 10000, "timer_1192108080");
+			flowThread.addEventClock(4000, 8000, "timer_814642064");
+			flowThread.addEventClock(3000, 10000, "timer_1230715505");
 		}
 
 		@Override
@@ -694,78 +700,78 @@ public class PresentationFlow extends iristk.flow.Flow {
 		public int onFlowEvent(Event event) throws Exception {
 			int eventResult;
 			int count;
-			// Line: 132
-			count = getCount(1617791695) + 1;
-			if (event.triggers("timer_1617791695")) {
-				incrCount(1617791695);
+			// Line: 125
+			count = getCount(814642064) + 1;
+			if (event.triggers("timer_814642064")) {
+				incrCount(814642064);
 				eventResult = EVENT_CONSUMED;
 				EXECUTION: {
-					// Line: 134
-					boolean chosen64 = false;
-					boolean matching65 = true;
-					while (!chosen64 && matching65) {
-						int rand66 = random(125993742, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-						matching65 = false;
+					// Line: 127
+					boolean chosen74 = false;
+					boolean matching75 = true;
+					while (!chosen74 && matching75) {
+						int rand76 = random(884369023, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+						matching75 = false;
 						if (true) {
-							matching65 = true;
-							if (rand66 >= 0 && rand66 < 1) {
-								chosen64 = true;
-								iristk.situated.SystemAgentFlow.gesture state67 = agent.new gesture();
-								state67.setAsync(true);
-								state67.setName("phone_oh");
-								if (!flowThread.callState(state67, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 134, 12)))) {
+							matching75 = true;
+							if (rand76 >= 0 && rand76 < 1) {
+								chosen74 = true;
+								iristk.situated.SystemAgentFlow.gesture state77 = agent.new gesture();
+								state77.setAsync(true);
+								state77.setName("phone_oh");
+								if (!flowThread.callState(state77, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching65 = true;
-							if (rand66 >= 1 && rand66 < 2) {
-								chosen64 = true;
-								iristk.situated.SystemAgentFlow.gesture state68 = agent.new gesture();
-								state68.setAsync(true);
-								state68.setName("surprise");
-								if (!flowThread.callState(state68, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 134, 12)))) {
+							matching75 = true;
+							if (rand76 >= 1 && rand76 < 2) {
+								chosen74 = true;
+								iristk.situated.SystemAgentFlow.gesture state78 = agent.new gesture();
+								state78.setAsync(true);
+								state78.setName("surprise");
+								if (!flowThread.callState(state78, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching65 = true;
-							if (rand66 >= 2 && rand66 < 3) {
-								chosen64 = true;
-								iristk.situated.SystemAgentFlow.gesture state69 = agent.new gesture();
-								state69.setAsync(true);
-								state69.setName("shy");
-								if (!flowThread.callState(state69, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 134, 12)))) {
+							matching75 = true;
+							if (rand76 >= 2 && rand76 < 3) {
+								chosen74 = true;
+								iristk.situated.SystemAgentFlow.gesture state79 = agent.new gesture();
+								state79.setAsync(true);
+								state79.setName("shy");
+								if (!flowThread.callState(state79, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching65 = true;
-							if (rand66 >= 3 && rand66 < 4) {
-								chosen64 = true;
-								iristk.situated.SystemAgentFlow.gesture state70 = agent.new gesture();
-								state70.setAsync(true);
-								state70.setName("smile");
-								if (!flowThread.callState(state70, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 134, 12)))) {
+							matching75 = true;
+							if (rand76 >= 3 && rand76 < 4) {
+								chosen74 = true;
+								iristk.situated.SystemAgentFlow.gesture state80 = agent.new gesture();
+								state80.setAsync(true);
+								state80.setName("smile");
+								if (!flowThread.callState(state80, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching65 = true;
-							if (rand66 >= 4 && rand66 < 5) {
-								chosen64 = true;
-								iristk.situated.SystemAgentFlow.gesture state71 = agent.new gesture();
-								state71.setAsync(true);
-								state71.setName("thoughtful");
-								if (!flowThread.callState(state71, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 134, 12)))) {
+							matching75 = true;
+							if (rand76 >= 4 && rand76 < 5) {
+								chosen74 = true;
+								iristk.situated.SystemAgentFlow.gesture state81 = agent.new gesture();
+								state81.setAsync(true);
+								state81.setName("thoughtful");
+								if (!flowThread.callState(state81, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 127, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
@@ -775,95 +781,95 @@ public class PresentationFlow extends iristk.flow.Flow {
 				}
 				if (eventResult != EVENT_IGNORED) return eventResult;
 			}
-			// Line: 142
-			count = getCount(1192108080) + 1;
-			if (event.triggers("timer_1192108080")) {
-				incrCount(1192108080);
+			// Line: 135
+			count = getCount(1230715505) + 1;
+			if (event.triggers("timer_1230715505")) {
+				incrCount(1230715505);
 				eventResult = EVENT_CONSUMED;
 				EXECUTION: {
-					// Line: 144
-					boolean chosen72 = false;
-					boolean matching73 = true;
-					while (!chosen72 && matching73) {
-						int rand74 = random(1068824137, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
-						matching73 = false;
+					// Line: 137
+					boolean chosen82 = false;
+					boolean matching83 = true;
+					while (!chosen82 && matching83) {
+						int rand84 = random(358090972, 5, iristk.util.RandomList.RandomModel.DECK_RESHUFFLE_NOREPEAT);
+						matching83 = false;
 						if (true) {
-							matching73 = true;
-							if (rand74 >= 0 && rand74 < 1) {
-								chosen72 = true;
-								iristk.situated.SystemAgentFlow.attend state75 = agent.new attend();
-								state75.setX(0.2);
-								state75.setY(0.1);
-								state75.setZ(1);
-								if (!flowThread.callState(state75, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 144, 12)))) {
+							matching83 = true;
+							if (rand84 >= 0 && rand84 < 1) {
+								chosen82 = true;
+								iristk.situated.SystemAgentFlow.attend state85 = agent.new attend();
+								state85.setX(0.2);
+								state85.setY(0.1);
+								state85.setZ(1);
+								if (!flowThread.callState(state85, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 137, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching73 = true;
-							if (rand74 >= 1 && rand74 < 2) {
-								chosen72 = true;
-								iristk.situated.SystemAgentFlow.attend state76 = agent.new attend();
-								state76.setX(0.2);
-								state76.setY(-0.1);
-								state76.setZ(1);
-								if (!flowThread.callState(state76, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 144, 12)))) {
+							matching83 = true;
+							if (rand84 >= 1 && rand84 < 2) {
+								chosen82 = true;
+								iristk.situated.SystemAgentFlow.attend state86 = agent.new attend();
+								state86.setX(0.2);
+								state86.setY(-0.1);
+								state86.setZ(1);
+								if (!flowThread.callState(state86, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 137, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching73 = true;
-							if (rand74 >= 2 && rand74 < 3) {
-								chosen72 = true;
-								iristk.situated.SystemAgentFlow.attend state77 = agent.new attend();
-								state77.setX(-0.2);
-								state77.setY(0.1);
-								state77.setZ(1);
-								if (!flowThread.callState(state77, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 144, 12)))) {
+							matching83 = true;
+							if (rand84 >= 2 && rand84 < 3) {
+								chosen82 = true;
+								iristk.situated.SystemAgentFlow.attend state87 = agent.new attend();
+								state87.setX(-0.2);
+								state87.setY(0.1);
+								state87.setZ(1);
+								if (!flowThread.callState(state87, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 137, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching73 = true;
-							if (rand74 >= 3 && rand74 < 4) {
-								chosen72 = true;
-								iristk.situated.SystemAgentFlow.attend state78 = agent.new attend();
-								state78.setX(-0.2);
-								state78.setY(-0.1);
-								state78.setZ(1);
-								if (!flowThread.callState(state78, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 144, 12)))) {
+							matching83 = true;
+							if (rand84 >= 3 && rand84 < 4) {
+								chosen82 = true;
+								iristk.situated.SystemAgentFlow.attend state88 = agent.new attend();
+								state88.setX(-0.2);
+								state88.setY(-0.1);
+								state88.setZ(1);
+								if (!flowThread.callState(state88, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 137, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 						if (true) {
-							matching73 = true;
-							if (rand74 >= 4 && rand74 < 5) {
-								chosen72 = true;
-								iristk.situated.SystemAgentFlow.attend state79 = agent.new attend();
-								state79.setX(0);
-								state79.setY(0);
-								state79.setZ(1);
-								if (!flowThread.callState(state79, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 144, 12)))) {
+							matching83 = true;
+							if (rand84 >= 4 && rand84 < 5) {
+								chosen82 = true;
+								iristk.situated.SystemAgentFlow.attend state89 = agent.new attend();
+								state89.setX(0);
+								state89.setY(0);
+								state89.setZ(1);
+								if (!flowThread.callState(state89, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 137, 12)))) {
 									eventResult = EVENT_ABORTED;
 									break EXECUTION;
 								}
 							}
 						}
 					}
-					iristk.situated.SystemAgentFlow.attend state80 = agent.new attend();
-					state80.setMode("eyes");
-					state80.setX(0);
-					state80.setY(0);
-					state80.setZ(1);
-					if (!flowThread.callState(state80, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 142, 33)))) {
+					iristk.situated.SystemAgentFlow.attend state90 = agent.new attend();
+					state90.setMode("eyes");
+					state90.setX(0);
+					state90.setY(0);
+					state90.setZ(1);
+					if (!flowThread.callState(state90, new FlowEventInfo(currentState, event, new XMLLocation(new File("C:\\Users\\ludvig\\dev\\furhat\\example-skills\\presentation\\src\\iristk\\app\\presentation\\PresentationFlow.xml"), 135, 33)))) {
 						eventResult = EVENT_ABORTED;
 						break EXECUTION;
 					}
