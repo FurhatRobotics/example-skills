@@ -1,17 +1,8 @@
-# Furhat example-skills 2nd-generation (Alpha)
+# Furhat example-skills
 
-Example skills provided by Furhat Robotics. Contributions welcome from everyone!
-
-# Contents
-
-Skill                 | Description                                 | Concepts showcased
-----------------------|---------------------------------------------|------------------------------------------------------
-
-# Running skills
-1. Clone the repository
-2. In IntelliJ IDEA, create a new gradle project (use the _from existing source_ alternative)
-3. Make sure you have the SDK development server or a robot running.
-4. Run the skill by the main method in the skill's `main.kt` file
+Example skills provided by Furhat Robotics for the Furhat SDK1.0 and SDK2.0 alpha.
 
 # Documentation
-See [docs.furhat.io](https://docs.furhat.io).
+
+* SDK 1.0: [docs.myfurhat.com](https://docs.myfurhat.com).
+* SDK 2.0 alpha: [docs.furhat.io](https://docs.furhat.io).
