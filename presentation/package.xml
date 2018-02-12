@@ -1,8 +1,0 @@
-<package name="presentation" version="1.5.0">
-	<provide>
-		<class type="iristk.furhat.skill.Skill" name="iristk.app.presentation.PresentationSkill" />
-	</provide>
-	<classpath>
-		<src path="src" output="bin"/>
-	</classpath>
-</package>

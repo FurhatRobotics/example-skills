@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<schema targetNamespace="iristk.flow" elementFormDefault="qualified"
+	xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow">
+	<element name="flow">
+		<complexType>
+			<sequence>
+				<element name="import" maxOccurs="unbounded"
+					minOccurs="0">
+					<complexType>
+						<attribute name="class" type="string" />
+					</complexType>
+				</element>
+				<element ref="flow:include" minOccurs="0" maxOccurs="unbounded" />
+				<element ref="flow:param" minOccurs="0" maxOccurs="unbounded" />
+				<element ref="flow:var" minOccurs="0" maxOccurs="unbounded"/>
+				<element name="init" minOccurs="0" maxOccurs="1">
+					<complexType mixed="true"></complexType>
+				</element>
+				<choice maxOccurs="unbounded" minOccurs="0">
+					<element ref="flow:state"/>
+					<element ref="flow:flow"/>
+				</choice>
+				<element ref="flow:schema" minOccurs="0" maxOccurs="1"/>
+			</sequence>
+			<attribute name="name" type="string" use="required"></attribute>
+			<attribute name="package" type="string"></attribute>
+			<attribute name="extends" type="string"	default="iristk.flow.Flow"></attribute>
+			<attribute name="initial" type="string"></attribute>
+			<attribute name="public" type="boolean" default="false"/>
+			<attribute name="static" type="boolean" default="false"/>
+		</complexType>
+	</element>
+
+	<element name="include">
+		<complexType>
+			<attribute name="href" type="string"></attribute>
+		</complexType>
+	</element>
+
+	<element name="state">
+		<complexType>
+			<sequence minOccurs="1" maxOccurs="1">
+				<element ref="flow:param" maxOccurs="unbounded" minOccurs="0" />
+				<element ref="flow:var" maxOccurs="unbounded" minOccurs="0" />
+				<group ref="flow:trigger" maxOccurs="unbounded" minOccurs="0" />
+			</sequence>
+			<attribute name="id" type="string" use="required"></attribute>
+			<attribute name="extends" type="string"></attribute>
+			<attribute name="public" type="boolean" default="false"/>
+			<attribute name="static" type="boolean" default="false"/>
+		</complexType>
+	</element>
+
+	<element name="var">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="value" type="string" use="optional"></attribute>
+			<attribute name="name" type="string" use="required"></attribute>
+			<attribute name="type" type="string" use="optional" default="String"></attribute>
+		</complexType>
+	</element>
+
+	<element name="param">
+		<complexType>
+			<sequence>
+				<element name="alt" type="string" maxOccurs="unbounded" minOccurs="0"/>
+			</sequence>
+			<attribute name="name" type="string" use="required"></attribute>
+			<attribute name="type" type="string" use="optional" default="String"></attribute>
+			<attribute name="default" type="string" use="optional"></attribute>
+			<attribute name="help" type="string" use="optional"></attribute>
+			<attribute name="elementType" type="string" use="optional"></attribute>
+		</complexType>
+	</element>
+
+	<group name="trigger">
+		<choice>
+			<element ref="flow:onentry" />
+			<element ref="flow:onevent" />
+			<element ref="flow:onexit" />
+			<element ref="flow:ontime" />
+		</choice>
+	</group>
+
+	<group name="actionSequence">
+		<sequence>
+		<!-- 
+			<group ref="flow:actionGroup" minOccurs="0" maxOccurs="unbounded" />
+			 -->
+			 <any namespace="##any" minOccurs="0" maxOccurs="unbounded" processContents="lax"></any>
+		</sequence>
+	</group>
+
+	<element name="onevent">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+			<attribute name="name" type="string"></attribute>
+			<attribute name="cond" type="string"></attribute>
+			<anyAttribute namespace="##other" />
+		</complexType>
+	</element>
+
+	<element name="onentry">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+		</complexType>
+	</element>
+
+	<element name="onexit">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+		</complexType>
+	</element>
+
+	<element name="ontime">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+			<attribute name="interval" type="string"></attribute>
+			<attribute name="afterentry" type="string"></attribute>
+		</complexType>
+	</element>
+
+	<complexType name="ifType">
+		<group ref="flow:actionSequence"></group>
+		<attribute name="cond" type="string"></attribute>
+	</complexType>
+
+    <!-- 
+	<element name="str">
+		<complexType mixed="true">
+			<sequence minOccurs="0" maxOccurs="unbounded">
+				<any processContents="lax" namespace="##any" />
+			</sequence>
+			<attribute name="id" type="ID"></attribute>
+			<attribute name="ref" type="IDREF"></attribute>
+			<attribute name="prob" type="float"></attribute>
+			<attribute name="cond" type="string"></attribute>
+		</complexType>
+	</element>
+	 -->
+
+	<element name="expr">
+		<complexType>
+			<simpleContent>
+				<extension base="string" />
+			</simpleContent>
+		</complexType>
+	</element>
+<!-- 
+	<group name="actionGroup">
+		<choice>
+			<element ref="flow:goto" />
+			<element ref="flow:run" />
+			<element ref="flow:call" />
+			<element ref="flow:return" />
+			<element ref="flow:if" />
+			<element ref="flow:elseif" />
+			<element ref="flow:else" />
+			<element ref="flow:random" />
+			<element ref="flow:raise" />
+			<element ref="flow:send" />
+			<element ref="flow:wait" />
+			<element ref="flow:block" />
+			<element ref="flow:exec" />
+			<element ref="flow:var" />
+			<element ref="flow:log" />
+			<element ref="flow:reentry" />
+			<element ref="flow:propagate" />
+			<element ref="flow:expr" />
+			<element ref="flow:select" />
+			<any namespace="##other" processContents="lax" />
+		</choice>
+	</group>
+ -->
+	<element name="goto">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="state" type="string" />
+			<attribute name="expr" type="string" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="run">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="state" type="string" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="call">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="state" type="string" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="raise">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="event" type="string" />
+			<attribute name="copy" type="string" />
+			<attribute name="delay" type="string" />
+			<attribute name="forgetOnExit" type="boolean" default="false" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="send">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="event" type="string" />
+			<attribute name="copy" type="string" />
+			<attribute name="delay" type="string" />
+			<attribute name="forgetOnExit" type="boolean" default="false" />
+			<attribute name="bindId" type="string" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="return">
+		<complexType mixed="true">
+			<sequence>
+				<any minOccurs="0" maxOccurs="unbounded" namespace="##any"
+					processContents="lax" />
+			</sequence>
+			<attribute name="event" type="string" />
+			<attribute name="copy" type="string" />
+			<anyAttribute namespace="##other" processContents="lax" />
+		</complexType>
+	</element>
+
+	<element name="if">
+		<complexType mixed="true">
+			<group ref="flow:actionSequence"></group>
+			<attribute name="cond" type="string"></attribute>
+		</complexType>
+	</element>
+
+	<element name="random">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+			<attribute name="list"></attribute>
+			<attribute name="model" use="optional" default="deck_reshuffle_norepeat">
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="deck" />
+						<enumeration value="deck_reshuffle" />
+						<enumeration value="deck_reshuffle_norepeat" />
+						<enumeration value="dice" />
+						<enumeration value="dice_norepeat" />
+						<enumeration value="nonrandom" />
+					</restriction>
+				</simpleType>
+			</attribute>
+		</complexType>
+	</element>
+	
+	<element name="repeat">
+		<complexType mixed="true">
+			<group ref="flow:actionSequence"></group>
+			<attribute name="times"></attribute>
+			<attribute name="while"></attribute>
+			<attribute name="list"></attribute>
+			<attribute name="handler"></attribute>
+		</complexType>
+	</element>
+	
+	<element name="select">
+		<complexType>
+			<group ref="flow:actionSequence"></group>
+			<attribute name="list"></attribute>
+		</complexType>
+	</element>
+	
+	<element name="wait">
+		<complexType>
+			<attribute name="msec" type="string" />
+		</complexType>
+	</element>
+
+	<element name="block">
+		<complexType mixed="true">
+			<group ref="flow:actionSequence"></group>
+			<attribute name="weight" type="int" use="optional" />
+			<attribute name="prob" type="float" use="optional" />
+			<attribute name="prio" type="int" use="optional" default="0" />
+			<attribute name="cond" type="string" use="optional" />
+		</complexType>
+	</element>
+
+	<element name="exec">
+		<complexType>
+			<simpleContent>
+				<extension base="string" />
+			</simpleContent>
+		</complexType>
+	</element>
+
+	<element name="log">
+		<complexType mixed="true">
+			<sequence>
+				<any processContents="lax" namespace="##any" minOccurs="0" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="reentry">
+		<complexType></complexType>
+	</element>
+
+	<element name="else">
+		<complexType></complexType>
+	</element>
+
+	<element name="elseif">
+		<complexType>
+			<attribute name="cond" type="string" />
+		</complexType>
+	</element>
+
+	<element name="propagate">
+		<complexType></complexType>
+	</element>
+	
+	<element name="schema">
+		<complexType>
+			<sequence>
+				<any namespace="http://www.w3.org/2001/XMLSchema" minOccurs="1" maxOccurs="unbounded" processContents="lax"></any>
+			</sequence>
+		</complexType>
+	</element>
+	
+</schema>

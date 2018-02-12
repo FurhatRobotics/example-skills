@@ -1,8 +1,0 @@
-<package name="social" version="1.2.0">
-	<provide>
-		<class type="iristk.furhat.skill.Skill" name="iristk.app.social.SocialSkill" />
-	</provide>
-	<classpath>
-		<src path="src" output="bin"/>
-	</classpath>
-</package>

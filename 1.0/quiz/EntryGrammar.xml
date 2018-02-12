@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" root="root"
+	xmlns="http://www.w3.org/2001/06/grammar" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar http://www.iristk.net/xml/srgs.xsd"
+	tag-format="semantics/1.0">
+
+	<rule id="root" scope="public">
+		<one-of>
+			<item>
+				<ruleref uri="#entry"/>  
+			</item>
+		</one-of>
+	</rule>
+
+	<rule id="entry">
+		<item repeat="0-1"> <!-- Prefix -->
+			<item repeat="0-2">
+				<one-of>
+					<item> play </item>
+					<item> begin</item>
+					<item> initiate</item>
+					<item> launch</item>
+					<item> Furhat</item>
+					<item> I'd like </item>
+				</one-of>
+			</item>
+			<item repeat="0-1">
+				<one-of>
+					<item> the</item>
+					<item>a</item>
+				</one-of>
+			</item>
+		</item>
+		<one-of>
+			<item>Game</item>
+			<item>Quiz</item>
+		</one-of>
+	</rule>
+</grammar>

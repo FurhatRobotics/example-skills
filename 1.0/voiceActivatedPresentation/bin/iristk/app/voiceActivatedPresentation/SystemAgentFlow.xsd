@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+    targetNamespace="iristk.situated.SystemAgentFlow"
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:flow="iristk.flow" xmlns:tns="iristk.situated.SystemAgentFlow">
+    <import namespace="iristk.flow" schemaLocation="flow.xsd"/>
+    <element name="gesture">
+        <complexType mixed="true">
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute default="true" name="async" type="string">
+                <annotation>
+                    <documentation>Whether to immediately return and produce gesture asynchronously</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="'smile'" name="name" type="string">
+                <annotation>
+                    <documentation>The name of the gesture</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="text" type="string"/>
+        </complexType>
+    </element>
+    <element name="voice">
+        <complexType>
+            <attribute default="null" name="name" type="string">
+                <annotation>
+                    <documentation>The name of the voice</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="null" name="gender" type="string">
+                <annotation>
+                    <documentation>The gender gender of the voice</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="texture">
+        <complexType>
+            <attribute default="null" name="name" type="string">
+                <annotation>
+                    <documentation>The face texture name</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="attend">
+        <complexType>
+            <attribute default="'headpose'" name="mode" type="string"/>
+            <attribute default="'nobody'" name="target" type="string">
+                <annotation>
+                    <documentation>test</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="null" name="location" type="string"/>
+            <attribute default="null" name="x" type="string"/>
+            <attribute default="null" name="y" type="string"/>
+            <attribute default="null" name="z" type="string"/>
+            <attribute default="'head'" name="part" type="string"/>
+            <attribute default="'medium'" name="speed" type="string"/>
+        </complexType>
+    </element>
+    <element name="attendNobody">
+        <complexType/>
+    </element>
+    <element name="attendRandom">
+        <complexType>
+            <attribute default="'headpose'" name="mode" type="string"/>
+            <attribute default="'medium'" name="speed" type="string"/>
+            <attribute default="null" name="select" type="string">
+                <annotation>
+                    <documentation>Restricts the attend to this selection.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="attendOther">
+        <complexType>
+            <attribute default="'headpose'" name="mode" type="string"/>
+            <attribute default="'medium'" name="speed" type="string"/>
+            <attribute default="null" name="select" type="string">
+                <annotation>
+                    <documentation>Restricts the attend to this selection.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="attendAll">
+        <complexType>
+            <attribute default="null" name="select" type="string"/>
+        </complexType>
+    </element>
+    <element name="fallAsleep">
+        <complexType/>
+    </element>
+    <element name="prompt">
+        <complexType mixed="true">
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute name="text" type="string"/>
+            <attribute default="8000" name="timeout" type="string">
+                <annotation>
+                    <documentation>The amount of silence (msec) to wait for if no speech is detected</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="700" name="endSil" type="string">
+                <annotation>
+                    <documentation>The amount of silence (msec) to wait for at the end of speech</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="1" name="nbest" type="string">
+                <annotation>
+                    <documentation>The number of hypotheses to return</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="context" type="string">
+                <annotation>
+                    <documentation>The context to use for speech recognition</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="stopSpeaking">
+        <complexType/>
+    </element>
+    <element name="say">
+        <complexType mixed="true">
+            <sequence>
+                <any maxOccurs="unbounded" minOccurs="0"
+                    namespace="##any" processContents="lax"/>
+            </sequence>
+            <attribute name="text" type="string">
+                <annotation>
+                    <documentation>The text to speak (can also be provided as a text node)</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="false" name="async" type="string">
+                <annotation>
+                    <documentation>Whether to immediately return and produce speech asynchronous</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="false" name="ifsilent" type="string">
+                <annotation>
+                    <documentation>Only say this if the system is silent</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="'brow_raise'" name="gesture" type="string">
+                <annotation>
+                    <documentation>A gesture to produce at the prominence of the utterance</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="null" name="display" type="string">
+                <annotation>
+                    <documentation>A nicely formatted text representation for display purposes</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="null" name="audio" type="string">
+                <annotation>
+                    <documentation>An audio file to play instead of synthesising</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="false" name="abort" type="string">
+                <annotation>
+                    <documentation>Whether to abort the current speech plan or just append to it</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="listen">
+        <complexType>
+            <attribute default="8000" name="timeout" type="string">
+                <annotation>
+                    <documentation>The amount of silence (msec) to wait for if no speech is detected</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="700" name="endSil" type="string">
+                <annotation>
+                    <documentation>The amount of silence (msec) to wait for at the end of speech</documentation>
+                </annotation>
+            </attribute>
+            <attribute default="1" name="nbest" type="string">
+                <annotation>
+                    <documentation>The number of hypotheses to return</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="context" type="string">
+                <annotation>
+                    <documentation>The context to use for speech recognition</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+</schema>

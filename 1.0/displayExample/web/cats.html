@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Cat display test</title>
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, minimal-ui">
+      <style>
+        body { margin: 0 !important }
+      </style>
+  </head>
+  <body>
+    <script>
+      // Accessees the system used to send events
+    	var system = parent.system;
+
+      // Sends a monitor event to the flow. This triggers no action for now, but is a good practise.
+    	system.sendEvent("monitor.game.connect", {});
+
+      // Event Listener
+    	system.onEvent = function (name, params) {
+        // Shows cats on game start
+        if (name == "action.game.start") {
+          cats = document.getElementsByClassName("cat");
+          for (var i = 0; i < cats.length; i ++) {
+            cats[i].style.display = 'block';
+          }
+        }
+    	}
+
+      // Function to send the clicked cat name to Furhat
+      function catClick(item) {
+        system.sendEvent("action.game.catclick", {
+          cat: item.getAttribute("item-id")
+        });
+      }
+
+    </script>
+
+    <img class="cat" src="cat1.jpg" item-id="molly" style="display: none; width:50%; float:left" onclick="catClick(this)"/>
+    <img class="cat" src="cat2.jpg" item-id="denise" style="display: none; width:50%; float:right" onclick="catClick(this)"/>
+  </body>
+</html>

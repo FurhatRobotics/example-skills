@@ -1,0 +1,8 @@
+#ABNF 1.0 ISO-8859-1;
+
+language en-US;
+root $srgs_root;
+
+public $srgs_root = ([no] [(my name is)|(i am)] $name {out.name=rules.name} [what is your name]);
+
+$name = $<swedish_male.abnf> | $<swedish_female.abnf> | $<english_male.abnf> | $<english_female.abnf>;

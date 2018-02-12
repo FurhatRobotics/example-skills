@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wizard>
+	<tab label="DisplayExample">
+		<section>TestSection</section>
+		<button label="Button">
+			<say>Display test</say>
+		</button>
+	</tab>
+</wizard>

@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" version="1.0" 
+	tag-format="semantics/1.0" xmlns="http://www.w3.org/2001/06/grammar"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/2001/06/grammar srgs.xsd">
+	
+	<rule id="req_quiz" scope="public">
+		<one-of>
+			<item>
+				<one-of>
+					<item>can we</item>
+					<item>can I</item>
+					<item>I want to</item>
+					<item>we want to</item>
+				</one-of>
+				<one-of>
+					<item>play a</item>
+					<item>do a</item>
+					<item>play some</item>
+				</one-of>
+				<one-of>
+					<item>quiz</item>
+					<item>game</item>
+					<item>quiz game</item>
+				</one-of>
+			</item>
+		</one-of>
+		<tag>out.req_quiz=true;</tag>
+	</rule>
+
+	<rule id="req_quiz_stop" scope="public">
+		<one-of>
+			<item>i don't want to play anymore</item>
+			<item>can we stop playing</item>
+			<item>can we stop playing this game</item>
+			<item>stop the quiz</item>
+		</one-of>
+		<tag>out.req_quiz_stop=true;</tag>
+	</rule>
+
+	<rule id="req_my_age" scope="public">
+		<one-of>
+			<item>how old do you think i am</item>
+			<item>how old am i</item>
+		</one-of>
+		<tag>out.req_my_age=true;</tag>
+	</rule>	
+	
+	<rule id="color">
+		<one-of>
+			<item>red<tag>out="1 0 0"</tag></item>
+			<item>green<tag>out="0 1 0"</tag></item>
+			<item>blue<tag>out="0 0 1"</tag></item>
+			<item>yellow<tag>out="1 1 0"</tag></item>
+			<item>purple<tag>out="1 0 1"</tag></item>
+			<item>white<tag>out="1 1 1"</tag></item>
+			<item>black<tag>out="0 0 0"</tag></item>
+			<item>pink<tag>out="1 0.5 0.5"</tag></item>
+			<item>grey<tag>out="0.5 0.5 0.5"</tag></item>
+			<item>orange<tag>out="1 0.5 0"</tag></item>
+			<item>brown<tag>out="0.5 0.3 0.1"</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="bodypart">
+		<one-of>
+			<item>face<tag>out="FACE_COLOR"</tag></item>
+			<item>yourself<tag>out="FACE_COLOR"</tag></item>
+			<item>eyes<tag>out="IRIS_COLOR"</tag></item>
+			<item>lips<tag>out="LIPS_COLOR"</tag></item>
+			<item>eyebrows<tag>out="BROWS_COLOR"</tag></item>
+		</one-of>
+	</rule>
+
+	<rule id="could_you">
+		<one-of>
+			<item>could you</item>
+			<item>can you</item>
+			<item>could you please</item>
+			<item>can you please</item>
+			<item>could you perhaps</item>
+			<item>can you perhaps</item>
+		</one-of>
+	</rule>
+	
+	<rule id="you_are">
+		<one-of>
+			<item>you are</item>
+			<item>you're</item>
+		</one-of>
+	</rule>
+	
+	<rule id="him_her">
+		<one-of>
+			<item>him</item>
+			<item>her</item>
+		</one-of>
+	</rule>
+
+	<rule id="filler">
+		<one-of>
+			<item>ahm</item>
+			<item>ah</item>
+			<item>eh</item>
+			<item>ehm</item>
+			<item>mm</item>
+		</one-of>
+	</rule>
+
+	<rule id="number" scope="public">
+		<item>
+			<ruleref uri="#number_1_99999"/>
+			<tag>out.number=rules.number_1_99999</tag>
+		</item>
+	</rule>
+
+	<rule id="number_1_99999">
+		<one-of>
+			<item><ruleref uri="#number_1_999"/><tag>out=rules.number_1_999</tag></item>
+			<item><ruleref uri="#number_1000_99999"/><tag>out=rules.number_1000_99999</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_1000_99999">
+		<one-of>
+			<item><item>thousand</item><tag>out=1000</tag></item>
+			<item><ruleref uri="#number_1_99"/><item>thousand</item><tag>out=rules.number_1_99 * 1000</tag></item>
+			<item>
+				<ruleref uri="#number_1_99"/>
+				<item>thousand</item>
+				<item repeat="0-1">and</item>
+				<ruleref uri="#number_1_999"/>
+				<tag>out=rules.number_1_99 * 1000 + rules.number_1_999</tag>
+			</item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_1_999">
+		<one-of>
+			<item><ruleref uri="#number_1_99"/><tag>out=rules.number_1_99</tag></item>
+			<item><ruleref uri="#number_100_999"/><tag>out=rules.number_100_999</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_100_999">
+		<one-of>
+			<item><item>hundred</item><tag>out=100</tag></item>
+			<item><ruleref uri="#number_1_9"/><item>hundred</item><tag>out=rules.number_1_9 * 100</tag></item>
+			<item>
+				<ruleref uri="#number_1_9"/>
+				<item>hundred</item>
+				<item repeat="0-1">and</item>
+				<ruleref uri="#number_1_99"/>
+				<tag>out=rules.number_1_9 * 100 + rules.number_1_99</tag>
+			</item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_1_99">
+		<one-of>
+			<item><ruleref uri="#number_1_9"/><tag>out=rules.number_1_9</tag></item>
+			<item><ruleref uri="#number_10_19"/><tag>out=rules.number_10_19</tag></item>
+			<item><ruleref uri="#number_20_90"/><tag>out=rules.number_20_90</tag></item>
+			<item><ruleref uri="#number_20_90"/><ruleref uri="#number_1_9"/><tag>out=rules.number_20_90 + rules.number_1_9</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_1_9">
+		<one-of>
+			<item>one<tag>out=1</tag></item>
+			<item>two<tag>out=2</tag></item>
+			<item>three<tag>out=3</tag></item>
+			<item>four<tag>out=4</tag></item>
+			<item>five<tag>out=5</tag></item>
+			<item>six<tag>out=6</tag></item>
+			<item>seven<tag>out=7</tag></item>
+			<item>eight<tag>out=8</tag></item>
+			<item>nine<tag>out=9</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_10_19">
+		<one-of>
+			<item>ten<tag>out=10</tag></item>
+			<item>eleven<tag>out=11</tag></item>
+			<item>twelve<tag>out=12</tag></item>
+			<item>thirteen<tag>out=13</tag></item>
+			<item>fourteen<tag>out=14</tag></item>
+			<item>fifteen<tag>out=15</tag></item>
+			<item>sixteen<tag>out=16</tag></item>
+			<item>seventeen<tag>out=17</tag></item>
+			<item>eighteen<tag>out=18</tag></item>
+			<item>nineteen<tag>out=19</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="number_20_90">
+		<one-of>
+			<item>twenty<tag>out=20</tag></item>
+			<item>thirty<tag>out=30</tag></item>
+			<item>forty<tag>out=40</tag></item>
+			<item>fifty<tag>out=50</tag></item>
+			<item>sixty<tag>out=60</tag></item>
+			<item>seventy<tag>out=70</tag></item>
+			<item>eighty<tag>out=80</tag></item>
+			<item>ninety<tag>out=90</tag></item>
+		</one-of>
+	</rule> 
+	
+	<rule id="yes" scope="public">
+		<one-of>
+			<item>yes</item>
+			<item>yes I do</item>
+			<item>sure</item>
+			<item>yeah</item>
+			<item>of course</item>
+			<item>okay</item>
+			<item>i think so</item>
+			<item>possibly</item>
+			<item>maybe</item>
+			<item>correct</item>
+			<item>right</item>
+		</one-of>
+		<tag>out.yes=true;</tag>
+	</rule>
+
+	<rule id="no" scope="public">
+		<one-of>
+			<item>no</item>
+			<item>no way</item>
+			<item>nope</item>
+			<item>not really</item>
+			<item>I don't think so</item>
+			<item>I have no more questions</item>
+		</one-of>
+		<tag>out.no=true;</tag>
+	</rule>
+
+	<!-- REQUEST NAME -->
+	<rule id="req_name" scope="public">
+		<one-of>
+			<item>your name</item>
+			<item>do you have a name</item>
+			<item>who are you</item>
+		</one-of>
+		<tag>out.req_name=true;</tag>
+	</rule>
+
+	<!-- REQUEST HEALTH -->
+	<rule id="req_health" scope="public">
+		<one-of>
+			<item>how are you</item>
+			<item>what's up</item>
+			<item>how is your day</item>
+			<item>how you doing</item>
+			<item>how's it going</item>
+			<item>are you lonely</item>
+			<item>are you alright</item>
+			<item>are you sad</item>
+			<item>are you happy</item>
+			<item>are you feeling fine</item>
+			<item>are you okay</item>
+		</one-of>
+		<tag>out.req_health=true;</tag>
+	</rule>
+
+
+	<!-- REQUEST JOB -->
+	<rule id="req_job" scope="public">
+		<one-of>
+			<item>what are you doing here</item>
+			<item>why are you here</item>
+			<item>what can you do</item>
+			<item>what do you want</item>
+			<item>what is your job</item>
+			<item>what can you talk about</item>
+		</one-of>
+		<tag>out.req_job=true;</tag>
+	</rule>
+
+	<!-- REQUEST MAKER -->
+	<rule id="req_maker" scope="public">
+		<one-of>
+			<item>who made you</item>
+			<item>who built you</item>
+			<item>who created you</item>
+			<item>who designed you</item>
+			<item>who did create you</item>
+			<item>who did you</item>
+			<item>who invented you</item>
+			<item>who programmed you</item>
+			<item>who was your inventor</item>
+			<item>who were you programmed by</item>
+			<item>who wrote your program</item>
+			<item>who wrote your programs</item>
+		</one-of>
+		<tag>out.req_maker=true;</tag>
+	</rule>
+
+	<!-- REQUEST AGE -->
+	<rule id="req_age" scope="public">
+		<one-of>
+			<item>how old are you</item>
+			<item>what is your age</item>
+			<item>when were you born</item>
+		</one-of>
+		<tag>out.req_age=true;</tag>
+	</rule>
+	
+	<!-- REQUEST BODY -->
+	<rule id="req_body" scope="public">
+		<one-of>
+			<item>where is your body</item>
+			<item>why don't you have a body</item>
+		</one-of>
+		<tag>out.req_body=true;</tag>
+	</rule>
+
+	<!-- COMMENT HAT -->
+	<rule id="req_hat" scope="public">
+		<one-of>
+			<item>why do you have a furhat</item>
+			<item>nice hat</item>
+			<item>nice furhat</item>
+			<item>you have a nice hat</item>
+			<item>why do you wear a hat</item>
+			<item>why do you wear a furhat</item>
+			<item>are you not warm</item>
+			<item>are you not warm in that hat</item>
+			<item>are you cold</item>
+			<item>why the hat</item>
+			<item>what is with the hat</item>
+			<item>nice hat</item>
+			<item>I like your hat</item>
+			<item>do you feel cold</item>
+			<item>why do you have a hat</item>
+		</one-of>
+		<tag>out.req_hat=true;</tag>
+	</rule>
+
+	<!-- REQUEST HI -->
+	<rule id="req_hi" scope="public">
+		<one-of>
+			<item>hello</item>
+			<item>hi</item>
+			<item>hi furhat</item>
+			<item>good day</item>
+			<item>hi there</item>
+			<item>hello there</item>
+			<item>good morning</item>
+			<item>good evening</item>
+			<item>good afternoon</item>
+			<item>good day to you</item>
+		</one-of>
+		<tag>out.req_hi=true;</tag>
+	</rule>
+
+	<!-- REQUEST QUESTIONS -->
+	<rule id="req_questions" scope="public">
+		<one-of>
+			<item>what questions can I ask you</item>
+			<item>what can I ask you</item>
+			<item>what questions can you understand</item>
+			<item>can I ask you a question</item>
+			<item>what can you tell me about</item>
+			<item>what do you want to talk about</item>
+			<item>what else can you tell me about</item>
+			<item>what question should i ask</item>
+			<item>what can i say</item>
+			<item>what can you tell me</item>
+			<item>what can you tell us</item>
+			<item>what do you want</item>
+			<item>help</item>
+			<item>what can i do for you</item>
+			<item>what else can you do</item>
+		</one-of>
+		<tag>out.req_questions=true;</tag>
+	</rule>
+
+	<!-- REQUEST REPEAT -->
+	<rule id="req_repeat" scope="public">
+		<one-of>
+			<item>could you repeat it</item>
+			<item>could you say that again</item>
+			<item>could you repeat that</item>
+			<item>could you say that again</item>
+			<item>could you repeat the options</item>
+			<item>what did you say</item>
+			<item>what do you mean</item>
+			<item>what do you mean by that</item>
+			<item>sorry</item>
+			<item>what was that</item>
+			<item>sorry did not get that</item>
+			<item>beg your pardon</item>
+			<item>again please</item>
+			<item>repeat</item>
+			<item>repeat please</item>
+		</one-of>
+		<tag>out.req_repeat=true;</tag>
+	</rule>
+	
+	<!-- REPORT NO UNDERSTANDING -->
+	<rule id="no_understanding" scope="public">
+		<one-of>
+			<item>why can't you understand everything</item>
+			<item>why can't you understand me</item>
+			<item>why do you not understand me</item>
+			<item>why do you only understand certain phrases</item>
+			<item>you don't understand</item>
+			<item>why don't you understand me</item>
+			<item>you don't understand me</item>
+			<item>you do not understand</item>
+			<item>you do not understand me</item>
+		</one-of>
+		<tag>out.no_understanding=true;</tag>
+	</rule>
+
+	<!-- REPORT NO ANSWER -->
+	<rule id="no_answer" scope="public">
+		<one-of>
+			<item>answer</item>
+			<item>answer it</item>
+			<item>answer me</item>
+			<item>answer me right now</item>
+			<item>answer my question</item>
+			<item>answer our questions</item>
+			<item>answer the question</item>
+			<item>answer you stupid robot</item>
+			<item>i did not ask that</item>
+			<item>i didn't ask that</item>
+			<item>i didn't ask you that</item>
+			<item>i didn't ask you that though</item>
+			<item>why aren't you answer my question</item>
+			<item>you didn't answer my question</item>
+			<item>you didn't hear me right</item>
+			<item>you didn't listen</item>
+		</one-of>
+		<tag>out.no_answer=true;</tag>
+	</rule>
+
+	<!-- REPORT UNWILLING USER -->
+	<rule id="dontknow" scope="public">
+		<one-of>
+			<item>i don't want to answer</item>
+			<item>i have no answer</item>
+			<item>i don't know</item>
+			<item>i refuse</item>
+			<item>i have no idea</item>
+			<item>beats me</item>
+			<item>that was a hard question</item>
+			<item>i refuse to answer</item>
+			<item>i don't like that question</item>
+		</one-of>
+		<tag>out.user_unwilling=true;</tag>
+	</rule>
+
+	<!-- REQUEST STOP TALKING -->
+	<rule id="req_stop_talking" scope="public">
+		<one-of>
+			<item>can you be quiet</item>
+			<item>can you stop talking</item>
+			<item>stop talking</item>
+			<item>shut up</item>
+			<item>be quiet</item>
+			<item>be silent</item>
+		</one-of>
+		<tag>out.req_stop_talking=true;</tag>
+	</rule>
+
+	<!-- REQUEST ROBOT -->
+	<rule id="req_robot" scope="public">
+		<one-of>
+			<item>can you look like a robot</item>
+			<item>can you look more like a robot</item>
+			<item>can you look different</item>
+			<item>can you change face</item>
+			<item>could you look like a robot</item>
+			<item>could you look more like a robot</item>
+			<item>could you look different</item>
+			<item>could you change face</item>
+			<item>change face</item>
+			<item>can you change your look</item>
+			<item>could you change your look</item>
+			<item>will you ever change your look</item>
+		</one-of>
+		<tag>out.req_robot=true;</tag>
+	</rule>
+
+	<!-- USER PHOTO -->
+	<rule id="req_photo" scope="public">
+		<one-of>
+			<item>can i take a picture of you</item>
+		</one-of>
+		<tag>out.req_photo=true;</tag>
+	</rule>
+
+	<!-- USER TOUCH -->
+	<rule id="req_touch" scope="public">
+		<one-of>
+			<item>can i touch you</item>
+		</one-of>
+		<tag>out.req_touch=true;</tag>
+	</rule>
+
+
+	<!-- GOODBYE -->
+	<rule id="goodbye" scope="public">
+		<one-of>
+			<item>goodbye</item>
+			<item>goodbye furhat</item>
+			<item>see you later</item>
+			<item>bye bye</item>
+			<item>goodbye take care</item>
+			<item>take care goodbye</item>
+		</one-of>
+		<tag>out.goodbye=true;</tag>
+	</rule>
+
+	<!-- SLEEP -->
+	<rule id="req_sleep" scope="public">
+		<one-of>
+			<item>go to sleep furhat</item>
+			<item>go to sleep</item>
+			<item>furhat go to sleep</item>
+		</one-of>
+		<tag>out.req_sleep=true;</tag>
+	</rule>
+	
+	<rule id="req_wakeup" scope="public">
+		<one-of>
+			<item>furhat wake up</item>
+			<item>wake up furhat</item>
+			<item>wake up</item>
+		</one-of>
+		<tag>out.req_wakeup=true;</tag>
+	</rule>
+
+	<!-- ROBOTS -->
+	<rule id="describe_robots" scope="public">
+		<one-of>
+			<item>about artificial intelligence</item>
+			<item>about robots</item>
+		</one-of>
+		<tag>out.describe_robots=true;</tag>
+	</rule>
+
+	<!-- SPEECH TECHNOLOGY -->
+	<rule id="describe_speech_technology" scope="public">
+		<one-of>
+			<item>how can you speak</item>
+			<item>how can you talk</item>
+			<item>how can you understand</item>
+			<item>how do you understand</item>
+			<item>can you see</item>
+			<item>do you see</item>
+			<item>do you hear</item>
+			<item>can you hear</item>
+		</one-of>
+		<tag>out.describe_speech_technology=true;</tag>
+	</rule>
+	
+	<!-- BIG QUESTIONS -->
+	<rule id="big_question" scope="public">
+		<one-of>
+			<item>what is the meaning of life</item>
+			<item>where is god</item>
+			<item>what is the speed of light</item>
+			<item>what is the square root of minus one</item>
+			<item>what is one plus one</item>
+			<item>what is a robot</item>
+		</one-of>
+		<tag>out.big_question=true;</tag>
+	</rule>	
+	
+	<!-- APPEARANCE -->
+	<rule id="comment_own_look" scope="public">
+		<one-of>
+			<item>how tall are you</item>
+			<item>how tall are your furhat</item>
+			<item>what's your hair color</item>
+			<item>what color are your eyes</item>
+			<item>what color is your coat</item>
+			<item>what color is your hair</item>
+			<item>what color is your jacket</item>
+			<item>what color is your shirt</item>
+			<item>what is your weight</item>
+			<item>how much do you cost</item>
+			<item>how much do you know</item>
+			<item>how much do you weigh</item>
+		</one-of>
+		<tag>out.comment_own_look=true;</tag>
+	</rule>
+
+	<!-- REQUEST CONFIGURE FACE -->
+	<rule id="req_config_face" scope="public">
+		<ruleref uri="#bodypart"/>
+		<ruleref uri="#color"/>
+		<tag>out.req_config_face=true;out.face_param=rules.bodypart;out.param_value=rules.color</tag>
+	</rule>
+
+	<rule id="req_config_face_normal" scope="public">
+		<one-of>
+			<item>can you look normal</item>
+			<item>can you look a human</item>
+			<item>could you look normal</item>
+			<item>could you look a human</item>
+			<item>can you look normal again</item>
+		</one-of>
+		<tag>out.req_gesture=true;out.gesture_name="default_colors";</tag>
+	</rule>
+
+	<!-- ORIGIN -->
+	<rule id="residence" scope="public">
+		<one-of>
+			<item>where are you from</item>
+			<item>what city are you living in</item>
+			<item>what city do you live in</item>
+			<item>where do you come from</item>
+			<item>where do you live</item>
+			<item>where do you work</item>
+			<item>where were you built</item>
+			<item>where were you designed</item>
+			<item>where were you made</item>
+			<item>where were you born</item>
+			<item>where's your home</item>
+		</one-of>
+		<tag>out.residence=true;</tag>
+	</rule>
+
+	<!-- EDUCATION -->
+	<rule id="tell_school" scope="public">
+		<one-of>
+			<item>did you go to school</item>
+			<item>where you go to school</item>
+			<item>where you went to school</item>
+			<item>where'd you do your schooling</item>
+			<item>where'd you go to school</item>
+		</one-of>
+		<tag>out.tell_school=true;</tag>
+	</rule>
+
+	<!-- SOCIAL COORDS -->
+	<rule id="tell_facebook" scope="public">
+		<one-of>
+			<item>are you on facebook</item>
+			<item>do you have facebook</item>
+			<item>do you have a gmail account</item>
+			<item>do you have an email account</item>
+			<item>what is your twitter address</item>
+		</one-of>
+		<tag>out.tell_facebook=true;</tag>
+	</rule>
+
+	<!-- FUN WORK -->
+	<rule id="fun_work" scope="public">
+		<one-of>
+			<item>how fun is the work here</item>
+			<item>how fun it is to work here</item>
+			<item>how long have you been around</item>
+			<item>how long have you been doing this</item>
+			<item>how long have you been here</item>
+			<item>how long have you worked here</item>
+			<item>is it fun being a robot</item>
+			<item>is it fun working here</item>
+		</one-of>
+		<tag>out.fun_work=true;</tag>
+	</rule>
+
+	<!-- BLA BLA -->
+	<rule id="blah_blah" scope="public">
+		<one-of>
+			<item>bla bla</item>
+			<item>bla bla bla</item>
+			<item>bla bla bla bla</item>
+		</one-of>
+		<tag>out.blah_blah=true;</tag>
+	</rule>
+
+	<!-- INTERESTS -->
+	<rule id="interests" scope="public">
+		<one-of>
+			<item>do you have any hobbies</item>
+			<item>what do you do for fun</item>
+			<item>what do you do in your free time</item>
+			<item>what do you do in your spare time</item>
+			<item>what do you do to do for fun</item>
+			<item>what do you do to have fun</item>
+			<item>what do you do to like to have fun</item>
+			<item>what do you do to to have fun</item>
+			<item>what do you do when you're bored</item>
+			<item>what do you like doing for fun</item>
+			<item>what do you like to do</item>
+			<item>what do you like to do for fun</item>
+			<item>what do you like to do in your free time</item>
+			<item>what do you like to do the most of all</item>
+			<item>what do you like to do to</item>
+			<item>what do you like to do to have fun</item>
+			<item>what are your favorite activities</item>
+		</one-of>
+		<tag>out.interests=true;</tag>
+	</rule>
+
+	<!-- BELONGINGS -->
+	<rule id="belongings" scope="public">
+		<one-of>
+			<item>do you have</item>
+		</one-of>
+		<tag>out.belongings=true;</tag>
+	</rule>
+
+	<!-- FAV COLOR -->
+	<rule id="favourite_color" scope="public">
+		<one-of>
+			<item>what color do you like</item>
+			<item>favorite color</item>
+		</one-of>
+		<tag>out.favourite_color=true;</tag>
+	</rule>
+
+	<!-- FAV FOOD -->
+	<rule id="favourite_food" scope="public">
+		<one-of>
+			<item>favorite desserts</item>
+			<item>favorite foods</item>
+			<item>what do you eat</item>
+			<item>like to eat</item>
+			<item>what food</item>
+		</one-of>
+		<tag>out.favourite_food=true;</tag>
+	</rule>
+
+	<!-- FAV MOVIE -->
+	<rule id="favourite_movie" scope="public">
+		<one-of>
+			<item>favorite movie</item>
+			<item>favorite movies</item>
+		</one-of>
+		<tag>out.favourite_movie=true;</tag>
+	</rule>
+
+	<!-- EMOTIONS -->
+	<rule id="emotions" scope="public">
+		<one-of>
+			<item>
+				<one-of>
+					<item>can you be</item>
+					<item>could you be</item>
+					<item>do you ever get</item>
+					<item>are you</item>
+				</one-of>
+				<one-of>
+					<item>angry</item>
+					<item>sad</item>
+					<item>happy</item>
+					<item>disgusted</item>
+					<item>depressed</item>
+					<item>mad</item>
+				</one-of>
+			</item>
+			<item>do you have emotions</item>
+			<item>do you have any emotions</item>
+			<item>do you have feelings</item>
+			<item>do you have real emotions</item>
+		</one-of>
+		<tag>out.emotions=true;</tag>
+	</rule>
+
+	<!-- KNOCK KNOCK -->
+	<rule id="knock_knock" scope="public">
+		knock knock
+		<tag>out.knock_knock=true;</tag>
+	</rule>
+
+	<!-- REQUEST STORY -->
+	<rule id="req_story" scope="public">
+		<one-of>
+			<item>can you tell me a story</item>
+			<item>tell me a story</item>
+		</one-of>
+		<tag>out.req_story=true;</tag>
+	</rule>
+
+	<!-- HAL 2001 -->
+	<rule id="hal_2001" scope="public">
+		<one-of>
+			<item>can you open the pod bay doors</item>
+			<item>open the pod bay doors</item>
+			<item>open the pod bay doors hal</item>
+		</one-of>
+		<tag>out.hal_2001=true;</tag>
+	</rule>
+
+	<!-- REQ_ASK_OTHER -->
+	<rule id="req_ask_other" scope="public">
+		<one-of>
+			<item>ask him</item>
+			<item>ask her</item>
+			<item>talk to him</item>
+			<item>talk to her</item>
+		</one-of>
+		<tag>out.req_ask_other=true;</tag>
+	</rule>
+
+	<!-- REQ DIRTY -->
+	<rule id="req_dirty" scope="public">
+		<one-of>
+			<item>can you talk dirty</item>
+			<item>can you talk dirty to me</item>
+			<item>talk dirty</item>
+			<item>talk dirty to me</item>
+		</one-of>
+		<tag>out.req_dirty=true;</tag>
+	</rule>
+
+	<!-- NEVER -->
+	<rule id="never" scope="public">
+		<one-of>
+			<item>never</item>
+			<item>that will never happen</item>
+		</one-of>
+		<tag>out.never=true;</tag>
+	</rule>
+
+	<!-- DONE -->
+	<rule id="done" scope="public">
+		<one-of>
+			<item>I have nothing more to say</item>
+			<item>that's it</item>
+			<item>I'm done</item>
+			<item>ask me another question</item>
+			<item>next question</item>
+		</one-of>
+		<tag>out.done=true;</tag>
+	</rule>
+
+	<!-- REQUEST JOKE -->
+	<rule id="req_joke" scope="public">
+		<item>
+			<one-of>
+				<item>makes me laugh</item>
+				<item>something funny</item>
+				<item>a joke</item>
+				<item>another joke</item>
+			</one-of>
+		</item>
+		<tag>out.req_joke=true;</tag>
+	</rule>
+
+	<!-- INSULTS -->
+	<rule id="insult" scope="public">
+		<one-of>
+			<item>an idiot</item>
+			<item>a liar</item>
+			<item>a fake</item>
+			<item>a bitch</item>
+			<item>a retard</item>
+			<item>silly</item>
+			<item>deaf</item>
+			<item>fake</item>
+			<item>dumb</item>
+			<item>stupid</item>
+			<item>retarded</item>
+			<item>annoying</item>
+			<item>weird</item>
+			<item>idiot</item>
+			<item>a douchebag</item>
+			<item>a moron</item>
+			<item>a retard</item>
+		</one-of>
+		<tag>out.insult=true;</tag>
+	</rule>
+
+	<!-- PRAISE -->
+	<rule id="praise" scope="public">
+		<one-of>
+			<item>amazing</item>
+			<item>awesome</item>
+			<item>cool</item>
+			<item>great</item>
+			<item>funny</item>
+			<item>hilarious</item>
+			<item>interesting</item>
+			<item>nice</item>
+			<item>cool</item>
+			<item>cool</item>
+			<item>funky</item>
+			<item>sexy</item>
+			<item>sassy</item>
+			<item>terrific</item>
+			<item>good looking</item>
+		</one-of>
+		<tag>out.praise=true;</tag>
+	</rule>
+
+	<rule id="req_time" scope="public">
+		<item>what time is it</item>
+		<item>what time it is</item>
+		<tag>out.req_timee=true;</tag>
+	</rule>
+	
+	<rule id="req_weather" scope="public">
+		<item>do i need an umbrella</item>
+		<item>what is the weather</item>
+		<tag>out.req_weather=true;</tag>
+	</rule>
+
+	<rule id="req_speak_swedish" scope="public">
+		<one-of>
+			<item>speak swedish</item>
+			<item>in swedish</item>
+		</one-of>
+		<tag>out.req_speak_swedish=true;</tag>
+	</rule>
+	
+	<rule id="req_speak_foreign" scope="public">
+		<one-of>
+			<item>say something in</item>
+			<item>can you speak</item>
+		</one-of>
+		<tag>out.req_speak_foreign=true;</tag>
+	</rule>
+	
+	<rule id="req_family" scope="public">
+		<one-of>
+			<item>wife</item>
+			<item>mother</item>
+			<item>sister</item>
+			<item>father</item>
+			<item>brother</item>
+			<item>children</item>
+		</one-of>
+		<tag>out.req_family=true;</tag>
+	</rule>	
+	
+	<rule id="req_my_name" scope="public">
+		<one-of>
+			<item>what is my name</item>
+		</one-of>
+		<tag>out.req_my_name=true;</tag>
+	</rule>	
+	
+	<rule id="req_voice" scope="public">
+		<one-of>
+			<item>can you sound like an old man<tag>out.req_voice="WillOldMan";</tag></item>
+		</one-of>
+	</rule>
+	
+	<rule id="req_face" scope="public">
+		<one-of>
+			<item>can you look like an avatar<tag>out.req_face="avatar"</tag></item>
+			<item>can you look like a robot<tag>out.req_face="irobot"</tag></item>
+			<item>can you look like obama<tag>out.req_face="obama"</tag></item>
+			<item>can you look normal<tag>out.req_face="default"</tag></item>
+			<item>can you look like furhat<tag>out.req_face="default"</tag></item>
+		</one-of>
+	</rule>
+
+</grammar>

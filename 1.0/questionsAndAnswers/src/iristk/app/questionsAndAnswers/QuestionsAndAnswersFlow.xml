@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flow name="QuestionsAndAnswersFlow" package="iristk.app.questionsAndAnswers" 
+	initial="Idle" xmlns:this="iristk.app.questionsAndAnswers.QuestionsAndAnswersFlow" xmlns="iristk.flow" 
+	xmlns:p="iristk.flow.param" xmlns:agent="iristk.situated.SystemAgentFlow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="iristk.flow flow.xsd iristk.situated.SystemAgentFlow SystemAgentFlow.xsd">
+	
+	<param name="agent" type="iristk.situated.SystemAgentFlow" />
+	<var name="system" type="iristk.situated.SystemAgent" value="agent.getSystemAgent()" />
+    
+	<state id="Idle">
+	 	<onentry>
+            <if cond="system.hasUsers()">
+		    	<agent:attendRandom />
+		    	<goto state="QnA"/>
+		    <else/>
+			    <agent:attendNobody />
+		    </if>
+		</onentry>
+
+		<!-- Goes to QnA mode if Furhat senses a user entering and the user is attending Furhat -->
+		<onevent name="sense.user.enter">
+			<agent:attend target="event:user" />
+			<goto state="QnA" />
+		</onevent>
+	</state>
+
+	<state id="QnA" extends="Dialog">
+
+		<onentry>
+			<agent:say>Hi, do you have any question for me?</agent:say>
+			<agent:listen />
+		</onentry>
+
+		<onevent name="sense.user.speak" cond="event?:sem:yes">
+			<agent:say>What is it?</agent:say>
+            <agent:listen/>
+		</onevent>
+		
+		<!-- if the users says no or bye, we go back to passive state. 
+		TODO: handle dead end here -->
+		<onevent name="sense.user.speak" cond="event?:sem:no">
+			<agent:say>Okay, bye</agent:say>
+		</onevent>
+
+		<!-- if the user says something that we have an answer for (see grammar 
+			file), we reply with the answer -->
+		<onevent name="sense.user.speak" cond="event?:sem:question">
+			
+			<var name="question" type="String" value="asString(event:sem:question)"/>
+			
+			<!-- Question and answer pairs, in this example hard-coded. The semantics for the questions needs to be added in grammar file -->
+			<if cond="question.equals('whatsYourName')">
+				<agent:say>My name is Fur hat</agent:say>
+			
+			<elseif cond="question.equals('whatsUp')"/>
+				<agent:say>Nothing, just chilling here</agent:say>
+				<agent:gesture name="'smile'"/>
+			
+			<elseif cond="question.equals('howAreYou')"/>
+				<agent:say>Good, thanks!</agent:say>
+				<agent:gesture name="'smile'"/>
+			
+			<elseif cond="question.equals('howOldAreYou')"/>
+				<agent:say>I'm two years old</agent:say>
+			
+			<elseif cond="question.equals('whoMadeYou')"/>
+				<agent:say>Fur hat Robotics made me</agent:say>
+			
+			<elseif cond="question.equals('whatCanYouDo')"/>
+				<agent:say>I can answer questions</agent:say>
+			
+			<elseif cond="question.equals('whatAreYou')"/>
+		    	<agent:say>I am a social robot</agent:say>
+		    
+		    <else/>
+		        <!-- We should never end up here. If we do, we have added a semantic tag in grammar that we haven't caught -->
+		        <agent:say>Sorry, I can't answer that.</agent:say>
+		    </if>
+			
+			<agent:listen />
+		</onevent>
+		
+		<!-- This catches any speak event that starts with any of the specified question start words -->
+	    <onevent name="sense.user.speak" cond="event?:sem:questionstart">
+	        
+	        <!-- Async since we want the flow to continue instantly -->
+	        <agent:say async="true">Lets see</agent:say>
+            <send event="action.gesture" p:name="'gaze_away'" />
+            <!-- Go to a query state to query other skills, passing on our event -->
+            <call state="PendingQueryAnswer" p:queryEvent="event"/>
+            <agent:listen />
+		</onevent>
+
+	</state>
+	
+	<!-- State to query other skills using the action.skill.query event. Returning when a monitor-event is received -->
+	<state id="PendingQueryAnswer">
+	    <param name="queryEvent" type="iristk.system.Event"/>
+		
+		<onentry>
+            <!-- Sends the text as a query. We will catch it asyncronously -->
+	        <send event="action.skill.query" p:text="queryEvent:text"/>
+	        <!-- logs the question -->
+	        <log>Question: <expr>queryEvent:text</expr></log>
+		</onentry>
+		
+		<!-- This catches a continue event returned when an answer to our query is received -->
+		<onevent name="monitor.skill.query">
+	        <!-- Check if we have an answer -->
+		    
+		    <if cond="event?:answer"> <!-- To support firmware <= 1.1.1 -->
+		        <!-- logs the answer -->
+		        <log>Answer: <expr>event:answer</expr></log>
+		        <!-- reads up the answer -->
+		        <agent:say><expr>event:answer</expr></agent:say>
+		        <agent:say>Anything else?</agent:say>
+	        <elseif cond="eq(event:status, 'MATCH')"/>  <!-- To support firmware > 1.1.1 -->
+                <call state="QueryParser" p:skills="asList(event.get('skills'))"/>
+            <else/>
+	            <agent:say>
+	                Sorry, I can't answer that. Please ask something else
+                </agent:say>
+		    </if>
+	        <return/>
+		</onevent>
+	</state>
+	
+	 <state id="QueryParser" extends="Dialog">     
+        <param name="skills" type="List"/>
+        <var name="skill" type="Record"/>
+        <var name="message" type="String"/>
+
+        <onentry>  
+            <exec>
+                skill = asRecord(skills.remove(0));
+                message = asString(skill.get("answer"));
+            </exec>
+            <log><expr>skill:name</expr></log>
+            <if cond="eq(skill:name, 'Houndify')">
+                <agent:say><expr>message</expr></agent:say>
+                <return/>
+            <else/>
+                <if cond="skills.isEmpty()">
+                    <return/>
+                <else/>
+                    <goto state="QueryParser" p:skills="skills"/>
+                </if>
+            </if>
+        </onentry>              
+    </state>      
+
+	<state id="Dialog">
+
+		<!-- Start smiling when someone starts speaking -->
+		<onevent name="sense.user.speech.start"
+			cond="system.isAttending(event) and eq(event:speakers, 1)">
+			<agent:gesture name="'smile'" />
+		</onevent>
+
+		<!-- Catch speak events that our grammar can't handle -->
+		<onevent name="sense.user.speak" cond="!eq(event:text, iristk.speech.RecResult.NOMATCH)">
+			<agent:say>
+				<random>
+					<block>Oh, you think so?</block>
+					<block>Okay</block>
+					<block>That doesn't sound like a question to me</block>
+					<block>Try to ask me a question</block>
+				</random>
+			</agent:say>
+		    <agent:listen />
+		</onevent>
+
+		<!-- Catches speak events that are undefined, i.e no text are returned 
+			from the recognizer.-->
+		<onevent name="sense.user.speak">
+			<agent:say>Sorry, I didn't get that.</agent:say>
+			<agent:listen />
+		</onevent>
+
+		<!-- We don't want to bother about multi-party dialogue in this example, hence we throw a normal speak event when we get a side speak event -->
+		<onevent name="sense.user.speak.side">
+			<send event="sense.user.speak" copy="event"/>
+		</onevent>
+		
+		<!-- We don't want to bother about multi-party dialogue in this example, hence we throw a normal speak event when we get a multi speak event -->
+		<onevent name="sense.user.speak.multi">
+			<send event="sense.user.speak" copy="event"/>
+		</onevent>
+		
+		<!-- Catches when no sound is picked up. In this example, we just continue listening  -->
+		<onevent name="sense.user.silence">
+			<agent:listen />
+		</onevent>
+
+		<!-- Catches when user leaves and if so, goes to passive -->
+		<onevent name="sense.user.leave" cond="system.isAttending(event)">
+			<if cond="system.hasUsers()">
+				<agent:attendRandom />
+				<reentry />
+			<else />
+				<goto state="Idle" />
+			</if>
+		</onevent>
+	</state>
+
+</flow>

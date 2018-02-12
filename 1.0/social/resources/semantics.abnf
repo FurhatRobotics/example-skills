@@ -1,0 +1,17 @@
+#ABNF 1.0 UTF-8;
+
+language en-US;
+root $root;
+
+public $root = (quiz | game) {out.game=1};
+
+public $stop_playing = ((stop playing) | (quit playing) | (stop the game)) {out.stop_quiz=1};
+
+public $your_name = ((your name)) {out.req_name=1};
+
+public $your_name = ((how are you)) {out.req_health=1};
+
+public $your_name = (football) {out.football=1};
+
+(take over the world)
+
