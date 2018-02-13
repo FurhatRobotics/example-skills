@@ -1,0 +1,12 @@
+buildscript {
+	repositories {
+		maven { url "http://furhatrobotics.bintray.com/furhat" }
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.furhatrobotics.furhatos:skill-configuration:+'
+	}
+}
+
+apply plugin: 'com.furhatrobotics.skill-configuration'
