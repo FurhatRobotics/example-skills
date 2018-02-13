@@ -6,6 +6,9 @@ Example skills provided by Furhat Robotics. Contributions welcome from everyone!
 
 Skill                 | Description                                 | Concepts showcased
 ----------------------|---------------------------------------------|------------------------------------------------------
+Parrot | A simple, interactive skill that repeats the user, with a few nuggets | Speech input, basic NLU (intents)
+FruitSeller | An interactive skill allowing you to order fruits | Speech input, NLU (intents, entities with pluralization)
+
 
 # Running skills
 1. Clone the repository

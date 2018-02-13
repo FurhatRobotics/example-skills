@@ -7,7 +7,7 @@ import furhatos.util.Language
 class Fruit : EnumEntity() {
 
     override fun getEnum(lang: Language?): List<String> {
-        return listOf("banana", "orange", "apple")
+        return listOf("banana:banana,bananas", "orange:orange,oranges", "apple:apple,apples")
     }
 
 }

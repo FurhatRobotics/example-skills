@@ -20,7 +20,7 @@ val TakingOrder = state(Interaction) {
     }
 
     onResponse<BuyFruit> {
-        furhat.say("${it.intent.fruit?.toText()}, what a lovely choice!")
+        furhat.say("${it.intent.fruit?.text}, what a lovely choice!")
         furhat.ask("Anything else?")
     }
 
