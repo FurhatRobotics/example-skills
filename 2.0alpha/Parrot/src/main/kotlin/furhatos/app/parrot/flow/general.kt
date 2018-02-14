@@ -17,9 +17,11 @@ val Idle : State = state {
         if (users.count > 0) {
             furhat.attend(users.random)
             goto(Start)
-        } else {
-            furhat.attendNobody()
         }
+    }
+
+    onEntry {
+        furhat.attendNobody()
     }
 
     onUserEnter {

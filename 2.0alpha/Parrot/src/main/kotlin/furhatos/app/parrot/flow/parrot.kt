@@ -1,5 +1,6 @@
 package furhatos.app.parrot.flow
 
+import furhatos.app.parrot.AnimalIntent
 import furhatos.app.parrot.Animals
 import furhatos.app.parrot.Goodbye
 import furhatos.flow.kotlin.State
@@ -17,14 +18,6 @@ val Start: State = state(Interaction) {
         furhat.listen()
     }
 
-    onResponse {
-        if (!it.speech.silent) {
-            furhat.say(it.speech.text)
-        } else {
-            propagate()
-        }
-    }
-
     onResponse<Animals> {
         call(AnimalLover)
         reentry()
@@ -32,6 +25,15 @@ val Start: State = state(Interaction) {
 
     onResponse<Goodbye> {
         goto(End)
+    }
+
+    onResponse { // The actual Parrot mode, repeating the user
+        if (!it.speech.silent) {
+            furhat.say(it.speech.text)
+            reentry()
+        } else {
+            propagate()
+        }
     }
 }
 

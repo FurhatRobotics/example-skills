@@ -10,16 +10,20 @@ val Idle : State = state {
     /*
         On the first run only, if we have users in interaction
         space, we attend a random user and start the interaction.
-        If not, we simply wait for a user to enter. This is also
-        the case when returning to this state.
+        If not, we simply wait for a user to enter.
+
+        If we return to this state, we attend nobody and wait for
+        users to enter.
      */
     init {
         if (users.count > 0) {
             furhat.attend(users.random)
             goto(Start)
-        } else {
-            furhat.attendNobody()
         }
+    }
+
+    onEntry {
+        furhat.attendNobody()
     }
 
     onUserEnter {
