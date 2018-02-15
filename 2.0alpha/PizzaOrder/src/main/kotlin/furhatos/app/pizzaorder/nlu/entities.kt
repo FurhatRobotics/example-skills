@@ -8,7 +8,7 @@ class ListOfTopping : ListEntity<Topping>()
 
 class Topping : EnumEntity() {
 
-    override fun getEnum(lang: Language?): List<String> {
+    override fun getEnum(lang: Language): List<String> {
         return listOf("onion", "tomato", "ham", "bacon", "rocket salad", "pepper")
     }
 
@@ -16,11 +16,11 @@ class Topping : EnumEntity() {
 
 class Place : EnumEntity() {
 
-    override fun getEnum(lang: Language?): List<String> {
+    override fun getEnum(lang: Language): List<String> {
         return listOf("home", "office")
     }
 
-    override fun toText(lang: Language?): String {
+    override fun toText(lang: Language): String {
         return fromPattern(lang,"to your @value");
     }
 }

@@ -24,7 +24,7 @@ open class Itinerary : Intent(), TextGenerator {
         return toText()
     }
 
-    override fun getExamples(lang: Language?): MutableList<String> {
+    override fun getExamples(lang: Language): MutableList<String> {
         return mutableListOf<String>(
                 "i want to go from @departure to @destination on @date",
                 "i would like to go travel on @date",
@@ -36,7 +36,7 @@ open class Itinerary : Intent(), TextGenerator {
 
 class TravelClass : EnumEntity() {
 
-    override fun getEnum(lang: Language?): List<String> {
+    override fun getEnum(lang: Language): List<String> {
         return listOf("economy", "business")
     }
 
