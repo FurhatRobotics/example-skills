@@ -20,6 +20,7 @@ class QuantifiedFruit : ComplexEnumEntity() {
 
     override fun getEnum(lang: Language): List<String> {
         return listOf("@count @fruit", "@fruit")
+
     }
 }
 
@@ -36,5 +37,4 @@ class BuyFruit : Intent() {
     override fun getExamples(lang: Language?): List<String> {
         return listOf("@fruits", "I want @fruits", "I would like @fruits", "I want to buy @fruits")
     }
-
 }
