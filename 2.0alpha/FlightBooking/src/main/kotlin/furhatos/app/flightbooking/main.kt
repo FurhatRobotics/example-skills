@@ -8,10 +8,6 @@ import furhatos.util.Language
 
 class FlightBookingSkill : Skill() {
     override fun start() {
-        // Init skill
-        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
-
-        // Run skill
         Flow().run(Idle)
     }
 }

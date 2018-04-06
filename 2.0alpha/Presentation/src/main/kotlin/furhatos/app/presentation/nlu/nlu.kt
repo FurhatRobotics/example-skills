@@ -4,7 +4,7 @@ import furhatos.nlu.Intent
 import furhatos.util.Language
 
 class StartIntent : Intent() {
-    override fun getExamples(lang: Language?): List<String> {
+    override fun getExamples(lang: Language): List<String> {
         return listOf(
             "Start",
             "Presentation",

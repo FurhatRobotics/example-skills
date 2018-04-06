@@ -8,9 +8,9 @@ Skill                 | Description                                 | Concepts s
 ----------------------|---------------------------------------------|------------------------------------------------------
 Presentation | A skill where Furhat presents himself | showcases a listen-loop, a simple wizard button and expressive speech | Speech output, random look-around, listen-loop, wizard button
 Parrot | A simple, interactive skill that repeats the user, with a few nuggets | Speech input, NLU (intents, entities with external enum-files)
-FruitSeller | An interactive skill allowing you to order various quantities of fruits | Speech input, NLU (intents, enum entities, complex enumentities, speech recognition phrases)
-PizzaOrder | An interactive form-filling skill allowing you to order a pizzas with various toppings and custom delivery times and locations and some additional chit-chat | Form-filling, NLU
-FlightBooking | An interactive form-filling skill allowing you to book flights | Form-filling, NLU
+FruitSeller | An interactive skill allowing you to order fruits | Speech input, NLU (intents, entities)
+PizzaOrder | An interactive form-filling skill allowing you to order a pizzas with various toppings and custom delivery times and locations and some additional chit-chat | Form-filling, more advanced NLU
+FlightBooking | An interactive form-filling skill allowing you to book flights | Form-filling, more advanced NLU
 
 # Running skills
 1. Clone the repository

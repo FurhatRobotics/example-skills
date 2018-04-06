@@ -10,9 +10,6 @@ val Idle : State = state {
     var shouldListen = true
 
     init {
-        furhat.setTexture("default")
-        furhat.setVoice(Language.ENGLISH_GB,"william", Gender.MALE)
-
         if (users.count > 0) {
             furhat.attend(users.random)
         }
@@ -21,14 +18,21 @@ val Idle : State = state {
         }
     }
 
-    onUserEnter {
-        furhat.attend(it)
-    }
-
     onEntry {
+        furhat.setTexture("default")
+        furhat.setVoice(Language.ENGLISH_GB, "william", Gender.MALE)
+
         if (shouldListen) {
             furhat.listen(16000)
         }
+    }
+
+    onExit {
+        furhat.stopListening()
+    }
+
+    onUserEnter {
+        furhat.attend(it)
     }
 
     onResponse<StartIntent> { // If the user says that we should start

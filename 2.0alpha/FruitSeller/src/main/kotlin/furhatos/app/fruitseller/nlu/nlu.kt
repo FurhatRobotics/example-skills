@@ -7,8 +7,11 @@ import furhatos.nlu.common.Number
 import furhatos.util.Language
 
 class RequestOptions: Intent() {
-    override fun getExamples(lang: Language?): List<String> {
-        return listOf("What options do you have?", "What fruits do you have?", "What are the alternatives?", "What do you have?")
+    override fun getExamples(lang: Language): List<String> {
+        return listOf("What options do you have?",
+                "What fruits do you have?",
+                "What are the alternatives?",
+                "What do you have?")
     }
 }
 
@@ -34,7 +37,7 @@ class BuyFruit : Intent() {
 
     var fruits : FruitList? = null
 
-    override fun getExamples(lang: Language?): List<String> {
+    override fun getExamples(lang: Language): List<String> {
         return listOf("@fruits", "I want @fruits", "I would like @fruits", "I want to buy @fruits")
     }
 }

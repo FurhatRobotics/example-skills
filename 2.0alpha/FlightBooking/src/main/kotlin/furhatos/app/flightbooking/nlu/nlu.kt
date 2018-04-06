@@ -17,7 +17,7 @@ open class Itinerary : Intent(), TextGenerator {
     var travelClass : TravelClass? = null
 
     override fun toText(lang : Language) : String {
-        return fromPattern(lang,"{from @departure} {to @destination} @date @time {travelling @travelClass class}");
+        return generate(lang,"{from @departure} {to @destination} @date @time {travelling @travelClass class}");
     }
 
     override fun toString(): String {

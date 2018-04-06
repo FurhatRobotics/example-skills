@@ -5,6 +5,7 @@ import furhatos.flow.kotlin.onUserLeave
 import furhatos.flow.kotlin.state
 
 import furhatos.flow.kotlin.*
+import furhatos.nlu.common.Goodbye
 import furhatos.skills.UserManager
 
 val Idle : State = state {
@@ -46,6 +47,7 @@ val Interaction : State = state {
 
         If a user enters, we glance at the user.
      */
+
     onUserLeave {
         if (users.count > 0) {
             if (it == users.current) {

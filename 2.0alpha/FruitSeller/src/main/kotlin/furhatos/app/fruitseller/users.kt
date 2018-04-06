@@ -1,8 +1,6 @@
 package furhatos.app.fruitseller
 
-import furhatos.app.fruitseller.nlu.Fruit
 import furhatos.app.fruitseller.nlu.FruitList
-import furhatos.app.fruitseller.nlu.QuantifiedFruit
 import furhatos.records.User
 
 class FruitData (
