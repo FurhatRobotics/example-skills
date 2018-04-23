@@ -7,8 +7,8 @@ import furhatos.util.Language
 
 val Start : State = state {
 
-    onUserEnter {
-        furhat.glance(it, 1)
+    onUserEnter (instant = true){
+        furhat.glance(it)
     }
 
     onButton("Stop") {

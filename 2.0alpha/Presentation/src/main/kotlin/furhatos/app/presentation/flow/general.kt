@@ -31,7 +31,7 @@ val Idle : State = state {
         furhat.stopListening()
     }
 
-    onUserEnter {
+    onUserEnter(instant = true) {
         furhat.attend(it)
     }
 
