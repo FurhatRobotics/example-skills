@@ -15,7 +15,7 @@ dependencies {
 	if (project.findProject(':furhat-commons') != null) {
 		compile project.project(':furhat-commons')
 	} else {
-		compile "com.furhatrobotics.furhatos:furhat-commons:0.2.8"
+		compile "com.furhatrobotics.furhatos:furhat-commons:0.3.0"
 	}
 }
 

@@ -42,20 +42,20 @@ val Interaction : State = state {
 
         If a user enters, we glance at the user.
      */
-    onUserLeave {
+    onUserLeave(instant = true) {
         if (users.count > 0) {
             if (it == users.current) {
                 furhat.attend(users.other)
                 goto(Start)
             } else {
-                furhat.glance(it, 1)
+                furhat.glance(it)
             }
         } else {
             goto(Idle)
         }
     }
 
-    onUserEnter {
-        furhat.glance(it, 1)
+    onUserEnter (instant = true){
+        furhat.glance(it)
     }
 }
