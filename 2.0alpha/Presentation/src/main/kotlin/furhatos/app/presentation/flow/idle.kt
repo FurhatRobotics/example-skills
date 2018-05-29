@@ -22,10 +22,10 @@ val Idle : State = state {
 
     onEntry {
         furhat.setTexture("default")
-        furhat.setVoice(Language.ENGLISH_GB, "william", Gender.MALE)
+        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
 
         if (shouldListen) {
-            furhat.listen(16000)
+            furhat.listen()
         }
     }
 
@@ -57,6 +57,10 @@ val Idle : State = state {
         shouldListen = false
     }
 
+    onTime(repeat = 6000..12000) { // Random look arounds on timer
+        attendRandomUserOrLocation()
+    }
+
     onTime(repeat = 8000..32000) { // Random things to spicy up his Idle time
         random(
             { furhat.gesture(Gestures.Oh) },
@@ -66,4 +70,6 @@ val Idle : State = state {
             { furhat.gesture(Gestures.Wink) }
         )
     }
+
+
 }

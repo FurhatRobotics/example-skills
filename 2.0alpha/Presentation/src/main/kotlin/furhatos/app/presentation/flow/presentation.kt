@@ -34,14 +34,14 @@ val Start : State = state {
         attendRandomUserOrLocation()
 
         furhat.say("And sound like a woman")
-        furhat.setVoice(Language.ENGLISH_US, "william", Gender.MALE)
+        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
         furhat.say("Or like anyone else")
         furhat.setTexture("avatar")
         furhat.say("Like an avatar")
         attendRandomUserOrLocation()
 
-        furhat.say("GESTURE_GIGGLE")
-        furhat.say("GESTURE_BREATH_IN")
+        furhat.say("Cute, right?")
+
         furhat.setTexture("default")
         delay(500)
         attendRandomUserOrLocation()

@@ -9,7 +9,7 @@ import furhatos.records.Location
 fun FlowControlRunner.attendRandomUserOrLocation() {
     if (users.count > 0) {
         random(
-                { furhat.attend(users.other) },
+                { furhat.attend(users.random) },
                 { furhat.attendRandomLocation() }
         )
     }
