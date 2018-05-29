@@ -21,6 +21,6 @@ class Place : EnumEntity() {
     }
 
     override fun toText(lang: Language): String {
-        return fromPattern(lang,"to your @value");
+        return generate(lang,"to your $value");
     }
 }

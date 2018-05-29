@@ -2,13 +2,14 @@ package furhatos.app.pizzaorder.flow
 
 import furhatos.app.pizzaorder.*
 import furhatos.app.pizzaorder.nlu.*
+import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
 
-class TellToppingOptions : FlowEvent()
-class TellDeliveryOptions : FlowEvent()
-class TellOpeningHours : FlowEvent()
+class TellToppingOptions : Event()
+class TellDeliveryOptions : Event()
+class TellOpeningHours : Event()
 
 val General: State = state(Interaction) {
 
