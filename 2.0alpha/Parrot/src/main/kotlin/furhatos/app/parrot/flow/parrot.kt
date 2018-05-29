@@ -1,6 +1,5 @@
 package furhatos.app.parrot.flow
 
-import furhatos.app.parrot.AnimalIntent
 import furhatos.app.parrot.Animals
 import furhatos.app.parrot.Goodbye
 import furhatos.flow.kotlin.State

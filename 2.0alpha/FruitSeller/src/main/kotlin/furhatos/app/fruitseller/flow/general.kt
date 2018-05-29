@@ -5,6 +5,8 @@ import furhatos.flow.kotlin.onUserLeave
 import furhatos.flow.kotlin.state
 
 import furhatos.flow.kotlin.*
+import furhatos.nlu.common.Goodbye
+import furhatos.skills.UserManager
 
 val Idle : State = state {
     /*
@@ -16,6 +18,7 @@ val Idle : State = state {
         users to enter.
      */
     init {
+        UserManager.getInstance()
         if (users.count > 0) {
             furhat.attend(users.random)
             goto(Start)
@@ -23,7 +26,9 @@ val Idle : State = state {
     }
 
     onEntry {
-        furhat.attendNobody()
+        if (users.count > 0 || true) {
+            furhat.attendNobody()
+        }
     }
 
     onUserEnter {
@@ -42,20 +47,21 @@ val Interaction : State = state {
 
         If a user enters, we glance at the user.
      */
-    onUserLeave {
+
+    onUserLeave(instant = true) {
         if (users.count > 0) {
             if (it == users.current) {
                 furhat.attend(users.other)
                 goto(Start)
             } else {
-                furhat.glance(it, 1)
+                furhat.glance(it)
             }
         } else {
             goto(Idle)
         }
     }
 
-    onUserEnter {
-        furhat.glance(it, 1)
+    onUserEnter(instant = true) {
+        furhat.glance(it)
     }
 }

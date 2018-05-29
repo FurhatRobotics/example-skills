@@ -9,23 +9,14 @@ buildscript {
 	}
 }
 
-plugins {
-	id "org.jetbrains.kotlin.jvm" version "1.2.30"
-}
-
-apply plugin: 'com.furhatrobotics.skill-configuration'
-
-
-repositories {
-	maven { url "http://furhatrobotics.bintray.com/furhat" }
-	jcenter()
-}
+apply plugin: 'java'
 
 dependencies {
 	if (project.findProject(':furhat-commons') != null) {
 		compile project.project(':furhat-commons')
 	} else {
-		// always use the latest version of commons
-		compile "com.furhatrobotics.furhatos:furhat-commons:+"
+		compile "com.furhatrobotics.furhatos:furhat-commons:0.3.0"
 	}
 }
+
+apply plugin: 'com.furhatrobotics.skill-configuration'

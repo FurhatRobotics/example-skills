@@ -1,12 +1,10 @@
-package furhatos.app.flightbooking
+package furhatos.app.presentation
 
-import furhatos.app.flightbooking.flow.Idle
+import furhatos.app.presentation.flow.*
 import furhatos.skills.Skill
 import furhatos.flow.kotlin.*
-import furhatos.util.Gender
-import furhatos.util.Language
 
-class FlightBookingSkill : Skill() {
+class PresentationSkill : Skill() {
     override fun start() {
         Flow().run(Idle)
     }

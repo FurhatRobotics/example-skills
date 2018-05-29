@@ -6,9 +6,11 @@ Example skills provided by Furhat Robotics. Contributions welcome from everyone!
 
 Skill                 | Description                                 | Concepts showcased
 ----------------------|---------------------------------------------|------------------------------------------------------
-Parrot | A simple, interactive skill that repeats the user, with a few nuggets | Speech input, basic NLU (intents, external enum-files)
-FruitSeller | An interactive skill allowing you to order fruits | Speech input, NLU (intents, entities with pluralization)
-
+Presentation | A skill where Furhat presents himself | showcases a listen-loop, a simple wizard button and expressive speech | Speech output, extention methods, listen-loop, wizard button, onTime
+Parrot | A simple, interactive skill that repeats the user, with a few nuggets | Speech input, NLU (intents, entities with external enum-files)
+FruitSeller | An interactive skill allowing you to order fruits | Speech input, NLU (intents, entities)
+PizzaOrder | An interactive form-filling skill allowing you to order a pizzas with various toppings and custom delivery times and locations and some additional chit-chat | Form-filling, more advanced NLU
+FlightBooking | An interactive form-filling skill allowing you to book flights | Form-filling, more advanced NLU
 
 # Running skills
 1. Clone the repository

@@ -6,9 +6,12 @@ import furhatos.flow.kotlin.*
 import furhatos.nlu.common.City
 import furhatos.nlu.common.Date
 import furhatos.nlu.common.Time
+import furhatos.util.Gender
+import furhatos.util.Language
 
 val Start : State = state(Interaction) {
     onEntry {
+        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
         furhat.say("Welcome to the flight booking system")
         goto(RequestStart)
     }
