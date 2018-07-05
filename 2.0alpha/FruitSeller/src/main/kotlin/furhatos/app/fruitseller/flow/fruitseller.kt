@@ -1,8 +1,6 @@
 package furhatos.app.fruitseller.flow
 
-import furhatos.app.fruitseller.nlu.BuyFruit
-import furhatos.app.fruitseller.nlu.Fruit
-import furhatos.app.fruitseller.nlu.RequestOptions
+import furhatos.app.fruitseller.nlu.*
 import furhatos.app.fruitseller.order
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.*
@@ -19,19 +17,16 @@ val Start = state(Interaction) {
     }
 }
 
-val TakingOrder = state(Interaction) {
-    onEntry {
-        random(
-            { furhat.ask("How about some fruits?") },
-            { furhat.ask("Do you want some fruits?") }
-        )
-    }
-
-    onReentry {
-        random(
-                { furhat.ask("We have very good fruits today") },
-                { furhat.ask("Want some?") }
-        )
+val Options = state(Interaction) {
+    onResponse<BuyFruit> {
+        val fruits = it.intent.fruits
+        if (fruits != null) {
+            goto(gotoOrderReceived(fruits))
+        }
+        else {
+            // currently not working in 0.3.3
+            //propagate()
+        }
     }
 
     onResponse<RequestOptions> {
@@ -39,23 +34,50 @@ val TakingOrder = state(Interaction) {
         furhat.ask("Do you want some?")
     }
 
-    onResponse<BuyFruit> {
-        furhat.say("${it.intent.fruits?.text}, what a lovely choice!")
-        it.intent.fruits?.list?.forEach {
+    onResponse<Yes> {
+        random(
+                { furhat.ask("What kind of fruit do you want?") },
+                { furhat.ask("What type of fruit?") }
+        )
+    }
+}
+
+val TakingOrder = state(Options) {
+    onEntry {
+        random(
+            { furhat.ask("How about some fruits?") },
+            { furhat.ask("Do you want some fruits?") }
+        )
+    }
+
+    onResponse<No> {
+        furhat.say("Okay, that's a shame. Have a splendid day!")
+        goto(Idle)
+    }
+}
+
+// State needed since it's currently not possible to reenter a state defined as a function taking a parameter
+fun gotoOrderReceived(fruitList: FruitList) = state {
+    onEntry {
+        goto(OrderReceived(fruitList))
+    }
+}
+
+fun OrderReceived(fruitList: FruitList) : State = state(Options) {
+    onEntry {
+        furhat.say("${fruitList.text}, what a lovely choice!")
+        fruitList.list.forEach {
+            println("adding fruit $it")
             users.current.order.fruits.list.add(it)
         }
         furhat.ask("Anything else?")
     }
 
-    onResponse<Yes> {
-        random(
-            { furhat.ask("What kind of fruit do you want?") },
-            { furhat.ask("What type of fruit?") }
-        )
+    onReentry {
+        furhat.ask("Did you want something else?")
     }
 
     onResponse<No> {
         furhat.say("Okay, here is your order of ${users.current.order.fruits}. Have a great day!")
-        goto(Idle)
     }
 }
