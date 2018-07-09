@@ -1,7 +1,0 @@
-﻿Question;Correct;Answer2;Answer3;Answer4;Category;Difficulty
-Which country won the 2016 Eurovision Song competition?;Ukraine;Sweden;France;Finland;Popular Culture;1;
-How many Popes were there during the Papal schism?;3;2;4;10;History;1;
-When was the first circumnavigation of the world completed?;15 22;14 99;16 32;15 78;History;1;
-Which language is Afrikaans derived from?;Dutch;German;Spanish;English;Geography;1;
-The Royal Mile is a famous street in which capital city?;Edinburgh;Ottawa;London;Dublin;Geography;1;
-How many wives did Henry VIII have?;6;5;8;4;History;1;

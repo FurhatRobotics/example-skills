@@ -1,9 +1,0 @@
-<package name="Houndify" version="1.3.0">
-	<provide>
-		<class type="iristk.furhat.skill.Skill" name="iristk.app.Houndify.HoundifySkill" />
-	</provide>
-	<classpath>
-		<src path="src" output="bin"/>
-		<lib path="lib/aws-s3-bucket-service.jar"/>
-	</classpath>
-</package>
