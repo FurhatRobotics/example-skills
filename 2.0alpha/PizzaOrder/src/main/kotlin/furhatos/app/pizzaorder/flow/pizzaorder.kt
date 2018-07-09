@@ -11,8 +11,13 @@ class TellToppingOptions : Event()
 class TellDeliveryOptions : Event()
 class TellOpeningHours : Event()
 
+/*
+    General enquiries that we want to be able to handle. The reason why we define events above
+    and then raise() events that we catch is that we want to be able to reuse these answers
+    in substates. For example, the user might as "what are your opening hours" both as an initial
+    question and after getting then question "when do you want it delivered?".
+ */
 val General: State = state(Interaction) {
-
     onResponse<RequestOpen> {
         raise(TellOpeningHours())
     }
@@ -48,26 +53,17 @@ val General: State = state(Interaction) {
 
 }
 
-val FillForm: State = state(parent = General) {
-
+// State with handlers only applicable once an order has been made.
+val OrderHandling: State = state(parent = General) {
     onResponse<RemoveTopping> {
         users.current.order.topping?.removeFromList(it.intent?.topping)
         furhat.say("Okay, we remove ${it.intent?.topping} from your pizza")
         reentry()
     }
-
 }
 
-
-val Start = state(parent= General) {
-    onEntry {
-        furhat.say("Welcome to Pizza house")
-        goto(RequestStart)
-    }
-}
-
+// Form-filling state
 val CheckOrder = state {
-
     onEntry {
         if (users.current.order.deliverTo == null) {
             goto(RequestDelivery)
@@ -82,16 +78,15 @@ val CheckOrder = state {
 
 }
 
-val RequestStart = state(parent= General) {
-
+// Start of interaction
+val Start = state(parent = General) {
     onEntry {
-        furhat.ask("How may I help you?")
+        furhat.ask("Welcome to Pizza house. How may I help you?")
     }
-
 }
 
-val RequestDelivery : State = state(parent = FillForm) {
-
+// Request delivery point
+val RequestDelivery : State = state(parent = OrderHandling) {
     onEntry() {
         furhat.ask("Where do you want it delivered?")
     }
@@ -108,7 +103,8 @@ val RequestDelivery : State = state(parent = FillForm) {
 
 }
 
-val RequestTime : State = state(parent = FillForm) {
+// Request delivery time
+val RequestTime : State = state(parent = OrderHandling) {
 
     onEntry() {
         furhat.ask("At what time do you want it delivered?")
@@ -126,7 +122,8 @@ val RequestTime : State = state(parent = FillForm) {
 
 }
 
-val RequestTopping : State = state(parent = FillForm) {
+// Request toppings
+val RequestTopping : State = state(parent = OrderHandling) {
 
     onEntry() {
         furhat.ask("Any extra topping?")
@@ -154,7 +151,8 @@ val RequestTopping : State = state(parent = FillForm) {
 
 }
 
-val ConfirmOrder = state(parent = FillForm) {
+// Confirming and verifying order
+val ConfirmOrder = state(parent = OrderHandling) {
     onEntry() {
         furhat.say("You want to order ${users.current.order}")
         furhat.ask("Is that correct?")
@@ -168,7 +166,8 @@ val ConfirmOrder = state(parent = FillForm) {
     }
 }
 
-val ChangeOrder = state(parent = FillForm) {
+// Changing order
+val ChangeOrder = state(parent = OrderHandling) {
     onEntry() {
         furhat.ask("Anything you would like to change?")
     }
@@ -180,10 +179,11 @@ val ChangeOrder = state(parent = FillForm) {
     }
 }
 
+// Order completed
 val EndOrder = state {
     onEntry {
         furhat.say("Thanks for your order. Goodbye")
-        terminate()
+        goto(Idle)
     }
 }
 

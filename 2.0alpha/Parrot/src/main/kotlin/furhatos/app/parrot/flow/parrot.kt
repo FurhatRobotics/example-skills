@@ -4,7 +4,6 @@ import furhatos.app.parrot.Animals
 import furhatos.app.parrot.Goodbye
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.*
-import furhatos.skills.SkillGUI
 
 val Start: State = state(Interaction) {
 

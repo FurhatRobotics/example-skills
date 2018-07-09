@@ -18,7 +18,6 @@ val Idle : State = state {
         users to enter.
      */
     init {
-        UserManager.getInstance()
         if (users.count > 0) {
             furhat.attend(users.random)
             goto(Start)

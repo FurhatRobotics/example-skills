@@ -72,6 +72,7 @@ class RemoveTopping : Intent() {
 
     override fun getExamples(lang: Language): List<String> {
         return listOf(
+                "no bacon",
                 "I do not want bacon",
                 "I don't want bacon",
                 "remove bacon from my pizza")

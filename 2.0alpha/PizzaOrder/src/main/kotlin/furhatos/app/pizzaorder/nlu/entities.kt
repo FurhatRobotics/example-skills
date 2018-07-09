@@ -20,6 +20,7 @@ class Place : EnumEntity() {
         return listOf("home", "office")
     }
 
+    // Method overriden to produce a spoken utterancce of the place
     override fun toText(lang: Language): String {
         return generate(lang,"to your $value");
     }
