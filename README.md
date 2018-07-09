@@ -1,4 +1,4 @@
-# Furhat example-skills 2nd-generation (Alpha)
+# Furhat example-skills 2nd generation.
 
 Example skills provided by Furhat Robotics. Contributions welcome from everyone!
 
