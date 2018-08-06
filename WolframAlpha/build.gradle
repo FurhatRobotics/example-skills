@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        maven { url "http://furhatrobotics.bintray.com/furhat" }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.furhatrobotics.furhatos:skill-configuration:+'
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.30"
+}
+
+apply plugin: 'com.furhatrobotics.skill-configuration'
+
+repositories {
+    maven { url "http://furhatrobotics.bintray.com/furhat" }
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile 'com.furhatrobotics.furhatos:furhat-commons:0.3.4'
+    compile 'com.github.jkcclemens:khttp:0.1.0'
+}
