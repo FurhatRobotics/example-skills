@@ -17,7 +17,7 @@ val Start : State = state(Interaction) {
     }
 
     onResponse<Yes>{
-        furhat.say("What is it?")
+        furhat.ask("What is it?")
     }
 
     onResponse<No>{
