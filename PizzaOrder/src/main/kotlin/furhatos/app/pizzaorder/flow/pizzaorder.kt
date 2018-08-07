@@ -75,7 +75,6 @@ val CheckOrder = state {
             goto(ConfirmOrder)
         }
     }
-
 }
 
 // Start of interaction

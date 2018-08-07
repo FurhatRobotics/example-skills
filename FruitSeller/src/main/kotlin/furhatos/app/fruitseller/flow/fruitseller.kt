@@ -29,7 +29,7 @@ val Options = state(Interaction) {
     }
 
     onResponse<RequestOptions> {
-        furhat.say("We have ${Fruit().getEnum(Language.ENGLISH_US).joinToString(", ")}")
+        furhat.say("We have ${Fruit().optionsToText()}")
         furhat.ask("Do you want some?")
     }
 

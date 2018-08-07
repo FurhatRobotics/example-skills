@@ -22,6 +22,7 @@ val Start : State = state(Interaction) {
 
     onResponse<No>{
         furhat.say("Okay, no worries")
+        goto(Idle)
     }
 
     onResponse {
@@ -32,22 +33,9 @@ val Start : State = state(Interaction) {
         }, async = true)
 
         // Query done in query state below, with its result saved here since we're doing a call
-        val response : String? = call(Query(it.text)) as String?
+        val response = call(Query(it.text)) as String
 
-        // Reply to user depending on the returned response
-        val reply = when {
-            response == null || response == "" -> {
-                println("Issues connecting to Wolfram alpha")
-                "I'm having issues connecting to my brain. Try again later!"
-            }
-            FAILED_RESPONSES.contains(response) -> {
-                println("No answer to question: ${it.text}")
-                "Sorry bro, can't answer that"
-            }
-            else -> response
-        }
-
-        furhat.say(reply)
+        furhat.say(response)
 
         furhat.ask("Anything else?")
     }
@@ -66,12 +54,21 @@ fun Query(question: String) = state {
             khttp.get(query).text
         } as String
 
+        // Reply to user depending on the returned response
+        val reply = when {
+            FAILED_RESPONSES.contains(response) -> {
+                println("No answer to question: $question")
+                "Sorry bro, can't answer that"
+            }
+            else -> response
+        }
         // Return the response
-        terminate(response)
+        terminate(reply)
     }
 
     onTime(TIMEOUT) {
+        println("Issues connecting to Wolfram alpha")
         // If timeout is reached, we return nothing
-        terminate()
+        terminate("I'm having issues connecting to my brain. Try again later!")
     }
 }
