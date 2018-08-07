@@ -21,11 +21,10 @@ val Options = state(Interaction) {
     onResponse<BuyFruit> {
         val fruits = it.intent.fruits
         if (fruits != null) {
-            goto(gotoOrderReceived(fruits))
+            goto(OrderReceived(fruits))
         }
         else {
-            // currently not working in 0.3.3
-            //propagate()
+            propagate()
         }
     }
 
@@ -53,13 +52,6 @@ val TakingOrder = state(Options) {
     onResponse<No> {
         furhat.say("Okay, that's a shame. Have a splendid day!")
         goto(Idle)
-    }
-}
-
-// State needed since it's currently not possible to reenter a state defined as a function taking a parameter
-fun gotoOrderReceived(fruitList: FruitList) = state {
-    onEntry {
-        goto(OrderReceived(fruitList))
     }
 }
 
