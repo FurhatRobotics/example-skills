@@ -6,10 +6,10 @@ import furhatos.util.Language
 
 class ListOfTopping : ListEntity<Topping>()
 
-class Topping : EnumEntity() {
+class Topping : EnumEntity(speechRecPhrases = true) {
 
     override fun getEnum(lang: Language): List<String> {
-        return listOf("onion", "tomato", "ham", "bacon", "rocket salad", "pepper")
+        return listOf("onion", "ham", "mozzarella", "bacon", "rocket salad:rocket salad,rocket sallad", "pepper")
     }
 
 }
@@ -20,7 +20,7 @@ class Place : EnumEntity() {
         return listOf("home", "office")
     }
 
-    // Method overriden to produce a spoken utterancce of the place
+    // Method overridden to produce a spoken utterance of the place
     override fun toText(lang: Language): String {
         return generate(lang,"to your $value");
     }
