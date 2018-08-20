@@ -10,62 +10,36 @@ import furhatos.nlu.common.Time
 import furhatos.nlu.common.Yes
 import java.time.LocalTime
 
-class TellToppingOptions : Event()
-class TellDeliveryOptions : Event()
-class TellOpeningHours : Event()
-val orderChanged = false
 /*
-    General enquiries that we want to be able to handle. The reason why we define events above
-    and then raise() events that we catch is that we want to be able to reuse these answers
-    in substates. For example, the user might as "what are your opening hours" both as an initial
-    question and after getting then question "when do you want it delivered?".
+    General enquiries that we want to be able to handle as well as an OrderPizzaIntent that is used for initial orders.
  */
 val General: State = state(Interaction) {
-    onResponse<RequestDeliveryOptions> {
-        raise(TellDeliveryOptions())
-    }
-
-    onEvent<TellDeliveryOptions> {
+    onResponse<RequestDeliveryOptionsIntent> {
         furhat.say("We can deliver to your home and to your office")
         reentry()
     }
-    onResponse<RequestOpeningHours> {
-        raise(TellOpeningHours())
-    }
 
-    onEvent<TellOpeningHours> {
+    onResponse<RequestOpeningHoursIntent> {
         furhat.say("We are open between 7 am and 8 pm")
         reentry()
     }
 
-    onResponse<RequestToppingOptions> {
-        raise(TellToppingOptions())
-    }
-
-    onEvent<TellToppingOptions> {
+    onResponse<RequestToppingOptionsIntent> {
         furhat.say("We have " + Topping().optionsToText())
         reentry()
+    }
+}
+
+// Start of interaction
+val Start = state(parent = General) {
+    onEntry {
+        furhat.ask("Welcome to Pizza house. How may I help you?")
     }
 
     onResponse<OrderPizzaIntent> {
         users.current.order.adjoin(it.intent)
-        furhat.say("Okay, you want ${it.intent}")
+        furhat.say("Ok, you want a pizza ${it.intent}")
         goto(CheckOrder)
-    }
-
-}
-
-val OrderHandling: State = state(parent = General) {
-    onResponse<AddToppingIntent> {
-        users.current.order.adjoin(it.intent)
-        furhat.say("Okay, added ${it.intent.topping}")
-        reentry()
-    }
-
-    onResponse<RemoveToppingIntent> {
-        users.current.order.topping?.removeFromList(it.intent?.topping)
-        furhat.say("Okay, we remove ${it.intent?.topping} from your pizza")
-        reentry()
     }
 }
 
@@ -78,16 +52,64 @@ val CheckOrder = state {
             order.deliverTo == null -> goto(RequestDelivery)
             order.deliveryTime == null -> goto(RequestTime)
             else -> {
+                furhat.say("Alright, so you want to order a pizza $order")
                 goto(ConfirmOrder)
             }
         }
     }
 }
 
-// Start of interaction
-val Start = state(parent = General) {
-    onEntry {
-        furhat.ask("Welcome to Pizza house. How may I help you?")
+/*
+    State for handling changes to an existing order
+ */
+val OrderHandling: State = state(parent = General) {
+
+    // Handler that re-uses our pizza intent but has a more intelligent response handling depending on what new information we get
+    onResponse<OrderPizzaIntent> {
+        val order = users.current.order
+
+        // Message to be constructed based on what data points we get from the user
+        var message = "Okay"
+
+        // Adding topping(s) if we get any new
+        if (it.intent.topping != null) message += ", adding }"
+
+        // Adding or changing delivery option and time
+        if (it.intent.deliverTo != null || it.intent.deliveryTime != null) {
+
+            /* We are constructing a specific message depending on if we
+            get a delivery place and/or time and if this slot already had a value
+             */
+            when {
+                it.intent.deliverTo != null && it.intent.deliveryTime != null -> { // We get both a delivery place and time
+                    message += ", delivering ${it.intent.deliverTo} ${it.intent.deliveryTime} "
+                    if (order.deliverTo != null || order.deliveryTime != null) message += "instead " // Add an "instead" if we are overwriting any of the slots
+                }
+                it.intent.deliverTo != null -> { // We get only a delivery place
+                    message += ", delivering ${it.intent.deliverTo} "
+                    if (order.deliverTo != null) message += "instead " // Add an "instead" if we are overwriting the slot
+                }
+                it.intent.deliveryTime != null -> { // We get only a delivery time
+                    message += ", delivering ${it.intent.deliveryTime} "
+                    if (order.deliveryTime != null) message += "instead " // Add an "instead" if we are overwriting the slot
+                }
+            }
+        }
+
+        // Deliver our message
+        furhat.say(message)
+
+        // Finally we join the existing order with the new one
+        order.adjoin(it.intent)
+
+        reentry()
+    }
+
+    // Specific handler for removing toppings since this is to complex to include in our OrderPizzaIntent (due to the ambiguity of adding vs removing toppings)
+    onResponse<RemoveToppingIntent> {
+        users.current.order.topping?.removeFromList(it.intent?.topping)
+        furhat.say("Okay, we remove ${it.intent?.topping} from your pizza")
+        reentry()
     }
 }
 
@@ -101,12 +123,12 @@ val RequestTopping : State = state(parent = OrderHandling) {
         furhat.ask("Do you want any extra topping?")
     }
 
-    onResponse<RequestOptionsIntent> {
-        raise(TellToppingOptions())
-    }
-
     onResponse<Yes> {
         furhat.ask("What kind of topping do you want?")
+    }
+
+    onResponse<RequestOptionsIntent> {
+        transform(it, RequestToppingOptionsIntent())
     }
 
     onResponse<No> {
@@ -129,7 +151,7 @@ val RequestDelivery : State = state(parent = OrderHandling) {
     }
 
     onResponse<RequestOptionsIntent> {
-        raise(TellDeliveryOptions())
+        transform(it, RequestDeliveryOptionsIntent())
     }
 
     onResponse<TellPlaceIntent> {
@@ -146,48 +168,35 @@ val RequestTime : State = state(parent = OrderHandling) {
     }
 
     onResponse<RequestOptionsIntent> {
-        raise(TellOpeningHours())
+        transform(it, RequestOpeningHoursIntent())
     }
 
-    class TellTime(val intent: TellTimeIntent) : Event()
-
     onResponse<Number> {
-        println(it)
-        println(LocalTime.of(it.intent.value, 0))
-        raise(TellTime(intent = TellTimeIntent(time = Time(LocalTime.of(it.intent.value, 0)))))
+        var hour = it.intent.value
+
+        // We're assuming we want an afternoon delivery, so if the user says "at 5", we assume it's 5pm.
+        if (hour <= 12) hour += 12
+        transform(it, TellTimeIntent(Time(LocalTime.of(hour, 0))))
     }
 
     onResponse<TellTimeIntent> {
-        println(it.intent.time)
-        raise(TellTime(it.intent))
-    }
-
-    onEvent<TellTime> {
-        println(it)
         furhat.say("Okay, ${it.intent.time}")
         users.current.order.deliveryTime = it.intent.time
         goto(CheckOrder)
     }
 }
 
-// Confirming and verifying order
+// Confirming order
 val ConfirmOrder : State = state(parent = OrderHandling) {
-    onEntry() {
-        furhat.say("You want to order ${users.current.order}")
-        furhat.ask("Is that correct?")
-    }
-
-    onResponse<OrderPizzaIntent> {
-        val order = users.current.order
-        order.adjoin(it.intent)
-        furhat.say("Okay, let's change that. So,")
-        reentry()
+    onEntry {
+        furhat.ask("Does that sound good?")
     }
 
     onResponse<Yes> {
-        furhat.say("Okay")
+        furhat.say("Great")
         goto(EndOrder)
     }
+
     onResponse<No> {
         goto(ChangeOrder)
     }
@@ -196,11 +205,11 @@ val ConfirmOrder : State = state(parent = OrderHandling) {
 // Changing order
 val ChangeOrder = state(parent = OrderHandling) {
     onEntry {
-        furhat.ask("Anything you would like to change?")
+        furhat.ask("Anything that you like to change?")
     }
 
     onReentry {
-        furhat.ask("Anything else you want to change?")
+        furhat.ask("I currently have a pizza ${users.current.order}. Anything that you like to change?")
     }
 
     onResponse<Yes> {
@@ -215,7 +224,7 @@ val ChangeOrder = state(parent = OrderHandling) {
 // Order completed
 val EndOrder = state {
     onEntry {
-        furhat.say("Thanks for your order. Goodbye")
+        furhat.say("Great, thanks for your order. Goodbye")
         goto(Idle)
     }
 }

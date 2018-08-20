@@ -8,7 +8,6 @@ import furhatos.nlu.common.Number
 import furhatos.records.GenericRecord
 
 open class OrderPizzaIntent : Intent(), TextGenerator {
-    var count : Number = Number(1)
     var topping : ListOfTopping? = null
     var deliverTo : Place? = null
     var deliveryTime : Time? = null
@@ -22,13 +21,15 @@ open class OrderPizzaIntent : Intent(), TextGenerator {
                 "I want it to @deliverTo",
                 "Deliver it at @deliveryTime",
                 "I want it at @deliveryTime",
-                "I want @count pizzas",
-                "I want @count of the same"
+                "I want to add @topping",
+                "I also want @topping",
+                "I want @topping",
+                "I want it @deliveryTime @deliverTo"
         )
     }
 
     override fun toText(lang : Language) : String {
-        return generate(lang, "${if (count.value?:1>1) "${count.value} pizzas" else "a pizza"} [with $topping] [delivered $deliverTo] [$deliveryTime]");
+        return generate(lang, "[with $topping] [$deliverTo] [delivered $deliveryTime]");
     }
 
     override fun toString(): String {
@@ -54,7 +55,7 @@ class TellPlaceIntent : Intent() {
 class TellTimeIntent(var time : Time? = null) : Intent() {
 
     override fun getExamples(lang: Language): List<String> {
-        return listOf("@time", "at @time", "I want it delivered at @time")
+        return listOf("@time", "at @time")
     }
 }
 
@@ -102,21 +103,21 @@ class RequestOptionsIntent : Intent()  {
     }
 }
 
-class RequestDeliveryOptions : Intent()  {
+class RequestDeliveryOptionsIntent : Intent()  {
     override fun getExamples(lang: Language): List<String> {
         return listOf("where can you deliver",
                 "where can I get it")
     }
 }
 
-class RequestToppingOptions : Intent()  {
+class RequestToppingOptionsIntent : Intent()  {
     override fun getExamples(lang: Language): List<String> {
         return listOf("what topping do you have",
                 "what different toppings do you have?")
     }
 }
 
-class RequestOpeningHours : Intent() {
+class RequestOpeningHoursIntent : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf("what are your opening hours",
                 "when do you open",
