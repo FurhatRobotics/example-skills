@@ -43,7 +43,7 @@ val Start = state(parent = General) {
     }
 }
 
-// Form-filling state
+// Form-filling state that checks any missing slots and if so, goes to specific slot-filling states.
 val CheckOrder = state {
     onEntry {
         val order = users.current.order
