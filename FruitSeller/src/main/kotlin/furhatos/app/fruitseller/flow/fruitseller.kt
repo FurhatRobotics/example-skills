@@ -59,7 +59,6 @@ fun OrderReceived(fruitList: FruitList) : State = state(Options) {
     onEntry {
         furhat.say("${fruitList.text}, what a lovely choice!")
         fruitList.list.forEach {
-            println("adding fruit $it")
             users.current.order.fruits.list.add(it)
         }
         furhat.ask("Anything else?")
