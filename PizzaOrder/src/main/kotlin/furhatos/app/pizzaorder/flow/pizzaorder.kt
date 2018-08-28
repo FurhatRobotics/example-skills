@@ -176,7 +176,7 @@ val RequestTime : State = state(parent = OrderHandling) {
 
         // We're assuming we want an afternoon delivery, so if the user says "at 5", we assume it's 5pm.
         if (hour <= 12) hour += 12
-        transform(it, TellTimeIntent(Time(LocalTime.of(hour, 0))))
+            transform(it, TellTimeIntent(Time(LocalTime.of(hour, 0))))
     }
 
     onResponse<TellTimeIntent> {
