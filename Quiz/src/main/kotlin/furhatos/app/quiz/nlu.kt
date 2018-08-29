@@ -47,7 +47,6 @@ class RequestRepeatOptions : Intent() {
 
 class AnswerOption : EnumEntity {
 
-    @RecordField
     var correct : Boolean = false
 
     constructor() {
