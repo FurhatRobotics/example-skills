@@ -52,12 +52,12 @@ class Question(val text: String, val answer: String, val alternatives: List<Stri
 
     fun getOptionsString() : String {
         var text = TextBuilder()
-        text.appendList(options.map { it.entity.value }, "or")
+        text.appendList(options.map { it.wordString }, "or")
         return text.toString()
     }
 
     val phrases : List<String>
-        get() = options.map { it.entity.value ?: "" }
+        get() = options.map { it.wordString ?: "" }
 
 }
 
