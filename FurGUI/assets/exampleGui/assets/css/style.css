@@ -1,0 +1,53 @@
+*{
+    box-sizing: border-box;
+}
+
+html {
+    height: 100vh
+}
+
+body {
+    min-height: 100vh
+}
+
+.appContainer {
+    min-height: 100vh;
+    padding: 30px;
+}
+
+.sectionList {
+  width: 100%;
+  height: calc(100vh - 140px)
+}
+
+.section {
+  height: 100%;
+  background-color: #FFF;
+}
+
+body {
+    background: #F7F7F7;
+}
+
+.center{
+    text-align: center;
+}
+
+p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: #fff;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 300;
+}
+
+.button {
+  height: 50px;
+  width: 200px;
+  padding: 0 !important;
+  margin-bottom: 20px;
+}
