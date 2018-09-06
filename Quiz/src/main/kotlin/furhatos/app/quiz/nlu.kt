@@ -49,16 +49,18 @@ class AnswerOption : EnumEntity {
 
     var correct : Boolean = false
 
+    // Every entity and intent needs an empty constructor.
     constructor() {
     }
 
+    // Since we are overwriting the value, we need to use this custom constructor
     constructor(correct : Boolean, value : String) {
         this.correct = correct
         this.value = value
     }
 
     override fun getEnumItems(lang: Language): List<EnumItem> {
-        return QuestionSet.current!!.options;
+        return QuestionSet.current.options;
     }
 
 }
