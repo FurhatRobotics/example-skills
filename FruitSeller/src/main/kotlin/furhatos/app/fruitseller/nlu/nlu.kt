@@ -18,8 +18,8 @@ class RequestOptions: Intent() {
 class FruitList : ListEntity<QuantifiedFruit>()
 
 class QuantifiedFruit(
-        val count : Number? = Number(1),
-        val fruit : Fruit? = null) : ComplexEnumEntity() {
+        var count : Number? = Number(1),
+        var fruit : Fruit? = null) : ComplexEnumEntity() {
     override fun getEnum(lang: Language): List<String> {
         return listOf("@count @fruit", "@fruit")
     }
@@ -35,10 +35,7 @@ class Fruit : EnumEntity(stemming = true, speechRecPhrases = true) {
     }
 }
 
-class BuyFruit : Intent() {
-
-    val fruits : FruitList? = null
-
+class BuyFruit(var fruits : FruitList? = null) : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf("@fruits", "I want @fruits", "I would like @fruits", "I want to buy @fruits")
     }

@@ -2,3 +2,4 @@
 */out
 */.gradle
 */logs
+**/node_modules/

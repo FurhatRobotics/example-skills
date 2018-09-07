@@ -1,5 +1,7 @@
 package furhatos.app.quiz
 
+import furhatos.nlu.EnumEntity
+import furhatos.nlu.EnumItem
 import furhatos.nlu.Intent
 import furhatos.util.Language
 
@@ -45,19 +47,20 @@ class RequestRepeatOptions : Intent() {
 
 class AnswerOption : EnumEntity {
 
-    @RecordField
     var correct : Boolean = false
 
+    // Every entity and intent needs an empty constructor.
     constructor() {
     }
 
+    // Since we are overwriting the value, we need to use this custom constructor
     constructor(correct : Boolean, value : String) {
         this.correct = correct
         this.value = value
     }
 
     override fun getEnumItems(lang: Language): List<EnumItem> {
-        return QuestionSet.current!!.options;
+        return QuestionSet.current.options;
     }
 
 }
