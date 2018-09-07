@@ -39,13 +39,9 @@ val GUIConnected = state(NoGUI) {
     // Users saved some input
     onEvent("VariableSet") {
         // Get data from event
-        println(it)
         val data = it.get("data") as Record
-        println(data)
         val variable = data.getString("variable")
-        println(variable)
         val value = data.getString("value")
-        println(value)
 
         // Get answer depending on what variable we changed and what the new value is, and speak it out
         val answer = inputFieldData[variable]?.invoke(value)
