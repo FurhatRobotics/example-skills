@@ -16,11 +16,6 @@ class Input extends Component {
   }
 
   isAllowedSubmit = () => {
-    console.log("....")
-    console.log(this.state.disabled)
-    console.log(this.props.speaking)
-    console.log(!this.state.disabled && !this.props.speaking)
-    console.log("....")
     return !this.state.disabled && !this.props.speaking
   }
 
