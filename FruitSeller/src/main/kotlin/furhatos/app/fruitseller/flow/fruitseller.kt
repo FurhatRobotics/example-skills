@@ -55,10 +55,10 @@ val TakingOrder = state(Options) {
     }
 }
 
-fun OrderReceived(fruitList: FruitList) : State = state(Options) {
+fun OrderReceived(fruits: FruitList) : State = state(Options) {
     onEntry {
-        furhat.say("${fruitList.text}, what a lovely choice!")
-        fruitList.list.forEach {
+        furhat.say("${fruits.text}, what a lovely choice!")
+        fruits.list.forEach {
             users.current.order.fruits.list.add(it)
         }
         furhat.ask("Anything else?")
