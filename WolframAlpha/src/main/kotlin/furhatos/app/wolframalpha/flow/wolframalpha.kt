@@ -10,10 +10,10 @@ val FAILED_RESPONSES = listOf("No spoken result available", "Wolfram Alpha did n
 val TIMEOUT = 4000 // 4 seconds
 
 // Start state containing everything except the query to the API
-val Start : State = state(Interaction) {
+val start : State = state(interaction) {
 
     onEntry {
-        furhat.ask("Hi there! Do you have any question?")
+        furhat.ask("Hi there! Do you have any questions?")
     }
 
     onResponse<Yes>{
@@ -22,18 +22,18 @@ val Start : State = state(Interaction) {
 
     onResponse<No>{
         furhat.say("Okay, no worries")
-        goto(Idle)
+        goto(idle)
     }
 
     onResponse {
         // Filler speech and gesture
-        furhat.say({
+        furhat.say(async = true) {
             +"Let's see"
             +Gestures.GazeAway
-        }, async = true)
+        }
 
         // Query done in query state below, with its result saved here since we're doing a call
-        val response = call(Query(it.text)) as String
+        val response = call(query(it.text)) as String
 
         furhat.say(response)
 
@@ -42,7 +42,7 @@ val Start : State = state(Interaction) {
 }
 
 // State to conduct the query to the API
-fun Query(question: String) = state {
+fun query(question: String) = state {
     onEntry {
         val question = question.replace("+", " plus ").replace(" ", "+")
         val query = "$BASE_URL?i=$question&appid=$APP_ID"

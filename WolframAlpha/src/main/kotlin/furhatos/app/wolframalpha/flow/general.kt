@@ -3,13 +3,12 @@ package furhatos.app.wolframalpha.flow
 import furhatos.flow.kotlin.*
 import furhatos.util.*
 
-val Idle: State = state {
-
+val idle: State = state {
     init {
         furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
         if (users.count > 0) {
             furhat.attend(users.random)
-            goto(Start)
+            goto(start)
         }
     }
 
@@ -19,22 +18,21 @@ val Idle: State = state {
 
     onUserEnter {
         furhat.attend(it)
-        goto(Start)
+        goto(start)
     }
 }
 
-val Interaction: State = state {
-
+val interaction: State = state {
     onUserLeave(instant = true) {
         if (users.count > 0) {
             if (it == users.current) {
                 furhat.attend(users.other)
-                goto(Start)
+                goto(start)
             } else {
                 furhat.glance(it)
             }
         } else {
-            goto(Idle)
+            goto(idle)
         }
     }
 
