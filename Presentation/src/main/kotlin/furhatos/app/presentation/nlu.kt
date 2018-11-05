@@ -1,4 +1,4 @@
-package furhatos.app.presentation.nlu
+package furhatos.app.presentation
 
 import furhatos.nlu.Intent
 import furhatos.util.Language

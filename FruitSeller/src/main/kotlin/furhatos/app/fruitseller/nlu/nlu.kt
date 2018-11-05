@@ -25,7 +25,7 @@ class QuantifiedFruit(
     }
 
     override fun toText(): String {
-        return generate("$count $fruit")
+        return generate("$count " + if (count?.value == 1) fruit?.value else "${fruit?.value}" + "s")
     }
 }
 

@@ -1,10 +1,9 @@
 package furhatos.app.presentation.flow
 
 import furhatos.app.presentation.attendRandomUserOrLocation
-import furhatos.app.presentation.nlu.StartIntent
+import furhatos.app.presentation.StartIntent
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
-import furhatos.records.Location
 import furhatos.util.*
 
 val Idle : State = state {
