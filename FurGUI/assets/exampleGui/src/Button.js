@@ -2,8 +2,6 @@ import React, {Component} from "react"
 import {
   Col,
   Button as BootstrapButton,
-  Image,
-  Media
 } from 'react-bootstrap';
 
 class Button extends Component {

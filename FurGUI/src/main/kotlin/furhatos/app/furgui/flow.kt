@@ -7,6 +7,8 @@ import furhatos.skills.HostedGUI
 
 // Our GUI declaration
 val GUI = HostedGUI("ExampleGUI", "assets/exampleGui", PORT)
+val VARIABLE_SET = "VariableSet"
+val CLICK_BUTTON = "ClickButton"
 
 // Starting state, before our GUI has connected.
 val NoGUI: State = state(null) {
@@ -28,7 +30,7 @@ val GUIConnected = state(NoGUI) {
     }
 
     // Users clicked any of our buttons
-    onEvent("ClickButton") {
+    onEvent(CLICK_BUTTON) {
         // Directly respond with the value we get from the event, with a fallback
         furhat.say("You pressed ${it.get("data") ?: "something I'm not aware of" }")
 
@@ -37,7 +39,7 @@ val GUIConnected = state(NoGUI) {
     }
 
     // Users saved some input
-    onEvent("VariableSet") {
+    onEvent(VARIABLE_SET) {
         // Get data from event
         val data = it.get("data") as Record
         val variable = data.getString("variable")

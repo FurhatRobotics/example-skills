@@ -14,8 +14,8 @@ val inputFieldData = mutableMapOf<String, (String) -> String>(
     "Favorite robot" to { robotName ->
         when (robotName.toLowerCase()) {
             "furhat" -> "I love you too!"
-            "pepper" -> "I prefer salt"
-            "jibo" -> "Jibo was cute. I miss her"
+            "pepper" -> "I prefer salt to be honest"
+            "jibo" -> "Jibo was cute. I miss him"
             else -> "Really? I don't know $robotName. I'd like to meet it"
         }
     }
