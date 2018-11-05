@@ -1,4 +1,6 @@
-# Furhat example-skills 2nd generation.
+# Furhat example-skills 2nd generation: LEGACY v0.3.5
+
+> Note: this branch will only be updated for eventual bugfixes and not actively maintained. 
 
 Example skills for the Furhat robot, provided by Furhat Robotics. Contributions welcome from everyone, just send a PR!
 
@@ -14,9 +16,8 @@ Skill                 | Description                                 | Concepts s
 Presentation | A skill where Furhat presents himself | showcases a listen-loop, a simple wizard button and expressive speech | Speech output, extention methods, listen-loop, wizard button, onTime
 FruitSeller | An interactive skill allowing you to order fruits | Speech input, NLU (intents, entities)
 WolframAlpha | A simple interactive skill allowing you to ask various questions to the Wolfram Alpha API | Querying external APIs
-PizzaOrder (temporary removed) | An interactive form-filling skill allowing you to order a pizzas with various toppings and custom delivery times and locations and some additional chit-chat | Form-filling, more advanced NLU
 Quiz | A multi-party, interactive quiz-game allowing one or two persons to play a trivia quiz with Furhat | Multiparty, dynamic intents, recognition phrases
-FurGUI **(NEW)** | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
+FurGUI | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`
@@ -26,4 +27,4 @@ FurGUI **(NEW)** | A simple skill showcasing how to add a custom Skill GUI built
 5. Run the skill by the main method in the skill's `main.kt` file. If you want to run on a robot, see [this part of the docs](https://docs.furhat.io/skills/#running-a-skill-on-a-robot)
 
 # Documentation
-For more info, see [docs.furhat.io](https://docs.furhat.io).
+For more info, see [docs.furhat.io](https://docs.furhat.io/legacy).
