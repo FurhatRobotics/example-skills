@@ -25,7 +25,7 @@ val Idle : State = state {
     }
 
     onEntry {
-        if (users.count > 0 || true) {
+        if (users.count > 0) {
             furhat.attendNobody()
         }
     }
