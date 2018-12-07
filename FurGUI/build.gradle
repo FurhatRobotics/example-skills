@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenLocal()
+       // mavenLocal()
         maven { url "http://furhatrobotics.bintray.com/furhat" }
         mavenCentral()
     }
@@ -23,5 +23,5 @@ repositories {
 }
 
 dependencies {
-    compile 'com.furhatrobotics.furhatos:furhat-commons:1.4.0'
+    compile 'com.furhatrobotics.furhatos:furhat-commons:1.4.1'
 }                                                                    
