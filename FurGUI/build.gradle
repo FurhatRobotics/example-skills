@@ -24,4 +24,4 @@ repositories {
 
 dependencies {
     compile 'com.furhatrobotics.furhatos:furhat-commons:1.4.1'
-}                                                                    
+}                                            
