@@ -39,7 +39,7 @@ open class OrderPizzaIntent : Intent(), TextGenerator {
     override fun adjoin(record: GenericRecord<Any>?) {
         super.adjoin(record)
         if (topping != null){
-            topping?.list = topping?.list?.distinctBy { it.value }
+            topping?.list = topping?.list?.distinctBy { it.value }!!.toMutableList()
         }
     }
 }
