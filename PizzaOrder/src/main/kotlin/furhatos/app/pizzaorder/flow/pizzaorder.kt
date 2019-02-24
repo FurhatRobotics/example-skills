@@ -106,7 +106,7 @@ val OrderHandling: State = state(parent = Questions) {
 
     // Specific handler for removing toppings since this is to complex to include in our OrderPizzaIntent (due to the ambiguity of adding vs removing toppings)
     onResponse<RemoveToppingIntent> {
-        users.current.order.topping?.removeFromList(it.intent?.topping)
+        users.current.order.topping?.removeFromList(it.intent?.topping!!)
         furhat.say("Okay, we remove ${it.intent?.topping} from your pizza")
         reentry()
     }
