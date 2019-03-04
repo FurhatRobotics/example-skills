@@ -30,9 +30,8 @@ object QuestionSet {
  * @text : The question as a String
  * @answer : A list containing the correct answer to the question, followed by alternative pronounciatons of the correct answer
  * @alternatives A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronounciations of the correct answer.
- * @persona
  */
-class Question(val text: String, answer: List<String>, alternatives: List<List<String>>, val persona: String = "Furhat") {
+class Question(val text: String, answer: List<String>, alternatives: List<List<String>>) {
     //All options, used to prime the NLU
     var options : MutableList<EnumItem> = mutableListOf()
     //Only the first option of the answers, these are correctly spelled, and not alternative.
