@@ -23,5 +23,9 @@ repositories {
 }
 
 dependencies {
-	compile 'com.furhatrobotics.furhatos:furhat-commons:1.4.1'
+	if (project.findProject(':furhat-commons') != null) {
+		implementation project.project(':furhat-commons')
+	} else {
+		implementation "com.furhatrobotics.furhatos:furhat-commons:1.8.0"
+	}
 }

@@ -3,3 +3,5 @@
 */.gradle
 */logs
 **/node_modules/
+*/.idea
+*.iml

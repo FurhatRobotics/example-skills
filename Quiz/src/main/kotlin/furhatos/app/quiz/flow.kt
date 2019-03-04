@@ -169,7 +169,7 @@ val AskQuestion : State = state(parent = Interaction) {
         failedAttempts = 0
 
         // Set speech rec phrases based on the current question's answers
-        furhat.setSpeechRecPhrases(QuestionSet.current.phrases)
+        furhat.setSpeechRecPhrases(QuestionSet.current.speechPhrases)
 
         // Ask the question followed by the options
         furhat.ask(QuestionSet.current.text + " " + QuestionSet.current.getOptionsString())
