@@ -5,7 +5,6 @@ package furhatos.app.quiz
  *  -The question
  *  -The correct answer, followed by alternative pronounciations
  *  -A list of other answers followed by their alternatives
- *  -The persona
  */
 val questionsEnglish = mutableListOf(
         Question("How many wives did Henry VIII have?",

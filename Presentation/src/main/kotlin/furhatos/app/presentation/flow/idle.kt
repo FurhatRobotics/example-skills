@@ -5,8 +5,11 @@ import furhatos.app.presentation.StartIntent
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.util.*
+import kotlin.Pair
 
-val Idle : State = state {
+val globalDefaultMale = Pair(Language.ENGLISH_US, "Matthew")
+val globalDefaultFemale = Pair(Language.ENGLISH_US, "Joanna")
+val Idle : State = state(Parent) {
 
     var shouldListen = true
 
@@ -21,7 +24,7 @@ val Idle : State = state {
 
     onEntry {
         furhat.setTexture("default")
-        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
+        furhat.setVoice(globalDefaultMale.first, globalDefaultMale.second)
 
         if (shouldListen) {
             furhat.listen()
