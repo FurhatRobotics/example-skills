@@ -1,7 +1,6 @@
 package furhatos.app.presentation.flow
 
-import furhatos.app.presentation.attendRandomUserOrLocation
-import furhatos.app.presentation.StartIntent
+import furhatos.app.presentation.*
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.util.*
@@ -43,8 +42,16 @@ val Idle : State = state(Parent) {
         goto(Start)
     }
 
-    onButton("Start") { // Creating a wizard button to start the presentation
-        goto(Start)
+    onResponse<ShowEmotionIntent> {// If the user wants us to show emotions
+        call(ComplexEmotions)
+    }
+
+    onResponse<ShowLEDIntent> {// If the user wants us to show the LEDs
+        call(ShowLED)
+    }
+
+    onResponse<ShowPersonalitiesIntent> {// If the user wants us to show different personalities
+        call(DifferentPersonalities)
     }
 
     onResponse { // Any other speech than our Start intent should just keep the listen loop

@@ -17,14 +17,16 @@ import furhatos.skills.UserManager
  */
 fun FlowControlRunner.attendRandomUserOrLocation() {
     if (users.count > 0) {
+        //If there are users, furhat does one of the following things:
+        //attend random user, attend all users, or shows a sick roll.
         random(
                 { furhat.attend(users.random) },
-                { furhat.attendRandomLocation() },
                 { furhat.attendAll()},
-                { furhat.gesture(Gestures.Roll)}
+                { furhat.gesture(Gestures.Roll(0.2))}
         )
     }
     else {
+        //If there are no users, Furhat will look in a random direction.
         furhat.attendRandomLocation()
     }
 }
