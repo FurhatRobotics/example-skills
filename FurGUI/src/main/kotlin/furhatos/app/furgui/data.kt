@@ -10,7 +10,7 @@ val buttons = listOf("A button", "Another button")
   */
 val inputFieldData = mutableMapOf<String, (String) -> String>(
     "Name" to { name -> "Nice to meet you $name" },
-    "Age" to { _ -> "That's a nice age. I'm 4 years old " },
+    "Age" to { _ -> "That's a nice age. I'm 5 years old " },
     "Favorite robot" to { robotName ->
         when (robotName.toLowerCase()) {
             "furhat" -> "I love you too!"

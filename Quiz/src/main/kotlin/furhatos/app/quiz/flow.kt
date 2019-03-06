@@ -74,6 +74,7 @@ val Idle: State = state {
             furhat.attend(users.playing().first())
             goto(NewGame)
         }
+        furhat.listen()
     }
 
     onUserEnter(instant = true) {
@@ -96,6 +97,14 @@ val Idle: State = state {
         } else {
             furhat.attendNobody()
         }
+    }
+
+    onResponse{
+        reentry()
+    }
+
+    onNoResponse {
+        reentry()
     }
 }
 
