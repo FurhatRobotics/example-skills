@@ -43,15 +43,21 @@ val Idle : State = state(Parent) {
     }
 
     onResponse<ShowEmotionIntent> {// If the user wants us to show emotions
+        print("Showing emotions")
         call(ComplexEmotions)
+        reentry()
     }
 
     onResponse<ShowLEDIntent> {// If the user wants us to show the LEDs
+        print("Showing LEDs")
         call(ShowLED)
+        reentry()
     }
 
     onResponse<ShowPersonalitiesIntent> {// If the user wants us to show different personalities
+        print("Showing personalities")
         call(DifferentPersonalities)
+        reentry()
     }
 
     onResponse { // Any other speech than our Start intent should just keep the listen loop
