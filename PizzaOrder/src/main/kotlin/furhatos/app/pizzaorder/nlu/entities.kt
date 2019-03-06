@@ -3,6 +3,7 @@ package furhatos.app.pizzaorder.nlu
 import furhatos.nlu.EnumEntity
 import furhatos.nlu.ListEntity
 import furhatos.util.Language
+import kotlin.sequences.Sequence
 
 class ListOfTopping : ListEntity<Topping>()
 
@@ -22,6 +23,6 @@ class Place : EnumEntity() {
 
     // Method overridden to produce a spoken utterance of the place
     override fun toText(lang: Language): String {
-        return generate(lang,"to your $value");
+        return generate(lang,"to your $value")
     }
 }

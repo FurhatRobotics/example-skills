@@ -56,7 +56,8 @@ val Idle : State = state(Parent) {
     }
 
     onResponseFailed { // No recognizer working, we don't need the listen loop anymore
-        shouldListen = false
+        furhat.say("My speech recognizer failed, but I am trying again.")
+        reentry()
     }
 
     onTime(repeat = 6000..12000) { // Random look arounds on timer

@@ -46,13 +46,19 @@ val Start : State = state(Parent) {
 
 val LEDBootSequence : State = state {
     onEntry {
+        //The presentation starts with slowly lighting up his LED's.
+        //And showing a growing big smile :)
         furhat.setLED("white", 25)
+        furhat.gesture(Gestures.BigSmile(0.3))
         delay(300)
         furhat.setLED("white", 50)
+        furhat.gesture(Gestures.BigSmile(0.6))
         delay(300)
         furhat.setLED("white", 75)
+        furhat.gesture(Gestures.BigSmile(0.9))
         delay(300)
         furhat.setLED("white", 100)
+        furhat.gesture(Gestures.BigSmile)
         delay(300)
         furhat.setLED("white")
         terminate()
@@ -101,15 +107,13 @@ val ShowLED : State = state {
         delay(500)
         furhat.gesture(Gestures.Surprise)
         delay(1000)
-        furhat.say("I can show a variety of colours")
+        furhat.say("I can show a variety of colours, for example these ones")
         furhat.setLED("blue")
         delay(500)
         furhat.setLED("purple")
         delay(500)
-        furhat.ledStrip.dual(Color.CYAN, Color.YELLOW)
-        delay(3000)
-        furhat.ledStrip.spin(Color.GREEN)
-        delay(3000)
+        furhat.setLED("orange")
+        delay(500)
         furhat.setLED("white")
         terminate()
     }

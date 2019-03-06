@@ -6,6 +6,7 @@ import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.Furhat
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.users
+import furhatos.gestures.Gestures
 import furhatos.records.Location
 import furhatos.records.User
 import furhatos.skills.UserManager
@@ -18,7 +19,9 @@ fun FlowControlRunner.attendRandomUserOrLocation() {
     if (users.count > 0) {
         random(
                 { furhat.attend(users.random) },
-                { furhat.attendRandomLocation() }
+                { furhat.attendRandomLocation() },
+                { furhat.attendAll()},
+                { furhat.gesture(Gestures.Roll)}
         )
     }
     else {

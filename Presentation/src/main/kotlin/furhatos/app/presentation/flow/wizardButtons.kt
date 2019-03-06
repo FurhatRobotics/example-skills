@@ -6,8 +6,13 @@ import furhatos.flow.kotlin.partialState
 
 val wizardButtons  = partialState {
 
+    onButton(key=" ") {
+        print("its a space as like empty space")
+        goto(Start)
+    }
+
     onButton("Go to Start", section = Section.LEFT, color = Color.Yellow) {
-        call(Start)
+        goto(Start)
     }
 
     onButton("Show Emotions", section = Section.LEFT, color = Color.Yellow) {
