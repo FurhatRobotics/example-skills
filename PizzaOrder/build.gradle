@@ -23,5 +23,6 @@ repositories {
 }
 
 dependencies {
-	compile 'com.furhatrobotics.furhatos:furhat-commons:1.4.1'
-}                                                                    
+    compile 'com.furhatrobotics.furhatos:furhat-commons:1.8.0'
+}
+

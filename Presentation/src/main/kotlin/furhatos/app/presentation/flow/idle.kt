@@ -1,12 +1,15 @@
 package furhatos.app.presentation.flow
 
-import furhatos.app.presentation.attendRandomUserOrLocation
-import furhatos.app.presentation.StartIntent
+import furhatos.app.presentation.*
 import furhatos.flow.kotlin.*
+import furhatos.flow.kotlin.voice.PollyVoice
 import furhatos.gestures.Gestures
 import furhatos.util.*
+import kotlin.Pair
 
-val Idle : State = state {
+val globalDefaultMale = PollyVoice("Matthew")
+val globalDefaultFemale = PollyVoice("Joanna")
+val Idle : State = state(Parent) {
 
     var shouldListen = true
 
@@ -21,7 +24,7 @@ val Idle : State = state {
 
     onEntry {
         furhat.setTexture("default")
-        furhat.setVoice(Language.ENGLISH_US, Gender.MALE)
+        furhat.voice = globalDefaultMale
 
         if (shouldListen) {
             furhat.listen()
@@ -40,8 +43,22 @@ val Idle : State = state {
         goto(Start)
     }
 
-    onButton("Start") { // Creating a wizard button to start the presentation
-        goto(Start)
+    onResponse<ShowEmotionIntent> {// If the user wants us to show emotions
+        print("Showing emotions")
+        call(ComplexEmotions)
+        reentry()
+    }
+
+    onResponse<ShowLEDIntent> {// If the user wants us to show the LEDs
+        print("Showing LEDs")
+        call(ShowLED)
+        reentry()
+    }
+
+    onResponse<ShowPersonalitiesIntent> {// If the user wants us to show different personalities
+        print("Showing personalities")
+        call(DifferentPersonalities)
+        reentry()
     }
 
     onResponse { // Any other speech than our Start intent should just keep the listen loop
@@ -53,7 +70,8 @@ val Idle : State = state {
     }
 
     onResponseFailed { // No recognizer working, we don't need the listen loop anymore
-        shouldListen = false
+        furhat.say("My speech recognizer failed, but I am trying again.")
+        reentry()
     }
 
     onTime(repeat = 6000..12000) { // Random look arounds on timer

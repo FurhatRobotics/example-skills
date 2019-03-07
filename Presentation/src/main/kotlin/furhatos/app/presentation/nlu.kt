@@ -16,3 +16,34 @@ class StartIntent : Intent() {
         )
     }
 }
+
+class ShowEmotionIntent : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+                "Show me some emotions",
+                "Show me emotions",
+                "show me your emotions"
+        )
+    }
+}
+
+class ShowLEDIntent : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+                "Show me some LEDs",
+                "Show me lights",
+                "show me your LED"
+        )
+    }
+}
+
+class ShowPersonalitiesIntent : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+                "Show me your personalities",
+                "Show me personalities",
+                "show me your personas",
+                "show me your other personas"
+        )
+    }
+}

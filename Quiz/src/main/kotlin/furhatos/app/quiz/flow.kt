@@ -71,9 +71,10 @@ val Idle: State = state {
         }
         // Once no more user, start the game with all interested users
         if (!users.playing().isEmpty()) {
-            furhat.attend(users.playing().first())
+            furhat.attendAll()
             goto(NewGame)
         }
+        furhat.listen()
     }
 
     onUserEnter(instant = true) {
@@ -96,6 +97,14 @@ val Idle: State = state {
         } else {
             furhat.attendNobody()
         }
+    }
+
+    onResponse{
+        reentry()
+    }
+
+    onNoResponse {
+        reentry()
     }
 }
 
@@ -126,8 +135,15 @@ val NewGame = state(parent = Interaction) {
     onEntry {
         playing = true
         rounds = 0
+
+        furhat.say("I will ask you $maxRounds multiple choice questions. And we'll see how many points you can get. ")
+        if (users.count > 1) {
+            furhat.say("If you answer wrong, the question will go over to the next person")
+        }
+
         furhat.say("Alright, here we go!")
         QuestionSet.next()
+        furhat.attend(users.playing().first())
         goto(AskQuestion)
     }
 }
@@ -139,11 +155,12 @@ val NewQuestion = state(parent = Interaction) {
          */
         if (users.playing().count() > 1) {
             if (shouldChangeUser) {
-                furhat.attend(users.nextPlaying())
+                val nextUser = users.nextPlaying()
+                furhat.attend(nextUser)
                 random(
-                    { furhat.say("The next one is for you") },
-                    { furhat.say("For you now") },
-                    { furhat.say("Now for you") }
+                        { furhat.say("The next one is for you") },
+                        { furhat.say("For you now") },
+                        { furhat.say("Now for you") }
                 )
             }
             else {
@@ -155,7 +172,18 @@ val NewQuestion = state(parent = Interaction) {
                 )
             }
         }
-
+        if (!users.current.isAttendingFurhat) {
+            furhat.say {
+                random {
+                    block {
+                        +"But then I do want you to pay attention"
+                        +Gestures.BigSmile
+                    }
+                    +"Look at me, I'm captain now"
+                    +"Could you pay some attention to me"
+                }
+            }
+        }
         // Ask new question
         QuestionSet.next()
         goto(AskQuestion)
@@ -169,7 +197,7 @@ val AskQuestion : State = state(parent = Interaction) {
         failedAttempts = 0
 
         // Set speech rec phrases based on the current question's answers
-        furhat.setSpeechRecPhrases(QuestionSet.current.phrases)
+        furhat.setSpeechRecPhrases(QuestionSet.current.speechPhrases)
 
         // Ask the question followed by the options
         furhat.ask(QuestionSet.current.text + " " + QuestionSet.current.getOptionsString())

@@ -127,7 +127,7 @@ val RequestTopping : State = state(parent = OrderHandling) {
     }
 
     onResponse<RequestOptionsIntent> {
-        raise(it, RequestToppingOptionsIntent())
+        raise(RequestToppingOptionsIntent())
     }
 
     onResponse<No> {
@@ -167,7 +167,7 @@ val RequestTime : State = state(parent = OrderHandling) {
     }
 
     onResponse<RequestOptionsIntent> {
-        raise(it, RequestOpeningHoursIntent())
+        raise(RequestOpeningHoursIntent())
     }
 
     onResponse<Number> {

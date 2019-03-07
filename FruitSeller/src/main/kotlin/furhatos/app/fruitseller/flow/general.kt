@@ -7,6 +7,7 @@ import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.Goodbye
 import furhatos.skills.UserManager
+import furhatos.util.Language
 
 val Idle : State = state {
     /*
@@ -18,6 +19,8 @@ val Idle : State = state {
         users to enter.
      */
     init {
+        furhat.setTexture("male")
+        furhat.setVoice(Language.ENGLISH_US, "Matthew")
         if (users.count > 0) {
             furhat.attend(users.random)
             goto(Start)

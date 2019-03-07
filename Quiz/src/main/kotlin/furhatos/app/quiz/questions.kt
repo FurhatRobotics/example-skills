@@ -6,58 +6,66 @@ import furhatos.nlu.TextBuilder
 import furhatos.util.Language
 import java.util.*
 
-val questions = mutableListOf(
-    Question("Which country won the 2016 Eurovision Song competition?", "Ukraine", listOf("Sweden","France","Finland"), "Female"),
-    Question("How many Popes were there during the Papal schism?", "3", listOf("2","4","10"), "Female"),
-    Question("When was the first circumnavigation of the world completed?", "15 22", listOf("14 99","16 32", "15 78"), "Female"),
-    Question("Which language is Afrikaans derived from?", "Dutch", listOf("German","Spanish","English"), "Female"),
-    Question("The Royal Mile is a famous street in which capital city?", "Edinburgh", listOf("Ottawa","London","Dublin"), "Female"),
-    Question("How many wives did Henry VIII have?", "6", listOf("5","8","4"), "Female"),
-    Question("During which decade did Elvis Presley die?", "70s", listOf("50s", "60s", "80s")),
-    Question("As of 2016, which athlete had won the most Olympic medals?", "Michael Phelps", listOf("Usain Bolt", "Chris Hoy", "Simone Biles")),
-    Question("Who is the author of the Game of Thrones books?", "George RR Martin", listOf("JK Rowling", "Suzanne Collins", "JRR Tolkien")),
-    Question("Which nation won the most gold medals at the 2014 Olympics in Brazil?", "USA", listOf("Great Britain", "China", "Russia"))
-)
-
 object QuestionSet {
 
-    var count : Int = 0;
-    var current: Question = questions[Random().nextInt(questions.lastIndex)]
+    var count : Int = 0
+    var current: Question = questionsEnglish[Random().nextInt(questionsEnglish.lastIndex)]
 
     init {
-        Collections.shuffle(questions)
+        questionsEnglish.shuffle()
     }
 
     fun next() {
-        count++;
-        if (count >= questions.size)
+        count++
+        if (count >= questionsEnglish.size)
             count = 0
-        current = questions[count]
+        current = questionsEnglish[count]
         AnswerOption().forget()
     }
 
 }
 
-
-class Question(val text: String, val answer: String, val alternatives: List<String>, val persona: String = "Furhat") {
+/**
+ * The question class gets the following parameters:
+ * @text : The question as a String
+ * @answer : A list containing the correct answer to the question, followed by alternative pronounciatons of the correct answer
+ * @alternatives A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronounciations of the correct answer.
+ */
+class Question(val text: String, answer: List<String>, alternatives: List<List<String>>) {
+    //All options, used to prime the NLU
     var options : MutableList<EnumItem> = mutableListOf()
+    //Only the first option of the answers, these are correctly spelled, and not alternative.
+    var primeoptions : MutableList<EnumItem> = mutableListOf()
 
+    //init loads the first item of the list into primeoptions
+    //And loads everything into options
     init {
-        options.add(EnumItem(AnswerOption(true, answer), answer))
-        alternatives.forEach {
-            options.add(EnumItem(AnswerOption(false, it), it))
+        primeoptions.add(EnumItem(AnswerOption(true, answer.first()), answer.first()))
+        answer.forEach {
+            options.add(EnumItem(AnswerOption(true, it), it))
         }
-        Collections.shuffle(options)
+
+        alternatives.forEach {
+            primeoptions.add(EnumItem(AnswerOption(true, it.first()), it.first()))
+            it.forEach {
+                options.add(EnumItem(AnswerOption(false, it), it))
+            }
+        }
+
+        options.shuffle()
+        primeoptions.shuffle()
     }
 
+    //Returns the well formatted answer options
     fun getOptionsString() : String {
         var text = TextBuilder()
-        text.appendList(options.map { it.wordString }, "or")
+        text.appendList(primeoptions.map { it.wordString }, "or")
         return text.toString()
     }
 
-    val phrases : List<String>
-        get() = options.map { it.wordString ?: "" }
+    //Returns the well formatted answer options
+    val speechPhrases : List<String>
+        get() = primeoptions.map { it.wordString ?: "" }
 
 }
 
