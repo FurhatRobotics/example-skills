@@ -4,10 +4,6 @@ import furhatos.app.presentation.attendRandomUserOrLocation
 import furhatos.app.presentation.setLED
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
-import furhatos.util.Gender
-import furhatos.util.Language
-import java.awt.Color
-
 
 //The parent states implements a partial state that contains wizardbuttons
 val Parent : State = state {
@@ -92,12 +88,12 @@ val DifferentPersonalities : State = state {
         furhat.say("I can have different personalities")
         furhat.setTexture("female")
         furhat.say("I can look like a woman")
-        furhat.setVoice(globalDefaultFemale.first, globalDefaultFemale.second)
+        furhat.voice = globalDefaultFemale
         attendRandomUserOrLocation()
 
         delay(500)
         furhat.say("And sound like a woman")
-        furhat.setVoice(globalDefaultMale.first, globalDefaultMale.second)
+        furhat.voice = globalDefaultMale
         furhat.say("Or like anyone else.")
         furhat.setTexture("irobot")
         delay(500)
@@ -141,7 +137,7 @@ val Ending : State = state{
         attendRandomUserOrLocation()
 
 
-        val myOtherUtterance = "between social robots and humans"
+        val myOtherUtterance = utterance {+ "between social robots and humans"}
         //This a way of calling a different utterance from within a utterance.
         //You can also call a delay in a utterancebuilder.
         furhat.say {

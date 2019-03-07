@@ -7,7 +7,7 @@ import furhatos.flow.kotlin.partialState
 val wizardButtons  = partialState {
 
     //If the spacebar is pressed, the presentation is started
-    onButton(key=" ") {
+    onButton(key = " ", visible = false) {
         goto(Start)
     }
 
