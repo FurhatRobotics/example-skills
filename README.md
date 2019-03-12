@@ -18,7 +18,8 @@ FruitSeller | An interactive skill allowing you to order fruits | Speech input, 
 WolframAlpha | A simple interactive skill allowing you to ask various questions to the Wolfram Alpha API | Querying external APIs
 PizzaOrder | An interactive form-filling skill allowing you to order a pizzas with various toppings and custom delivery times and locations and some additional chit-chat | Form-filling, more advanced NLU
 Quiz | A multi-party, interactive quiz-game allowing one or two persons to play a trivia quiz with Furhat | Multiparty, dynamic intents, recognition phrases
-FurGUI **(NEW)** | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
+FurGUI | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
+Interviewee | A fully wizarded skill where Furhat is getting interviewed by a journalist | Wizarding
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`
