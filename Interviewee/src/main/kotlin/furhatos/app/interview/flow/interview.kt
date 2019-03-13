@@ -185,13 +185,13 @@ val Interview: State = state {
         call(ChangeMask("pugz"))
 
         furhat.say {
-            +Audio("https://s3-eu-west-1.amazonaws.com/furhat-users/7bf151ad-5539-446f-a3b6-c3c33d431fa9/audio/Dougie1.wav",
+            +Audio("https://s3-eu-west-1.amazonaws.com/furhat-users/ffb5bb0d-22c3-4500-b491-6cdfebb671f8/audio/dougi1.wav",
                 "Hello, my name is Dougie the dog.")
             +Gestures.Wink
         }
 
         furhat.say {
-            +Audio("https://s3-eu-west-1.amazonaws.com/furhat-users/7bf151ad-5539-446f-a3b6-c3c33d431fa9/audio/Dougie6.wav",
+            +Audio("https://s3-eu-west-1.amazonaws.com/furhat-users/ffb5bb0d-22c3-4500-b491-6cdfebb671f8/audio/Dougie6.wav",
                     "well, anyway, its been nice talking to you I got to go take a nap now. rof rof..")
         }
 

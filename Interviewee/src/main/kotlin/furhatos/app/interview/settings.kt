@@ -13,5 +13,5 @@ val interval = 2000..4000
 const val amplitudeUserPresent = 0.05
 const val amplitudeUserAbsent = 0.1
 
-val femaleVoice = PollyVoice(name = "amy", language = Language.ENGLISH_US, gender = Gender.FEMALE)
-val maleVoice = PollyVoice(name = "matthew", language = Language.ENGLISH_US, gender = Gender.MALE)
+val femaleVoice = PollyVoice(name = "Joanna", language = Language.ENGLISH_US, gender = Gender.FEMALE)
+val maleVoice = PollyVoice(name = "Matthew", language = Language.ENGLISH_US, gender = Gender.MALE)
