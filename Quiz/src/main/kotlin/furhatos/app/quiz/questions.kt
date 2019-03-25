@@ -46,7 +46,7 @@ class Question(val text: String, answer: List<String>, alternatives: List<List<S
         }
 
         alternatives.forEach {
-            primeoptions.add(EnumItem(AnswerOption(true, it.first()), it.first()))
+            primeoptions.add(EnumItem(AnswerOption(false, it.first()), it.first()))
             it.forEach {
                 options.add(EnumItem(AnswerOption(false, it), it))
             }
