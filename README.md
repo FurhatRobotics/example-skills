@@ -20,6 +20,7 @@ PizzaOrder | An interactive form-filling skill allowing you to order a pizzas wi
 Quiz | A multi-party, interactive quiz-game allowing one or two persons to play a trivia quiz with Furhat | Multiparty, dynamic intents, recognition phrases
 FurGUI | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
 Interviewee | A fully wizarded skill where Furhat is getting interviewed by a journalist | Wizarding
+DialogFlow | A Skill which interacts with a DialogFlow agent to create an interaction | Querying external APIs, Using a 'chatbot' framework
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`
