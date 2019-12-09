@@ -22,7 +22,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^3.5.0",
+    "eslint": "^4.18.2",
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^2.1.14",
     "npm-run-all": "^4.0.2",
