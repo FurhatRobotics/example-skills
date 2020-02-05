@@ -43,7 +43,7 @@ repositories {
 }
 
 dependencies {
-	compile 'com.furhatrobotics.furhatos:furhat-commons:1.10.0'
+	compile 'com.furhatrobotics.furhatos:furhat-commons:+'
 }
 
 //These new blocks are needed to package your project into a working skill file.
