@@ -2,7 +2,6 @@ package furhatos.app.jokebot.flow
 
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
-import furhatos.app.jokebot.nlu.*
 
 val Start : State = state(Interaction) {
 
