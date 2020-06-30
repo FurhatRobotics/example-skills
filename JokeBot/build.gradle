@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.furhatrobotics.furhatos:furhat-commons:1.19.0'
+    compile 'com.furhatrobotics.furhatos:furhat-commons:1.20.0'
 }
 
 jar {

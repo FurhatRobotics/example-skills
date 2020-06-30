@@ -52,5 +52,6 @@ val RequestJokeTest: State = state(Interaction) {
 
     onResponse<No> {
         furhat.say("Oh, that’s a shame.")
+        goto(Idle)
     }
 }
