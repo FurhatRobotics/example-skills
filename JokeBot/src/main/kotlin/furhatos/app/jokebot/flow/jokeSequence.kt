@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-val JokeSequence: State = state {
+val JokeSequence: State = state(Interaction) {
 
     onEntry {
         val joke = JokeHandler.getJoke()
@@ -57,7 +57,7 @@ val JokeSequence: State = state {
     }
 }
 
-val SmileBack: State = state {
+val SmileBack: State = state(Interaction) {
 
 
     val smileProbability = 0.25
@@ -66,7 +66,7 @@ val SmileBack: State = state {
     var smilingIsAllowed = true
     val resetAllowedToSmile = { GlobalScope.launch { delay(smileTimeout); smilingIsAllowed = true }} //Lambda function
 
-    onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser && smilingIsAllowed}) {
+    onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser && smilingIsAllowed}, instant = true) {
         val randomNumber = Math.random()
         when {
             randomNumber > bigSmileProbability -> {
@@ -85,7 +85,7 @@ val SmileBack: State = state {
         }
     }
 
-    onUserGestureEnd(UserGestures.Smile, cond = { it.isCurrentUser }) {
+    onUserGestureEnd(UserGestures.Smile, cond = { it.isCurrentUser }, instant = true) {
         furhat.gesture(stopSmile)
     }
 }
@@ -110,11 +110,11 @@ val JokeScore: State = state(SmileBack) {
         saidBadJoke = true
     }
 
-    onResponse {
+    onResponse(instant = true) {
         //Do nothing
     }
 
-    onNoResponse {
+    onNoResponse(instant = true) {
         //Do nothing
     }
 
