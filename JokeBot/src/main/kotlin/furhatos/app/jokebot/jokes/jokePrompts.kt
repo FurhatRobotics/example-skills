@@ -1,7 +1,13 @@
 package furhatos.app.jokebot.jokes
 
-
-fun getJokeIntro(score: Double?): String {
+/**
+ * Returns a comment on the joke, based on joke score. This could be
+ * -> A new joke
+ * -> A mixed reception joke
+ * -> A positive reception joke
+ * -> A negative reception joke.
+ */
+fun getJokeComment(score: Double?): String {
     return when {
         score == null -> newIntros.random()
         score > 0.0 -> positiveIntros.random()
@@ -31,6 +37,11 @@ private val negativeIntros = listOf(
         "I’ll give this one another chance"
 )
 
+/**
+ * Gives a comment based on the users reaction to the joke.
+ *  -> User smiled or not
+ *  -> User said it was a good/bad joke.
+ */
 fun getResponseOnUser(didUserLaugh: Boolean, badJoke: Boolean, goodJoke: Boolean): String {
     return if (didUserLaugh) {
         when {

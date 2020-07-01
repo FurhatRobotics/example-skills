@@ -3,33 +3,40 @@ package furhatos.app.jokebot.flow
 import furhatos.app.jokebot.jokes.*
 import furhatos.app.jokebot.nlu.BadJoke
 import furhatos.app.jokebot.nlu.GoodJoke
+import furhatos.app.jokebot.util.calculateJokeScore
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.No
 import furhatos.nlu.common.Yes
 import furhatos.skills.emotions.UserGestures
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-
+/**
+ * This state gets jokes, tells jokes, and records the user's response to it.
+ *
+ * Once the joke has been told, prompts the user if they want to hear another joke.
+ */
 val JokeSequence: State = state(Interaction) {
 
     onEntry {
+        //Get joke from the JokeHandler
         val joke = JokeHandler.getJoke()
 
+        //Build an utterance with the joke.
         val utterance = utterance {
-            +getJokeIntro(joke.score)
-            +delay(200)
-            +joke.intro
+            +getJokeComment(joke.score) //Get comment on joke, using the score
+            +delay(200) //Short delay
+            +joke.intro //Deliver the intro of the joke
             +delay(1500) //Always let the intro sink in
-            +joke.punchline
+            +joke.punchline //Deliver the punchline of the joke.
         }
 
         furhat.say(utterance)
 
-        val jokeRanking = call(JokeScore) as Double
-        JokeHandler.changeJokeScore(jokeRanking)
+        /**
+         * Calls a state which we know returns a joke score.
+         */
+        JokeHandler.changeJokeScore(call(JokeScore) as Double)
 
+        //Prompt the user if they want to hear another joke.
         furhat.ask(continuePrompt.random())
     }
 
@@ -53,48 +60,19 @@ val JokeSequence: State = state(Interaction) {
     }
 
     onNoResponse {
-        furhat.ask("I didn't hear you ")
+        furhat.ask("I didn't hear you.")
     }
 }
 
-val SmileBack: State = state(Interaction) {
-
-
-    val smileProbability = 0.25
-    val bigSmileProbability = 0.5
-    val smileTimeout = 5000L
-    var smilingIsAllowed = true
-    val resetAllowedToSmile = { GlobalScope.launch { delay(smileTimeout); smilingIsAllowed = true }} //Lambda function
-
-    onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser && smilingIsAllowed}, instant = true) {
-        val randomNumber = Math.random()
-        when {
-            randomNumber > bigSmileProbability -> {
-                smilingIsAllowed = false
-                furhat.gesture(indefiniteBigSmile)
-                resetAllowedToSmile()
-            }
-            randomNumber > smileProbability -> {
-                smilingIsAllowed = false
-                furhat.gesture(indefiniteSmile)
-                resetAllowedToSmile()
-            }
-            else -> {
-                //Nothing
-            }
-        }
-    }
-
-    onUserGestureEnd(UserGestures.Smile, cond = { it.isCurrentUser }, instant = true) {
-        furhat.gesture(stopSmile)
-    }
-}
-
-val JokeScore: State = state(SmileBack) {
+/**
+ * This state records the users reaction to a joke, and terminates with calculated joke value.
+ * Joke value is based on if the user smiled and/or the user said it was a good/bad joke.
+ */
+val JokeScore: State = state(Interaction) {
 
     var saidBadJoke = false
     var saidGoodJoke = false
-    var timeSmiledAtJoke: Long = 0L
+    var timeSmiledAtJoke = 0L
     var timestampStartedLaughing = 0L
     val jokeTimeout = 4000 // We wait for a reaction for 4 seconds
 
@@ -119,7 +97,7 @@ val JokeScore: State = state(SmileBack) {
     }
 
     onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser }, instant = true) {
-        timestampStartedLaughing = System.currentTimeMillis()
+        timestampStartedLaughing = System.currentTimeMillis() //Timestamp the moment the user started smiling.
         propagate()
     }
 
@@ -138,21 +116,4 @@ val JokeScore: State = state(SmileBack) {
 
         terminate(calculateJokeScore(timeSmiledAtJoke, jokeTimeout, saidBadJoke, saidGoodJoke))
     }
-}
-
-
-fun calculateJokeScore(timeSpentLaughing: Long, maxTimeLaughing: Int, badJoke: Boolean, goodJoke: Boolean): Double {
-    val smileModifier = when {
-        badJoke -> -0.25
-        goodJoke -> 0.25
-        else -> 0.0
-    }
-
-    val gestureModifier = if (timeSpentLaughing != 0L) {
-        (maxTimeLaughing / timeSpentLaughing) * 0.5
-    } else {
-        0.0
-    }
-
-    return gestureModifier + smileModifier
 }
