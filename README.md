@@ -21,6 +21,7 @@ Quiz | A multi-party, interactive quiz-game allowing one or two persons to play 
 FurGUI | A simple skill showcasing how to add a custom Skill GUI built in React with buttons and input fields | Custom GUI, Button and form-input
 Interviewee | A fully wizarded skill where Furhat is getting interviewed by a journalist | Wizarding
 DialogFlow | A Skill which interacts with a DialogFlow agent to create an interaction | Querying external APIs, Using a 'chatbot' framework
+JokeBot | A skill for the robot (does not work on SDK) that tells jokes and uses the user's reaction to assert if it is a good joke. | Gesture Detection, Storage of interaction data, Randomizing interactions
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`

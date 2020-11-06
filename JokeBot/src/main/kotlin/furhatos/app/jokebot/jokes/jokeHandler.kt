@@ -22,7 +22,11 @@ data class Joke(val intro: String, val punchline: String, var score: Double? = n
 
 object JokeHandler {
 
-    private val jokeFile = CommonUtils.getAppDataDir("jokes.json") //File to read/save jokes to
+    /**
+     * File to read/save jokes to.
+     * Can be found in the user's home directory/.furhat/jokes.json when running on SDK.
+     */
+    private val jokeFile = CommonUtils.getAppDataDir("jokes.json")
     private val gson = Gson().newBuilder().setPrettyPrinting().create() //JSON parser/serializer
     private val listOfJokes = getJokes() //List of jokes
     private lateinit var currentJoke: Joke //Will be initialized when we request the first joke.
@@ -72,12 +76,4 @@ object JokeHandler {
         jokeFile.writeText(gson.toJson(listOfJokes))
     }
 
-}
-
-fun main() {
-    println("Testing")
-    val thing = JokeHandler.getJoke()
-    println("Score now:" + thing.score)
-    JokeHandler.changeJokeScore(0.25)
-    println("New score:" + thing.score)
 }
