@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Furhat from 'furhat-gui'
+import FurhatGUI from 'furhat-gui'
 import { Grid, Row, Col } from 'react-bootstrap'
 import Button from './Button'
 import Input from './Input'
@@ -13,40 +13,35 @@ class App extends Component {
           "buttons": [],
           "inputFields": []
         }
+        this.furhat = null
+    }
+
+    setupSubscriptions() {
+        // Our DataDelivery event is getting no custom name and hence gets it's full class name as event name.
+        this.furhat.subscribe('furhatos.app.furgui.DataDelivery', (data) => {
+            this.setState({
+                ...this.state,
+                buttons: data.buttons,
+                inputFields: data.inputFields
+            })
+        })
+
+        // This event contains to data so we defined it inline in the flow
+        this.furhat.subscribe('SpeechDone', () => {
+            this.setState({
+                ...this.state,
+                speaking: false
+            })
+        })
     }
 
     componentDidMount() {
-        // Needed to access "this" inside our callback
-        const INSTANCE = this;
-
-        // Connecting to our skill and subscribing to events
-        Furhat(function (furhat) {
-
-            // Our DataDelivery event is getting no custom name and hence gets it's full class name as event name.
-            furhat.subscribe('furhatos.app.furgui.DataDelivery', function (data) {
-                INSTANCE.setState({
-                    ...this.state,
-                    buttons: data.buttons,
-                    inputFields: data.inputFields
-                })
+        FurhatGUI()
+            .then(connection => {
+                this.furhat = connection
+                this.setupSubscriptions()
             })
-
-            // This event contains to data so we defined it inline in the flow
-            furhat.subscribe('SpeechDone', function () {
-                INSTANCE.setState({
-                    ...this.state,
-                    speaking: false
-                })
-            })
-
-            // Method that we can access outside of this callback, for sending
-            INSTANCE.sendEvent = (data) => {
-              furhat.send({
-                event_name: data.event_name,
-                data: data.data
-              })
-            }
-        })
+            .catch(console.error)
     }
 
     clickButton = (button) => {
@@ -54,7 +49,7 @@ class App extends Component {
             ...this.state,
             speaking: true
         })
-        this.sendEvent({
+        this.furhat.send({
           event_name: "ClickButton",
           data: button
         })
@@ -65,7 +60,7 @@ class App extends Component {
             ...this.state,
             speaking: true
         })
-        this.sendEvent({
+        this.furhat.send({
           event_name: "VariableSet",
           data: {
             variable,

@@ -30,7 +30,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "furhat-gui": "0.0.9",
+    "furhat-gui": "0.1.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0"
