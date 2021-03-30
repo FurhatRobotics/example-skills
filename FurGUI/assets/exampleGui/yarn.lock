@@ -2226,15 +2226,15 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
 
-furhat-core@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/furhat-core/-/furhat-core-0.0.4.tgz#f3a3cc74942167bb65d0aafa7b9c32fef31067fd"
+furhat-core@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/furhat-core/-/furhat-core-0.2.0.tgz#257d96462878cb5eaff9fe043421d72467d80d34"
 
-furhat-gui@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/furhat-gui/-/furhat-gui-0.0.9.tgz#a93d873cde11a59aeeb95577b768717abc495fd7"
+furhat-gui@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/furhat-gui/-/furhat-gui-0.1.0.tgz#504c396296ab6522c22a9e658350147d983349d5"
   dependencies:
-    furhat-core "0.0.4"
+    furhat-core "0.2.0"
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -5007,8 +5007,8 @@ xtend@^4.0.0:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
 y18n@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.2.tgz#85c901bd6470ce71fc4bb723ad209b70f7f28696"
 
 yallist@^2.1.2:
   version "2.1.2"
