@@ -55,6 +55,13 @@ val Interaction : State = state {
 val Idle: State = state {
     init {
         furhat.voice = voice
+        /*
+            By default, only two users can be actively engaged at the same time.
+            By setting an engagement policy, the innerDistance (triggering entry),
+            outerDistance (triggering exit), and maximum number of concurrent users
+            can be set to values applicable to the skill's use case.
+         */
+        users.setSimpleEngagementPolicy(1.5, 2.0, 4)
     }
 
     onEntry {
@@ -70,11 +77,10 @@ val Idle: State = state {
             goto(QueryPerson(it))
         }
         // Once no more user, start the game with all interested users
-        if (!users.playing().isEmpty()) {
+        if (users.playing().isNotEmpty()) {
             furhat.attendAll()
             goto(NewGame)
         }
-        furhat.listen()
     }
 
     onUserEnter(instant = true) {

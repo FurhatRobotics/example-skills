@@ -28,8 +28,8 @@ object QuestionSet {
 /**
  * The question class gets the following parameters:
  * @text : The question as a String
- * @answer : A list containing the correct answer to the question, followed by alternative pronounciatons of the correct answer
- * @alternatives A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronounciations of the correct answer.
+ * @answer : A list containing the correct answer to the question, followed by alternative pronunciations of the correct answer
+ * @alternatives A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronunciations of the correct answer.
  */
 class Question(val text: String, answer: List<String>, alternatives: List<List<String>>) {
     //All options, used to prime the NLU
