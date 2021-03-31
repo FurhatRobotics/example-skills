@@ -76,8 +76,8 @@ val questionsEnglish = mutableListOf(
                 alternatives = listOf(listOf("Buzz Aldrin", "Buzz", "Aldrin"),listOf("Michael Collins", "Michael", "Collins"),listOf("Yuri Gagarin", "Yuri", "Gagarin"))),
 
         Question("Which country has more inhabitants?",
-                answer = listOf("Sweden"),
-                alternatives = listOf(listOf("Switserland"))),
+                answer = listOf("Sweden", "Swedish"),
+                alternatives = listOf(listOf("Switzerland", "Swiss"))),
 
         Question("Which volcano erupted in 1906 and devastated Naples?",
                 answer = listOf("Mount Vesuvius", "Vesuvius"),
