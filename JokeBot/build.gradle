@@ -37,12 +37,13 @@ compileTestKotlin {
 
 repositories {
     mavenLocal()
-    maven { url "https://furhatrobotics.bintray.com/furhat" }
-    jcenter()
+    mavenCentral()
+    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
 }
 
 dependencies {
-    compile 'com.furhatrobotics.furhatos:furhat-commons:1.22.0'
+    compile 'com.furhatrobotics.furhatos:furhat-commons:+'
 }
 
 jar {
