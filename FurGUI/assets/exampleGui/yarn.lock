@@ -2226,15 +2226,15 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
 
-furhat-core@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/furhat-core/-/furhat-core-0.0.4.tgz#f3a3cc74942167bb65d0aafa7b9c32fef31067fd"
+furhat-core@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/furhat-core/-/furhat-core-0.2.0.tgz#257d96462878cb5eaff9fe043421d72467d80d34"
 
-furhat-gui@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/furhat-gui/-/furhat-gui-0.0.9.tgz#a93d873cde11a59aeeb95577b768717abc495fd7"
+furhat-gui@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/furhat-gui/-/furhat-gui-0.1.0.tgz#504c396296ab6522c22a9e658350147d983349d5"
   dependencies:
-    furhat-core "0.0.4"
+    furhat-core "0.2.0"
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -4721,8 +4721,8 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
 ua-parser-js@^0.7.9:
-  version "0.7.17"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"
+  version "0.7.28"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
 
 uglify-js@^2.8.27:
   version "2.8.29"
