@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.furhatrobotics.furhatos:skill-configuration:+'
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.30"
+}
+
+version = "1.1.3"
+
+
+apply plugin: 'com.furhatrobotics.skill-configuration'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
+    maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+}
+
+dependencies {
+    if (project.findProject(':furhat-commons') != null) {
+        compile project.project(':furhat-commons')
+    } else {
+        compile 'com.furhatrobotics.furhatos:furhat-commons:+'
+    }
+}
