@@ -2,8 +2,6 @@
 
 Example skills for the Furhat robot, provided by Furhat Robotics. Contributions welcome from everyone, just send a PR!
 
-For an example of a larger Furhat skill, please see the [Demo skill](https://github.com/FurhatRobotics/demo-skill) residing in it's own repository.
-
 # Dependencies
 
 * A running Furhat SDK [See furhat.io](https://furhat.io)
