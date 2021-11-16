@@ -65,4 +65,9 @@ shadowJar {
 	from "skill.properties"
 	from "assets"
 	extension 'skill'
+	Properties properties = new Properties()
+	properties.load(project.file('skill.properties').newDataInputStream())
+	def version = properties.getProperty('version')
+	def name = properties.getProperty('name')
+	archiveName = "${name}_${version}.skill"
 }
