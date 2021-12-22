@@ -1,6 +1,9 @@
-package furhatos.app.interview.flow
+package furhatos.app.interview.flow.main
 
-import furhatos.app.interview.*
+import furhatos.app.interview.flow.ChangeMask
+import furhatos.app.interview.flow.generalAnswers
+import furhatos.app.interview.flow.getRelativeRandomLocation
+import furhatos.app.interview.setting.*
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.gestures.Gestures.BigSmile

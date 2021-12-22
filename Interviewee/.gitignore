@@ -1,5 +1,9 @@
-logs/*
 node_modules/
+/out
+/build
 build/
-out/
-.gradle/
+/.gradle
+/logs
+/.idea
+save_flow.xml
+*.iml

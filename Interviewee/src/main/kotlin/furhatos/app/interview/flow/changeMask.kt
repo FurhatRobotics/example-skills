@@ -1,6 +1,7 @@
 package furhatos.app.interview.flow
 
-import furhatos.app.interview.maskChanging
+import furhatos.app.interview.flow.main.Interview
+import furhatos.app.interview.setting.maskChanging
 import furhatos.flow.kotlin.Color
 import furhatos.flow.kotlin.Section
 import furhatos.flow.kotlin.furhat

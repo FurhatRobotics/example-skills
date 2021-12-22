@@ -1,4 +1,4 @@
-package furhatos.app.interview
+package furhatos.app.interview.setting
 
 import furhatos.flow.kotlin.voice.PollyVoice
 import furhatos.records.Location
