@@ -1,5 +1,6 @@
 package furhatos.app.quiz
 
+import furhatos.app.quiz.questions.QuestionSet
 import furhatos.nlu.EnumEntity
 import furhatos.nlu.EnumItem
 import furhatos.nlu.Intent
