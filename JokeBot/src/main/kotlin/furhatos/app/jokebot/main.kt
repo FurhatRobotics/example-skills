@@ -1,12 +1,12 @@
 package furhatos.app.jokebot
 
-import furhatos.app.jokebot.flow.*
+import furhatos.app.jokebot.flow.Init
+import furhatos.flow.kotlin.Flow
 import furhatos.skills.Skill
-import furhatos.flow.kotlin.*
 
 class JokebotSkill : Skill() {
     override fun start() {
-        Flow().run(Idle)
+        Flow().run(Init)
     }
 }
 
