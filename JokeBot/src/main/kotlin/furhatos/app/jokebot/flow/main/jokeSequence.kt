@@ -1,5 +1,6 @@
-package furhatos.app.jokebot.flow
+package furhatos.app.jokebot.flow.main
 
+import furhatos.app.jokebot.flow.Parent
 import furhatos.app.jokebot.jokes.*
 import furhatos.app.jokebot.nlu.BadJoke
 import furhatos.app.jokebot.nlu.GoodJoke
@@ -14,7 +15,7 @@ import furhatos.skills.emotions.UserGestures
  *
  * Once the joke has been told, prompts the user if they want to hear another joke.
  */
-val JokeSequence: State = state(Interaction) {
+val JokeSequence: State = state(Parent) {
 
     onEntry {
         //Get joke from the JokeHandler
@@ -68,7 +69,7 @@ val JokeSequence: State = state(Interaction) {
  * This state records the users reaction to a joke, and terminates with calculated joke value.
  * Joke value is based on if the user smiled and/or the user said it was a good/bad joke.
  */
-val JokeScore: State = state(Interaction) {
+val JokeScore: State = state(Parent) {
 
     var saidBadJoke = false
     var saidGoodJoke = false

@@ -1,35 +1,16 @@
-package furhatos.app.jokebot.flow
+package furhatos.app.jokebot.setting
 
 import furhatos.app.jokebot.jokes.indefiniteBigSmile
 import furhatos.app.jokebot.jokes.indefiniteSmile
 import furhatos.app.jokebot.jokes.stopSmile
-import furhatos.flow.kotlin.*
-import furhatos.flow.kotlin.voice.PollyNeuralVoice
+import furhatos.flow.kotlin.furhat
+import furhatos.flow.kotlin.onUserGesture
+import furhatos.flow.kotlin.onUserGestureEnd
+import furhatos.flow.kotlin.partialState
 import furhatos.skills.emotions.UserGestures
-import furhatos.util.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-val Idle: State = state {
-
-    init {
-        furhat.voice = PollyNeuralVoice.Matthew()
-        if (users.count > 0) {
-            furhat.attend(users.random)
-            goto(Start)
-        }
-    }
-
-    onEntry {
-        furhat.attendNobody()
-    }
-
-    onUserEnter {
-        furhat.attend(it)
-        goto(Start)
-    }
-}
 
 /**
  * Parent state that smiles to the current user, if the current user is smiling.
@@ -41,7 +22,7 @@ val Idle: State = state {
  *
  *  If Furhat smiled, then there is a smile cooldown.
  */
-val SmileBack: State = state {
+val SmileBack = partialState() {
 
     val smileProbability = 0.25 //25% of the time we do a small smile
     val bigSmileProbability = 0.5 //50% of the time we do a big smile
@@ -51,10 +32,10 @@ val SmileBack: State = state {
     /**
      * Lambda function that starts a thread, which allows Furhat to smile again after the set smile timeout.
      */
-    val resetAllowedToSmile = { GlobalScope.launch { delay(smileTimeout); smilingIsAllowed = true }}
+    val resetAllowedToSmile = { GlobalScope.launch { delay(smileTimeout); smilingIsAllowed = true } }
 
     //Instant trigger ('parallel thread') that detects a user smiling and takes action.
-    onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser && smilingIsAllowed}, instant = true) {
+    onUserGesture(UserGestures.Smile, cond = { it.isCurrentUser && smilingIsAllowed }, instant = true) {
         val randomNumber = Math.random()
         when {
             randomNumber > bigSmileProbability -> {
@@ -76,25 +57,4 @@ val SmileBack: State = state {
     onUserGestureEnd(UserGestures.Smile, cond = { it.isCurrentUser }, instant = true) {
         furhat.gesture(stopSmile)
     }
-}
-
-val Interaction: State = state(SmileBack) {
-
-    onUserLeave(instant = true) {
-        if (users.count > 0) {
-            if (it == users.current) {
-                furhat.attend(users.other)
-                goto(Start)
-            } else {
-                furhat.glance(it)
-            }
-        } else {
-            goto(Idle)
-        }
-    }
-
-    onUserEnter(instant = true) {
-        furhat.glance(it)
-    }
-
 }

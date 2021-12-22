@@ -1,9 +1,10 @@
-package furhatos.app.jokebot.flow
+package furhatos.app.jokebot.flow.main
 
+import furhatos.app.jokebot.flow.Parent
 import furhatos.nlu.common.*
 import furhatos.flow.kotlin.*
 
-val Start : State = state(Interaction) {
+val Start : State = state(Parent) {
 
     onEntry {
         furhat.ask("Hi there.")
@@ -18,7 +19,7 @@ val Start : State = state(Interaction) {
     }
 }
 
-val AreYouHappy: State = state(Interaction) {
+val AreYouHappy: State = state(Parent) {
 
     onEntry {
         furhat.ask("I am wondering, are you happy today?")
@@ -40,7 +41,7 @@ val AreYouHappy: State = state(Interaction) {
     }
 }
 
-val RequestJokeTest: State = state(Interaction) {
+val RequestJokeTest: State = state(Parent) {
     onEntry {
         furhat.ask("I’m trying to learn some humor you see. So. Could I test a few jokes on you?")
     }
