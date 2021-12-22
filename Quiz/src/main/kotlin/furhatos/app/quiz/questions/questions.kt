@@ -1,9 +1,8 @@
-package furhatos.app.quiz
+package furhatos.app.quiz.questions
 
-import furhatos.nlu.EnumEntity
+import furhatos.app.quiz.AnswerOption
 import furhatos.nlu.EnumItem
 import furhatos.nlu.TextBuilder
-import furhatos.util.Language
 import java.util.*
 
 object QuestionSet {

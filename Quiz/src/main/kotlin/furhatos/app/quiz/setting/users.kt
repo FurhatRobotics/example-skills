@@ -1,6 +1,5 @@
-package furhatos.app.quiz
+package furhatos.app.quiz.setting
 
-import furhatos.flow.kotlin.Furhat
 import furhatos.records.Record
 import furhatos.records.User
 import furhatos.skills.UserManager
