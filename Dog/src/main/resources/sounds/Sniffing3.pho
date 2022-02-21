@@ -1,0 +1,109 @@
+{
+    "class": "furhatos.records.Transcription",
+    "phones": [
+        {
+            "end": 0.09,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.0
+        },
+        {
+            "end": 0.16,
+            "name": "_s",
+            "prominent": false,
+            "start": 0.09
+        },
+        {
+            "end": 0.23,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.16
+        },
+        {
+            "end": 0.31,
+            "name": "_s",
+            "prominent": false,
+            "start": 0.23
+        },
+        {
+            "end": 0.41,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.31
+        },
+        {
+            "end": 0.66,
+            "name": "_s",
+            "prominent": false,
+            "start": 0.41
+        },
+        {
+            "end": 0.76,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.66
+        },
+        {
+            "end": 0.84,
+            "name": "_s",
+            "prominent": false,
+            "start": 0.76
+        },
+        {
+            "end": 0.9,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.84
+        },
+        {
+            "end": 0.98,
+            "name": "_s",
+            "prominent": false,
+            "start": 0.9
+        },
+        {
+            "end": 1.06,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 0.98
+        },
+        {
+            "end": 1.15,
+            "name": "_s",
+            "prominent": false,
+            "start": 1.06
+        },
+        {
+            "end": 1.24,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 1.15
+        },
+        {
+            "end": 1.3,
+            "name": "_s",
+            "prominent": false,
+            "start": 1.24
+        },
+        {
+            "end": 1.37,
+            "name": "M",
+            "prominent": false,
+            "word": "m",
+            "start": 1.3
+        },
+        {
+            "end": 1.385125,
+            "name": "",
+            "prominent": false,
+            "start": 1.37
+        }
+    ]
+}

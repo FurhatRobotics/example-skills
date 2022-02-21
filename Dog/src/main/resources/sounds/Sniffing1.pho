@@ -1,0 +1,461 @@
+{
+    "phones": [
+        {
+            "name": "_s",
+            "start": 0.0,
+            "prominent": false,
+            "end": 0.03
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.03,
+            "prominent": false,
+            "end": 0.15
+        },
+        {
+            "name": "_s",
+            "start": 0.15,
+            "prominent": false,
+            "end": 0.22
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.22,
+            "prominent": false,
+            "end": 0.31
+        },
+        {
+            "name": "_s",
+            "start": 0.31,
+            "prominent": false,
+            "end": 0.37
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.37,
+            "prominent": false,
+            "end": 0.45
+        },
+        {
+            "name": "_s",
+            "start": 0.45,
+            "prominent": false,
+            "end": 0.52
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.52,
+            "prominent": false,
+            "end": 0.6
+        },
+        {
+            "name": "_s",
+            "start": 0.6,
+            "prominent": false,
+            "end": 0.68
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.68,
+            "prominent": false,
+            "end": 0.76
+        },
+        {
+            "name": "_s",
+            "start": 0.76,
+            "prominent": false,
+            "end": 0.8
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.8,
+            "prominent": false,
+            "end": 0.9
+        },
+        {
+            "name": "_s",
+            "start": 0.9,
+            "prominent": false,
+            "end": 0.98
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 0.98,
+            "prominent": false,
+            "end": 1.08
+        },
+        {
+            "name": "_s",
+            "start": 1.08,
+            "prominent": false,
+            "end": 1.28
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.28,
+            "prominent": false,
+            "end": 1.31
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.31,
+            "prominent": false,
+            "end": 1.34
+        },
+        {
+            "name": "_s",
+            "start": 1.34,
+            "prominent": false,
+            "end": 1.41
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.41,
+            "prominent": false,
+            "end": 1.44
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.44,
+            "prominent": false,
+            "end": 1.47
+        },
+        {
+            "name": "_s",
+            "start": 1.47,
+            "prominent": false,
+            "end": 1.55
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.55,
+            "prominent": false,
+            "end": 1.63
+        },
+        {
+            "name": "_s",
+            "start": 1.63,
+            "prominent": false,
+            "end": 1.7
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.7,
+            "prominent": false,
+            "end": 1.77
+        },
+        {
+            "name": "_s",
+            "start": 1.77,
+            "prominent": false,
+            "end": 1.85
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 1.85,
+            "prominent": false,
+            "end": 1.93
+        },
+        {
+            "name": "_s",
+            "start": 1.93,
+            "prominent": false,
+            "end": 2.01
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.01,
+            "prominent": false,
+            "end": 2.09
+        },
+        {
+            "name": "_s",
+            "start": 2.09,
+            "prominent": false,
+            "end": 2.17
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.17,
+            "prominent": false,
+            "end": 2.24
+        },
+        {
+            "name": "_s",
+            "start": 2.24,
+            "prominent": false,
+            "end": 2.33
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.33,
+            "prominent": false,
+            "end": 2.41
+        },
+        {
+            "name": "_s",
+            "start": 2.41,
+            "prominent": false,
+            "end": 2.48
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.48,
+            "prominent": false,
+            "end": 2.57
+        },
+        {
+            "name": "_s",
+            "start": 2.57,
+            "prominent": false,
+            "end": 2.65
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.65,
+            "prominent": false,
+            "end": 2.74
+        },
+        {
+            "name": "_s",
+            "start": 2.74,
+            "prominent": false,
+            "end": 2.82
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.82,
+            "prominent": false,
+            "end": 2.9
+        },
+        {
+            "name": "_s",
+            "start": 2.9,
+            "prominent": false,
+            "end": 2.98
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 2.98,
+            "prominent": false,
+            "end": 3.06
+        },
+        {
+            "name": "_s",
+            "start": 3.06,
+            "prominent": false,
+            "end": 3.14
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 3.14,
+            "prominent": false,
+            "end": 3.21
+        },
+        {
+            "name": "_s",
+            "start": 3.21,
+            "prominent": false,
+            "end": 3.29
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 3.29,
+            "prominent": false,
+            "end": 3.38
+        },
+        {
+            "name": "_s",
+            "start": 3.38,
+            "prominent": false,
+            "end": 3.46
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 3.46,
+            "prominent": false,
+            "end": 3.55
+        },
+        {
+            "name": "_s",
+            "start": 3.55,
+            "prominent": false,
+            "end": 3.64
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 3.64,
+            "prominent": false,
+            "end": 3.67
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 3.67,
+            "prominent": false,
+            "end": 3.71
+        },
+        {
+            "name": "_s",
+            "start": 3.71,
+            "prominent": false,
+            "end": 4.27
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 4.27,
+            "prominent": false,
+            "end": 4.35
+        },
+        {
+            "name": "_s",
+            "start": 4.35,
+            "prominent": false,
+            "end": 4.42
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 4.42,
+            "prominent": false,
+            "end": 4.49
+        },
+        {
+            "name": "_s",
+            "start": 4.49,
+            "prominent": false,
+            "end": 4.57
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 4.57,
+            "prominent": false,
+            "end": 4.67
+        },
+        {
+            "name": "_s",
+            "start": 4.67,
+            "prominent": false,
+            "end": 4.74
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 4.74,
+            "prominent": false,
+            "end": 4.82
+        },
+        {
+            "name": "_s",
+            "start": 4.82,
+            "prominent": false,
+            "end": 4.92
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 4.92,
+            "prominent": false,
+            "end": 5.01
+        },
+        {
+            "name": "_s",
+            "start": 5.01,
+            "prominent": false,
+            "end": 5.1
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 5.1,
+            "prominent": false,
+            "end": 5.17
+        },
+        {
+            "name": "_s",
+            "start": 5.17,
+            "prominent": false,
+            "end": 5.24
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 5.24,
+            "prominent": false,
+            "end": 5.32
+        },
+        {
+            "name": "_s",
+            "start": 5.32,
+            "prominent": false,
+            "end": 5.41
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 5.41,
+            "prominent": false,
+            "end": 5.5
+        },
+        {
+            "name": "_s",
+            "start": 5.5,
+            "prominent": false,
+            "end": 5.56
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 5.56,
+            "prominent": false,
+            "end": 5.65
+        },
+        {
+            "name": "_s",
+            "start": 5.65,
+            "prominent": false,
+            "end": 5.68
+        },
+        {
+            "word": "m",
+            "name": "M",
+            "start": 5.68,
+            "prominent": false,
+            "end": 5.71
+        },
+        {
+            "name": "",
+            "start": 5.71,
+            "prominent": false,
+            "end": 5.72925
+        }
+    ],
+    "class": "furhatos.records.Transcription"
+}
