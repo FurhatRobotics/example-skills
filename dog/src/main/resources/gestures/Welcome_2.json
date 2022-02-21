@@ -1,0 +1,182 @@
+{
+  "frames": [
+    {
+      "time": [
+        0.0
+      ],
+      "persist": false,
+      "params": {
+        "GLOB_EyebrowLarger": 0.0024
+      },
+      "texture": "default"
+    },
+    {
+      "time": [
+        0.08
+      ],
+      "persist": false,
+      "params": {},
+      "audio": "classpath:sounds/d-17b.wav"
+    },
+    {
+      "time": [
+        0.5
+      ],
+      "persist": false,
+      "params": {
+        "GLOB_EyesScaleUp": 0.2,
+        "BROW_UP_RIGHT": 1.0,
+        "BROW_UP_LEFT": 1.0,
+        "SURPRISE": 0.6,
+        "NECK_TILT": -8.0,
+        "NECK_ROLL": 8.0,
+        "NECK_PAN": -2.0
+      }
+    },
+    {
+      "time": [
+        1.0
+      ],
+      "persist": false,
+      "params": {
+        "GLOB_EyesScaleUp": 0.2,
+        "BROW_UP_RIGHT": 1.0,
+        "BROW_UP_LEFT": 1.0,
+        "SURPRISE": 0.6,
+        "NECK_TILT": -2.0,
+        "NECK_ROLL": 5.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        1.48
+      ],
+      "persist": false,
+      "params": {
+        "NECK_TILT": -2.0,
+        "NECK_ROLL": 5.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        2.0
+      ],
+      "persist": false,
+      "params": {
+        "GLOB_EyesScaleUp": 0.2,
+        "BROW_UP_RIGHT": 1.0,
+        "BROW_UP_LEFT": 1.0,
+        "BLINK_LEFT": 0.0,
+        "BLINK_RIGHT": 0.0,
+        "SURPRISE": 0.6,
+        "SMILE_OPEN": 0.0,
+        "NECK_TILT": 2.0,
+        "NECK_ROLL": -6.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        2.5
+      ],
+      "persist": false,
+      "params": {
+        "BROW_UP_RIGHT": 0.5,
+        "BROW_UP_LEFT": 0.5,
+        "BLINK_LEFT": 0.0,
+        "BLINK_RIGHT": 0.0,
+        "SURPRISE": 0.0,
+        "SMILE_OPEN": 1.0,
+        "NECK_TILT": 0.0,
+        "NECK_ROLL": -4.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        2.58
+      ],
+      "persist": false,
+      "params": {},
+      "texture": "eyelidCrease_off"
+    },
+    {
+      "time": [
+        2.67
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 1.0,
+        "BLINK_RIGHT": 1.0
+      }
+    },
+    {
+      "time": [
+        2.75
+      ],
+      "persist": false,
+      "params": {},
+      "texture": "default"
+    },
+    {
+      "time": [
+        2.83
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 0.0,
+        "BLINK_RIGHT": 0.0,
+        "SMILE_OPEN": 1.0
+      }
+    },
+    {
+      "time": [
+        3.5
+      ],
+      "persist": false,
+      "params": {
+        "SMILE_OPEN": 1.0,
+        "SMILE_CLOSED": 0.0,
+        "NECK_TILT": 0.0,
+        "NECK_ROLL": -4.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        4.0
+      ],
+      "persist": false,
+      "params": {
+        "SMILE_OPEN": 0.0,
+        "SMILE_CLOSED": 1.0,
+        "NECK_TILT": 0.0,
+        "NECK_ROLL": 3.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        4.5
+      ],
+      "persist": false,
+      "params": {
+        "NECK_ROLL": 0.0
+      }
+    },
+    {
+      "time": [
+        5.0
+      ],
+      "persist": false,
+      "params": {
+        "reset": true
+      },
+      "texture": "default"
+    }
+  ],
+  "name": "Welcome_2",
+  "class": "furhatos.gestures.Gesture"
+}

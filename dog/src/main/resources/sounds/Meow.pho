@@ -1,0 +1,36 @@
+{
+    "phones": [
+        {
+            "start": 0.0,
+            "end": 0.64,
+            "prominent": false,
+            "name": "_s"
+        },
+        {
+            "start": 0.64,
+            "end": 0.67,
+            "prominent": false,
+            "word": "yay",
+            "name": "J"
+        },
+        {
+            "start": 0.67,
+            "end": 0.87,
+            "prominent": false,
+            "name": "EI"
+        },
+        {
+            "start": 0.87,
+            "end": 1.22,
+            "prominent": false,
+            "name": "_s"
+        },
+        {
+            "start": 1.22,
+            "end": 1.237625,
+            "prominent": false,
+            "name": ""
+        }
+    ],
+    "class": "furhatos.records.Transcription"
+}

@@ -1,0 +1,9 @@
+logs/*
+node_modules/
+build/
+distr/
+out/
+.gradle/
+.idea/
+*.iml
+/config.properties

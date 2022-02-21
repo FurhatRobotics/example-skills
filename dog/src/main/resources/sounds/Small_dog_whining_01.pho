@@ -1,0 +1,72 @@
+{
+    "class": "furhatos.records.Transcription",
+    "phones": [
+        {
+            "start": 0.0,
+            "prominent": false,
+            "name": "H",
+            "word": "whimpering1",
+            "end": 0.03
+        },
+        {
+            "start": 0.03,
+            "prominent": false,
+            "name": "W",
+            "end": 0.06
+        },
+        {
+            "start": 0.06,
+            "prominent": false,
+            "name": "IH",
+            "end": 0.09
+        },
+        {
+            "start": 0.09,
+            "prominent": false,
+            "name": "M",
+            "end": 0.12
+        },
+        {
+            "start": 0.12,
+            "prominent": false,
+            "name": "P",
+            "end": 0.25
+        },
+        {
+            "start": 0.25,
+            "prominent": true,
+            "name": "ER",
+            "end": 0.47
+        },
+        {
+            "start": 0.47,
+            "prominent": true,
+            "name": "IH",
+            "end": 0.52
+        },
+        {
+            "start": 0.52,
+            "prominent": false,
+            "name": "NG",
+            "end": 0.62
+        },
+        {
+            "start": 0.62,
+            "prominent": false,
+            "name": "AH",
+            "end": 0.66
+        },
+        {
+            "start": 0.66,
+            "prominent": false,
+            "name": "N",
+            "end": 0.73
+        },
+        {
+            "start": 0.73,
+            "prominent": false,
+            "name": "",
+            "end": 0.75
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "class": "furhatos.records.Transcription",
+    "phones": [
+        {
+            "name": "W",
+            "start": 0.0,
+            "end": 0.06,
+            "prominent": false,
+            "word": "wah"
+        },
+        {
+            "name": "AH",
+            "start": 0.06,
+            "end": 0.26,
+            "prominent": false
+        },
+        {
+            "name": "H",
+            "start": 0.26,
+            "end": 0.43,
+            "prominent": false
+        },
+        {
+            "name": "_s",
+            "start": 0.43,
+            "end": 0.64,
+            "prominent": false
+        },
+        {
+            "name": "_s",
+            "start": 0.64,
+            "end": 0.6573125,
+            "prominent": false
+        }
+    ]
+}

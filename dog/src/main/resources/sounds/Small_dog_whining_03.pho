@@ -1,0 +1,110 @@
+{
+    "class": "furhatos.records.Transcription",
+    "phones": [
+        {
+            "start": 0.0,
+            "prominent": false,
+            "end": 0.32,
+            "name": "_s"
+        },
+        {
+            "start": 0.32,
+            "prominent": false,
+            "word": "small",
+            "end": 0.35,
+            "name": "S"
+        },
+        {
+            "start": 0.35,
+            "prominent": false,
+            "end": 0.38,
+            "name": "M"
+        },
+        {
+            "start": 0.38,
+            "prominent": true,
+            "end": 0.44,
+            "name": "AO"
+        },
+        {
+            "start": 0.44,
+            "prominent": false,
+            "end": 0.48,
+            "name": "L"
+        },
+        {
+            "start": 0.48,
+            "prominent": false,
+            "word": "dog",
+            "end": 0.51,
+            "name": "D"
+        },
+        {
+            "start": 0.51,
+            "prominent": false,
+            "end": 0.54,
+            "name": "AO"
+        },
+        {
+            "start": 0.54,
+            "prominent": false,
+            "end": 0.57,
+            "name": "G"
+        },
+        {
+            "start": 0.57,
+            "prominent": false,
+            "word": "whimpering",
+            "end": 0.6,
+            "name": "H"
+        },
+        {
+            "start": 0.6,
+            "prominent": false,
+            "end": 0.63,
+            "name": "W"
+        },
+        {
+            "start": 0.63,
+            "prominent": false,
+            "end": 0.66,
+            "name": "IH"
+        },
+        {
+            "start": 0.66,
+            "prominent": false,
+            "end": 0.72,
+            "name": "M"
+        },
+        {
+            "start": 0.72,
+            "prominent": false,
+            "end": 0.75,
+            "name": "P"
+        },
+        {
+            "start": 0.75,
+            "prominent": false,
+            "end": 0.79,
+            "name": "ER"
+        },
+        {
+            "start": 0.79,
+            "prominent": true,
+            "end": 0.84,
+            "name": "IH"
+        },
+        {
+            "start": 0.84,
+            "prominent": false,
+            "end": 1.01,
+            "name": "NG"
+        },
+        {
+            "start": 1.01,
+            "prominent": false,
+            "end": 1.03,
+            "name": ""
+        }
+    ]
+}

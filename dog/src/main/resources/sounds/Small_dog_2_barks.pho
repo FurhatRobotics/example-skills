@@ -1,0 +1,49 @@
+{
+    "class": "furhatos.records.Transcription",
+    "phones": [
+        {
+            "start": 0.0,
+            "word": "how",
+            "end": 0.12,
+            "name": "H",
+            "prominent": false
+        },
+        {
+            "start": 0.12,
+            "end": 0.22,
+            "name": "AU",
+            "prominent": false
+        },
+        {
+            "start": 0.22,
+            "end": 0.31,
+            "name": "_s",
+            "prominent": false
+        },
+        {
+            "start": 0.31,
+            "word": "how",
+            "end": 0.36,
+            "name": "H",
+            "prominent": false
+        },
+        {
+            "start": 0.36,
+            "end": 0.49,
+            "name": "AU",
+            "prominent": false
+        },
+        {
+            "start": 0.49,
+            "end": 0.68,
+            "name": "_s",
+            "prominent": false
+        },
+        {
+            "start": 0.68,
+            "end": 0.7,
+            "name": "",
+            "prominent": false
+        }
+    ]
+}
