@@ -1,7 +1,7 @@
-package furhatos.app.furhatdog.gestures
+package furhatos.app.dog.gestures
 
-import furhatos.app.furhatdog.utils._defineGesture
-import furhatos.app.furhatdog.utils.getAudioURL
+import furhatos.app.dog.utils._defineGesture
+import furhatos.app.dog.utils.getAudioURL
 import furhatos.gestures.BasicParams
 
 val shake1 = _defineGesture("shake1", frameTimes = listOf(0.25), audioURL = getAudioURL("Medium_dog_shaking_01.wav")) {

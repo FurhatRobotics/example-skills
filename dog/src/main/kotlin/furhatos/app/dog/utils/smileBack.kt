@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.utils
+package furhatos.app.dog.utils
 
 /**
  * This can be included using include(SmileBackState)
@@ -6,12 +6,8 @@ package furhatos.app.furhatdog.utils
  * Todo. See if smiles should have rondomized strength
  */
 
-import furhatos.skills.Skill
 import furhatos.flow.kotlin.*
-import furhatos.gestures.BasicParams
-import furhatos.gestures.defineGesture
 import furhatos.skills.emotions.UserGestures
-import furhatos.util.CommonUtils
 import gestures.indefiniteBigSmile
 import gestures.indefiniteSmile
 import gestures.stopSmile

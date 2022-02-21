@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.dog
+package furhatos.app.dog.dog
 
 import furhatos.records.User
 import kotlin.random.Random

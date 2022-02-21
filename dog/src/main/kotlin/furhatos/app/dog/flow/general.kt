@@ -1,15 +1,13 @@
-package furhatos.app.furhatdog.flow
+package furhatos.app.dog.flow
 
-import furhatos.app.furhatdog.dog.*
-import furhatos.app.furhatdog.extensions.randomBark
-import furhatos.app.furhatdog.extensions.randomGrowl
-import furhatos.app.furhatdog.extensions.randomWhimpering
-import furhatos.app.furhatdog.extensions.setDogCharacter
-import furhatos.app.furhatdog.gestures.*
-import furhatos.app.furhatdog.utils.*
+import furhatos.app.dog.dog.*
+import furhatos.app.dog.extensions.randomBark
+import furhatos.app.dog.extensions.randomGrowl
+import furhatos.app.dog.extensions.randomWhimpering
+import furhatos.app.dog.extensions.setDogCharacter
+import furhatos.app.dog.gestures.*
+import furhatos.app.dog.utils.*
 import furhatos.flow.kotlin.*
-import furhatos.gestures.BasicParams
-import furhatos.gestures.defineGesture
 import furhatos.skills.UserManager
 import gestures.FallAsleep
 import gestures.WakeUpWithHeadShake
@@ -373,4 +371,9 @@ val Interacting: State = state(Parent) {
             }
         }
     }
+}
+
+
+val MissingMask: State = state(Parent) {
+    // do nothing.
 }

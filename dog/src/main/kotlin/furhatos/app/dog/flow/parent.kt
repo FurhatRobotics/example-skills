@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.flow
+package furhatos.app.dog.flow
 
 
 import furhatos.flow.kotlin.*

@@ -1,9 +1,8 @@
 package gestures
 
-import furhatos.app.furhatdog.utils.getRandomInRange
+import furhatos.app.dog.utils.getRandomInRange
 import furhatos.gestures.BasicParams
 import furhatos.gestures.defineGesture
-import furhatos.gestures.BasicParams.*
 import furhatos.gestures.Gesture
 
 

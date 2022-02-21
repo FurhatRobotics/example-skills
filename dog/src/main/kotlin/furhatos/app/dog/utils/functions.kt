@@ -1,8 +1,6 @@
-package furhatos.app.furhatdog.utils
+package furhatos.app.dog.utils
 
-import furhatos.app.furhatdog.FurhatdogSkill
-import furhatos.flow.kotlin.FlowControlRunner
-import furhatos.flow.kotlin.furhat
+import furhatos.app.dog.DogSkill
 import furhatos.gestures.*
 import furhatos.records.Pixel
 import furhatos.records.Record
@@ -16,7 +14,7 @@ var isVirtual = false
 fun getRandomInRange(startInterval: Double = 18.0, interval: Double = 3.0) = startInterval + Math.random() * interval
 
 fun getResourceGesture(filePath: String): Gesture {
-    val resource = FurhatdogSkill::class.java.getResourceAsStream(filePath)
+    val resource = DogSkill::class.java.getResourceAsStream(filePath)
     return if (resource != null) {
         Record.fromJSON(BufferedReader(InputStreamReader(resource)).readText()) as Gesture
     } else {

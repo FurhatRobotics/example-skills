@@ -1,7 +1,7 @@
-package furhatos.app.furhatdog.flow
+package furhatos.app.dog.flow
 
-import furhatos.app.furhatdog.gestures.shake1
-import furhatos.app.furhatdog.gestures.yawn1
+import furhatos.app.dog.gestures.shake1
+import furhatos.app.dog.gestures.yawn1
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state

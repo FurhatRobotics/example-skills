@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.gestures
+package furhatos.app.dog.gestures
 
 import furhatos.gestures.BasicParams
 import furhatos.gestures.defineGesture

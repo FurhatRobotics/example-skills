@@ -1,6 +1,6 @@
-package furhatos.app.furhatdog.flow
+package furhatos.app.dog.flow
 
-import furhatos.app.furhatdog.gestures.*
+import furhatos.app.dog.gestures.*
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state

@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.dog
+package furhatos.app.dog.dog
 
 import furhatos.event.Event
 import furhatos.event.EventSystem

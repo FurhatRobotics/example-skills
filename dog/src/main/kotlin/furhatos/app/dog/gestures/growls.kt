@@ -1,7 +1,7 @@
-package furhatos.app.furhatdog.gestures
+package furhatos.app.dog.gestures
 
-import furhatos.app.furhatdog.utils._defineGesture
-import furhatos.app.furhatdog.utils.getAudioURL
+import furhatos.app.dog.utils._defineGesture
+import furhatos.app.dog.utils.getAudioURL
 import furhatos.gestures.BasicParams
 
 val growlPositive2 = _defineGesture("growlPositive2", frameTimes = listOf(0.2), audioURL = getAudioURL("Small_dog_single_growl_non_aggressive_02.wav")) {

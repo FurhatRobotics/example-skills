@@ -1,10 +1,10 @@
-package furhatos.app.furhatdog
+package furhatos.app.dog
 
-import furhatos.app.furhatdog.flow.*
+import furhatos.app.dog.flow.*
 import furhatos.skills.Skill
 import furhatos.flow.kotlin.*
 
-class FurhatdogSkill : Skill() {
+class DogSkill : Skill() {
     override fun start() {
         Flow().run(Main)
     }

@@ -1,4 +1,4 @@
-package furhatos.app.furhatdog.nlu
+package furhatos.app.dog.nlu
 
 import furhatos.nlu.Intent
 import furhatos.util.Language
