@@ -1,8 +1,6 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhatos.flow.kotlin.State
-import furhatos.flow.kotlin.onUserEnter
-import furhatos.flow.kotlin.state
+import furhatos.flow.kotlin.*
 
 val Idle: State = state {
 
@@ -12,6 +10,9 @@ val Idle: State = state {
         //furhat.attend(users.random)
         //goto(Start)
         //}
+        if (furhat.isVirtual() && users.hasAny() == false) {
+            furhat.say("Add a Virtual User to start the interaction. ")
+        }
     }
 
     onEntry {
