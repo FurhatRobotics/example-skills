@@ -1,0 +1,1 @@
+package furhatos.app.fortuneteller.nlu

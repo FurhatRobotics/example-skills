@@ -1,0 +1,3 @@
+package furhatos.app.fortuneteller
+
+
