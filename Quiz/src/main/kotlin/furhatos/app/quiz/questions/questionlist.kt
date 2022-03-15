@@ -7,9 +7,6 @@ package furhatos.app.quiz.questions
  *  -A list of other answers followed by their alternatives
  */
 val questionsEnglish = mutableListOf(
-        Question("How many wives did Henry VIII have?",
-                answer = listOf("6"),
-                alternatives = listOf(listOf("5"), listOf("8"), listOf("4"))),
 
         Question("Which country won the 2016 Eurovision Song competition?",
                 answer = listOf("Ukraine"),
@@ -19,29 +16,9 @@ val questionsEnglish = mutableListOf(
                 answer = listOf("15 22", "1522"),
                 alternatives = listOf(listOf("14 99", "1499"), listOf("16 32", "1632"), listOf("15 78", "1578"))),
 
-        Question("Which language is Afrikaans derived from?",
-                answer = listOf("Dutch", "touch"),
-                alternatives = listOf(listOf("German"), listOf("Spanish"), listOf("English"))),
-
-        Question("The Strip is a famous street in which American city?",
-                answer = listOf("Las Vegas", "vegas"),
-                alternatives = listOf(listOf("Washington DC", "washington"), listOf("Los Angeles", "hollywood", "angeles", "la"), listOf("New York", "York", "New"))),
-
         Question("During which decade did Elvis Presley die?",
                 answer = listOf("70s", "seventies", "70"),
                 alternatives = listOf(listOf("50s", "fifties", "50"), listOf("60s", "sixties", "60"), listOf("80s", "eighties", "hades", "80"))),
-
-        Question("As of 2016, which athlete had won the most Olympic medals?",
-                answer = listOf("Michael Phelps", "Phelps", "Michael"),
-                alternatives = listOf(listOf("Usain Bolt", "Bolt", "Usain"))),
-
-        Question("Who is the author of the Game of Thrones books?",
-                answer = listOf("George RR Martin", "George Martin", "George", "martin"),
-                alternatives = listOf(listOf("JK Rowling", "Rowling", "Rolling"), listOf("Suzanne Collins", "Collins", "Suzanne"), listOf("JRR Tolkien", "Tolkien", "Talking"))),
-
-        Question("Which nation won the most gold medals at the 2014 Olympics in Brazil?",
-                answer = listOf("USA", "America"),
-                alternatives = listOf(listOf("Great Britain", "United Kingdom", "Britain"), listOf("China"), listOf("Russia"))),
 
         Question("What is the largest freshwater lake in the world?",
                 answer = listOf("Lake Superior", "Superior"),
@@ -57,7 +34,8 @@ val questionsEnglish = mutableListOf(
 
         Question("In what year did, ABBA,  win the Eurovision songfestival?",
                 answer = listOf("19 74", "1974", "74"),
-                alternatives = listOf(listOf("19 78", "1978", "78"), listOf("19 76", "1976", "76"), listOf("19 72", "1972", "72"))),
+                alternatives = listOf(listOf("19 78", "1978", "78"), listOf("19 76", "1976", "76"), listOf("19 72", "1972", "72")),
+                funfact = "They won it with their well known song Waterloo. Man, do I love that song"),
 
         Question("What is the title of the famous novel by George Orwell?",
                 answer = listOf("19 84", "1984"),
@@ -85,5 +63,50 @@ val questionsEnglish = mutableListOf(
 
         Question("Which famous tennis player is from Sweden?",
                 answer = listOf("Bjorn Borg", "Borg", "Bjorn"),
-                alternatives = listOf(listOf("Roger Federer", "Federer", "Roger"), listOf("Novak Djokovic", "Novak", "Djokovic"), listOf("Andy Murray", "Andy", "Murray")))
+                alternatives = listOf(listOf("Roger Federer", "Federer", "Roger"), listOf("Novak Djokovic", "Novak", "Djokovic"), listOf("Andy Murray", "Andy", "Murray"))),
+
+        Question("Everbody knows what the Nobel Prize is, but what was Mr Nobel's first name?",
+                answer = listOf("Alfred"),
+                alternatives = listOf(listOf("Albert"), listOf("Isak"), listOf("Alexander")),
+                funfact = "Did you know he named his invention dynamite after the Greek word for power? This sounds much better than the first name Nobel's Safety Powder"),
+
+        Question("What is the national animal of Sweden?",
+                answer = listOf("elk", "moose", "alces alces"),
+                alternatives = listOf(listOf("reindeer"), listOf("arctic fox"), listOf("Brown Bear")),
+                funfact = "They really look majestic, don't they?"),
+
+        Question("One of Swedens most known Royals, Karl the 14th Johan, doesn't origin from Sweden. Previous to his new job, he was a general for which country?",
+                answer = listOf("France", "French"),
+                alternatives = listOf(listOf("Prussia", "Germany", "German"), listOf("Russia", "Russian"), listOf("Norway", "Norwegian")),
+                funfact = "He was know as Jean Bernadotte and served in the French Army. Hopefully one day I'll get a promotion like that")
+
+
+)
+
+val questionsSwedenEnglish = mutableListOf(
+        Question("One of Swedens most known Royals, Karl the 14th Johan, doesn't origin from Sweden. Previous to his new job, he was a general for which country?",
+                answer = listOf("France", "French"),
+                alternatives = listOf(listOf("Prussia", "Germany", "German"), listOf("Russia", "Russian"), listOf("Norway", "Norwegian")),
+                funfact = "He was know as Jean Bernadotte and served in the French Army. Hopefully one day I'll get a promotion like that")
+)
+
+val questionsRobotEnglishReasonPhraseCatalog = mutableListOf(
+        Question("One of Swedens most known Royals, Karl the 14th Johan, doesn't origin from Sweden. Previous to his new job, he was a general for which country?",
+                answer = listOf("France", "French"),
+                alternatives = listOf(listOf("Prussia", "Germany", "German"), listOf("Russia", "Russian"), listOf("Norway", "Norwegian")),
+                funfact = "He was know as Jean Bernadotte and served in the French Army. Hopefully one day I'll get a promotion like that")
+)
+
+val questionsMusicEnglish = mutableListOf(
+        Question("In what year did, ABBA,  win the Eurovision songfestival?",
+                answer = listOf("19 74", "1974", "74"),
+                alternatives = listOf(listOf("19 78", "1978", "78"), listOf("19 76", "1976", "76"), listOf("19 72", "1972", "72")),
+                funfact = "They won it with their well known song Waterloo. Man, do I love that song")
+)
+
+val questionsScience = mutableListOf(
+        Question("Where can you find the Sea of Tranquility?",
+                answer = listOf("The moon", "moon"),
+                alternatives = listOf(listOf("Turkey"), listOf("Germany"), listOf("The united states", "united states", "states")),
+                funfact = "")
 )
