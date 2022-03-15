@@ -28,13 +28,16 @@ object QuestionSet {
  * The question class gets the following parameters:
  * @text : The question as a String
  * @answer : A list containing the correct answer to the question, followed by alternative pronunciations of the correct answer
- * @alternatives A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronunciations of the correct answer.
+ * @alternatives : A list, containing lists of other (wrong) answers. Every other answer is also followed by alternative pronunciations of the correct answer.
+ * @funfact : A list, containing a funny thing to know or a funny answer that Furhat tells, if the user got the right answer
  */
-class Question(val text: String, answer: List<String>, alternatives: List<List<String>>) {
+class Question(val text: String, answer: List<String>, alternatives: List<List<String>>,val funfact: String = "") {
     //All options, used to prime the NLU
     var options : MutableList<EnumItem> = mutableListOf()
     //Only the first option of the answers, these are correctly spelled, and not alternative.
     var primeoptions : MutableList<EnumItem> = mutableListOf()
+    var rightanswer : String = answer.first()
+
 
     //init loads the first item of the list into primeoptions
     //And loads everything into options
