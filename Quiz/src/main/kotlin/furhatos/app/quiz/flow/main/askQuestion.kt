@@ -5,6 +5,7 @@ import furhatos.app.quiz.DontKnow
 import furhatos.app.quiz.RequestRepeatOptions
 import furhatos.app.quiz.RequestRepeatQuestion
 import furhatos.app.quiz.flow.Parent
+import furhatos.app.quiz.questions.Question
 import furhatos.app.quiz.questions.QuestionSet
 import furhatos.app.quiz.setting.nextPlaying
 import furhatos.app.quiz.setting.notQuestioned
@@ -41,10 +42,16 @@ val AskQuestion: State = state(parent = Parent) {
         if (answer.correct) {
             furhat.gesture(Gestures.Smile)
             users.current.quiz.score++
-            random(
-                    { furhat.say("Great! That was the ${furhat.voice.emphasis("right")}  answer, you now have a score of ${users.current.quiz.score}") },
-                    { furhat.say("that was ${furhat.voice.emphasis("correct")}, you now have a score of ${users.current.quiz.score}") }
+            random(                                                 // Todo: emphasis is not supported for this voice
+                    { furhat.say("Great! That was the ${furhat.voice.emphasis("right")} answer") },
+                    { furhat.say("that was ${furhat.voice.emphasis("correct")}") }
             )
+            if (QuestionSet.current.funfact != ""){
+            delay(1000)
+            furhat.say(QuestionSet.current.funfact)
+            delay(1000)
+            furhat.say("You now have a score of ${users.current.quiz.score}\"")
+            }
             /*
             If the user answers incorrect, we give another user the chance of answering if one is present in the game.
             If we indeed ask another player, the furhat.ask() interrupts the rest of the handler.
@@ -103,10 +110,11 @@ val AskQuestion: State = state(parent = Parent) {
 
     // If we don't get any response, we assume the user was too slow
     onNoResponse {
-        random(
-                { furhat.say("Too slow! Here comes the next question") },
-                { furhat.say("A bit too slow amigo! Get ready for the next question") }
-        )
+        furhat.say{
+            random{
+                +"Too slow! Here comes the next question"
+                +"A bit too slow amigo! Get ready for the next question"
+                +"Looks like the question was too hard. Let's go to the next one"}}
         goto(NewQuestion)
     }
 
@@ -123,7 +131,9 @@ val AskQuestion: State = state(parent = Parent) {
                 furhat.ask("The options are ${QuestionSet.current.getOptionsString()}")
             }
             else -> {
-                furhat.say("Still couldn't get that. Let's try a new question")
+                furhat.say("Still couldn't get that. Maybe this question was too hard for you")
+                furhat.say("The answer would have been ${QuestionSet.current.rightanswer}")
+                furhat.say("Let's try a new question")
                 shouldChangeUser = false
                 goto(NewQuestion)
             }
