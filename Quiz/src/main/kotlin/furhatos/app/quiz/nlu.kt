@@ -46,6 +46,45 @@ class RequestRepeatOptions : Intent() {
     }
 }
 
+class Science : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "science",
+            "sign"
+        )
+    }
+}
+
+class Sweden : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Sweden"
+        )
+    }
+}
+
+class Music : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Music")
+    }
+}
+
+class Robots : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "Robot", "Robots")
+    }
+}
+
+class Mix : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "everything", "all", "mix", "suprise me", "random"
+        )
+    }
+}
+
 class AnswerOption : EnumEntity {
 
     var correct : Boolean = false
