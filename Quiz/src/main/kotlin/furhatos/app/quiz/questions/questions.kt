@@ -6,19 +6,24 @@ import furhatos.nlu.TextBuilder
 import java.util.*
 
 object QuestionSet {
-
     var count : Int = 0
-    var current: Question = questionsEnglish[Random().nextInt(questionsEnglish.lastIndex)]
+    var currenttopic : MutableList<Question> = questionsEnglish
+    var current: Question = currenttopic[Random().nextInt(currenttopic.lastIndex)]
 
     init {
         questionsEnglish.shuffle()
+        questionsScienceEnglish.shuffle()
+        questionsMusicEnglish.shuffle()
+        questionsSwedenEnglish.shuffle()
+        questionsRobotEnglish.shuffle()
     }
 
-    fun next() {
+    fun next(topic : MutableList<Question>) {
         count++
-        if (count >= questionsEnglish.size)
+        if (count >= topic.size)
             count = 0
-        current = questionsEnglish[count]
+        current = topic[count]
+        currenttopic = topic
         AnswerOption().forget()
     }
 
