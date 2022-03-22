@@ -1,11 +1,12 @@
 package furhatos.app.quiz.flow.main
 
+import furhat.libraries.standard.GesturesLib
 import furhatos.app.quiz.AnswerOption
 import furhatos.app.quiz.DontKnow
 import furhatos.app.quiz.RequestRepeatOptions
 import furhatos.app.quiz.RequestRepeatQuestion
 import furhatos.app.quiz.flow.Parent
-import furhatos.app.quiz.questions.Question
+import furhatos.app.quiz.flow.customGestures.awaitAnswer
 import furhatos.app.quiz.questions.QuestionSet
 import furhatos.app.quiz.setting.nextPlaying
 import furhatos.app.quiz.setting.notQuestioned
@@ -25,7 +26,7 @@ val AskQuestion: State = state(parent = Parent) {
         furhat.setSpeechRecPhrases(QuestionSet.current.speechPhrases)
 
         // Ask the question followed by the options
-        furhat.ask(QuestionSet.current.text + " " + QuestionSet.current.getOptionsString())
+        furhat.ask(QuestionSet.current.text + " " + QuestionSet.current.getOptionsString(), timeout = 12000)
     }
 
     // Here we re-state the question
@@ -42,15 +43,28 @@ val AskQuestion: State = state(parent = Parent) {
         if (answer.correct) {
             furhat.gesture(Gestures.Smile)
             users.current.quiz.score++
-            random(                                                 // Todo: emphasis is not supported for this voice
-                    { furhat.say("Great! That was the ${furhat.voice.emphasis("right")} answer") },
-                    { furhat.say("that was ${furhat.voice.emphasis("correct")}") }
+            furhat.say("This answer was")
+            delay(500)
+            furhat.ledStrip.solid(java.awt.Color.GREEN)
+            furhat.say("correct")
+            furhat.say{
+                random {
+                    +"Congratulation!"
+                    +"Good job."
+                    +"Well done."
+                }
+            }
+            random(
+                {furhat.gesture(GesturesLib.ohYeah1)},
+                {furhat.gesture(GesturesLib.SmileRandom())}
             )
+            delay(500)
+            furhat.ledStrip.solid(java.awt.Color(0,0,0))
             if (QuestionSet.current.funfact != ""){
             delay(1000)
             furhat.say(QuestionSet.current.funfact)
             delay(1000)
-            furhat.say("You now have a score of ${users.current.quiz.score}\"")
+            furhat.say("You now have a score of ${users.current.quiz.score}")
             }
             /*
             If the user answers incorrect, we give another user the chance of answering if one is present in the game.
@@ -58,8 +72,11 @@ val AskQuestion: State = state(parent = Parent) {
              */
         } else {
             furhat.gesture(Gestures.BrowFrown)
-            furhat.say("Sorry, that was ${furhat.voice.emphasis("not")} correct")
-
+            furhat.say("This answer was")
+            delay(500)
+            furhat.ledStrip.solid(java.awt.Color.RED)
+            furhat.say("sadly ${furhat.voice.emphasis("not")} correct")
+            furhat.gesture(GesturesLib.sad1)
             // Keep track of what users answered what question so that we don't ask the same user
             users.current.quiz.questionsAsked.add(QuestionSet.current.text)
 
@@ -73,6 +90,10 @@ val AskQuestion: State = state(parent = Parent) {
                 shouldChangeUser = false
                 furhat.ask("Maybe you know the answer?")
             }
+            delay(500)
+            furhat.say("The correct answer would have been: $answer")
+            delay(500)
+            furhat.ledStrip.solid(java.awt.Color(0,0,0))
         }
 
         // Check if the game has ended and if not, goes to a new question
@@ -80,12 +101,16 @@ val AskQuestion: State = state(parent = Parent) {
             furhat.say("That was the last question")
             goto(EndGame)
         } else {
+            delay(900)
+            furhat.say("Here comes the next question")
+            delay(500)
             goto(NewQuestion)
         }
     }
 
     // The users answers that they don't know
     onResponse<DontKnow> {
+        furhat.gesture(awaitAnswer)
         furhat.say("Too bad. Here comes the next question")
         goto(NewQuestion)
     }
@@ -177,7 +202,7 @@ val NewQuestion = state(parent = Parent) {
             }
         }
         // Ask new question
-        QuestionSet.next()
+        QuestionSet.next(QuestionSet.currenttopic)
         goto(AskQuestion)
     }
 }
