@@ -1,6 +1,8 @@
 package furhatos.app.quiz.flow
 
+import furhat.libraries.standard.getResourceGesture
 import furhatos.app.quiz.RequestRules
+import furhatos.app.quiz.flow.customGestures.mySmile
 import furhatos.app.quiz.flow.main.Idle
 import furhatos.app.quiz.flow.main.NewQuestion
 import furhatos.app.quiz.flow.main.maxRounds
@@ -9,6 +11,8 @@ import furhatos.app.quiz.setting.playing
 import furhatos.app.quiz.setting.quiz
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.Goodbye
+val EyebrowRaise = getResourceGesture("/json/EyebrowRaise.json")
+val surprise = getResourceGesture("/json/surprise.json")
 
 val Parent: State = state {
 
@@ -33,7 +37,7 @@ val Parent: State = state {
         it.quiz.playing = false
         if (users.current?.id == it.id) {
             furhat.stopSpeaking()
-            if (users.playing().count() > 0) {
+            if (users.playing().isNotEmpty()) {
                 furhat.attend(users.nextPlaying())
                 goto(NewQuestion)
             } else {
