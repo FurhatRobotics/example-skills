@@ -70,9 +70,14 @@ var playing = false
 fun QueryPerson(user: User) = state(parent = Parent) {
     onEntry {
         if (!user.quiz.played) {
-            furhat.ask("Do you want to play?")
+            furhat.say("I hope you are doing fine. I am in the mood for a quiz.")
+            delay(900)
+            furhat.ask("Do you want to play one?")
         } else {
-            furhat.ask("Do you want to play again? Maybe you can beat your old score of ${user.quiz.lastScore}")
+            furhat.ask{random {
+                +"Do you want to play again? Maybe you can beat your old score of ${user.quiz.lastScore}"
+                +"Are you up for another round?  Maybe you can beat your old score of ${user.quiz.lastScore}"
+            }}
         }
     }
 
