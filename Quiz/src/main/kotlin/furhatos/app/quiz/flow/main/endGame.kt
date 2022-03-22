@@ -1,5 +1,6 @@
 package furhatos.app.quiz.flow.main
 
+import furhat.libraries.standard.GesturesLib
 import furhatos.app.quiz.flow.Parent
 import furhatos.app.quiz.setting.playing
 import furhatos.app.quiz.setting.quiz
@@ -59,6 +60,7 @@ val EndGame: State = state(parent = Parent) {
         // Only one player, we simply announce the score
         else {
             furhat.say("You got ${users.current.quiz.score} points.")
+
         }
 
         furhat.say("Thanks for playing!")
@@ -68,6 +70,7 @@ val EndGame: State = state(parent = Parent) {
             it.quiz.playing = false
             it.quiz.played = true
             it.quiz.lastScore = it.quiz.score
+            it.quiz.score = 0
         }
 
         delay(1000)
