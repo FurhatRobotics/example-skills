@@ -45,6 +45,7 @@ repositories {
 
 dependencies {
 	compile 'com.furhatrobotics.furhatos:furhat-commons:+'
+	compile 'com.furhatrobotics.assets:StandardLibraryCollection:1.0.1'
 }
 
 //These new blocks are needed to package your project into a working skill file.
