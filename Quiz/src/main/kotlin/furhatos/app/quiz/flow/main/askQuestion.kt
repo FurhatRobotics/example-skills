@@ -7,14 +7,12 @@ import furhatos.app.quiz.RequestRepeatOptions
 import furhatos.app.quiz.RequestRepeatQuestion
 import furhatos.app.quiz.flow.Parent
 import furhatos.app.quiz.flow.customGestures.awaitAnswer
-import furhatos.app.quiz.questions.QuestionSet
-import furhatos.app.quiz.setting.nextPlaying
-import furhatos.app.quiz.setting.notQuestioned
-import furhatos.app.quiz.setting.playing
-import furhatos.app.quiz.setting.quiz
+import furhatos.app.quiz.questions.*
+import furhatos.app.quiz.setting.*
 import furhatos.flow.kotlin.*
 import furhatos.gestures.Gestures
 import furhatos.nlu.common.RequestRepeat
+import org.eclipse.jetty.server.Authentication.User
 
 val AskQuestion: State = state(parent = Parent) {
     var failedAttempts = 0
@@ -26,7 +24,22 @@ val AskQuestion: State = state(parent = Parent) {
         furhat.setSpeechRecPhrases(QuestionSet.current.speechPhrases)
 
         // Ask the question followed by the options
-        furhat.ask(QuestionSet.current.text + " " + QuestionSet.current.getOptionsString(), timeout = 12000)
+        furhat.say(QuestionSet.current.text + " ${furhat.voice.pause("500ms")} ")
+        var answeroptions = QuestionSet.current.getOptionsString().replace(" or ", " , ").split(",")
+        if (answeroptions.size >2) {
+        furhat.say(answeroptions[0])
+        delay(200)
+        furhat.say(answeroptions[1])
+        delay(200)
+        furhat.ask("or " + answeroptions[2], timeout = 12000)
+    }
+        else{
+            furhat.say(answeroptions[0])
+            delay(200)
+            furhat.say("or")
+            delay(200)
+            furhat.ask(answeroptions[1], timeout = 12000)
+        }
     }
 
     // Here we re-state the question
@@ -44,8 +57,8 @@ val AskQuestion: State = state(parent = Parent) {
             furhat.gesture(Gestures.Smile)
             users.current.quiz.score++
             furhat.say("This answer was")
-            delay(500)
-            furhat.ledStrip.solid(java.awt.Color.GREEN)
+            delay(600)
+            furhat.ledStrip.solid(java.awt.Color(0,15,0))
             furhat.say("correct")
             furhat.say{
                 random {
@@ -63,20 +76,32 @@ val AskQuestion: State = state(parent = Parent) {
             if (QuestionSet.current.funfact != ""){
             delay(1000)
             furhat.say(QuestionSet.current.funfact)
-            delay(1000)
-            furhat.say("You now have a score of ${users.current.quiz.score}")
-            }
+            delay(1000)}
+            furhat.say{
+            random{
+                + "You now have a score of ${users.current.quiz.score}"
+                + "Your current score is ${users.current.quiz.score} points"
+                + "You are now at ${users.current.quiz.score} points"
+            }}
+
+
             /*
             If the user answers incorrect, we give another user the chance of answering if one is present in the game.
             If we indeed ask another player, the furhat.ask() interrupts the rest of the handler.
              */
         } else {
-            furhat.gesture(Gestures.BrowFrown)
             furhat.say("This answer was")
             delay(500)
-            furhat.ledStrip.solid(java.awt.Color.RED)
-            furhat.say("sadly ${furhat.voice.emphasis("not")} correct")
-            furhat.gesture(GesturesLib.sad1)
+            furhat.gesture(Gestures.BrowFrown)
+            furhat.ledStrip.solid(java.awt.Color(15,0,0))
+            furhat.say("sadly not correct")
+            random(
+                {furhat.gesture(GesturesLib.sad1)},
+                {furhat.gesture(GesturesLib.mouthSide1)},
+                {furhat.gesture(GesturesLib.what1)}
+            )
+
+
             // Keep track of what users answered what question so that we don't ask the same user
             users.current.quiz.questionsAsked.add(QuestionSet.current.text)
 
@@ -84,15 +109,16 @@ val AskQuestion: State = state(parent = Parent) {
              For the flow of the skill, we will continue asking the new user the next question through the
              shouldChangeUser = false flag.
              */
-            val availableUsers = users.notQuestioned(QuestionSet.current.text)
+            /*val availableUsers = users.notQuestioned(QuestionSet.current.text)
             if (!availableUsers.isEmpty()) {
                 furhat.attend(availableUsers.first())
                 shouldChangeUser = false
-                furhat.ask("Maybe you know the answer?")
-            }
-            delay(500)
-            furhat.say("The correct answer would have been: $answer")
-            delay(500)
+                furhat.ask("Maybe you know the answer?")}*/
+
+            delay(600)
+            // TODO:
+            furhat.say("The correct answer would have been: ${QuestionSet.current.rightanswer}")
+            delay(250)
             furhat.ledStrip.solid(java.awt.Color(0,0,0))
         }
 
@@ -100,9 +126,27 @@ val AskQuestion: State = state(parent = Parent) {
         if (++rounds >= maxRounds) {
             furhat.say("That was the last question")
             goto(EndGame)
-        } else {
+        }
+        else if (rounds ==  maxRounds-1){
+            furhat.say{
+                random {
+                    + "We are now heading to the last question"
+                    + "Prepare for the last question"
+                    + "Only one question left"
+                }
+            }
+            delay(500)
+            goto(NewQuestion)
+        }
+        else {
             delay(900)
-            furhat.say("Here comes the next question")
+            furhat.say{
+                random {
+                    + "Here comes the next question"
+                    + "Let's proceed"
+                    + "Let's go to the next round"
+                }
+            }
             delay(500)
             goto(NewQuestion)
         }
@@ -110,8 +154,17 @@ val AskQuestion: State = state(parent = Parent) {
 
     // The users answers that they don't know
     onResponse<DontKnow> {
+        furhat.say{
+            random{
+                +"too bad."
+                +"That is unfortunate to hear"
+                +"Looks like this question was too hard for you."
+                +"Oh no"
+            }}
+        delay(600)
+        furhat.say("The correct answer would have been: ${QuestionSet.current.rightanswer}")
         furhat.gesture(awaitAnswer)
-        furhat.say("Too bad. Here comes the next question")
+        furhat.say("Let's proceed")
         goto(NewQuestion)
     }
 
@@ -149,6 +202,7 @@ val AskQuestion: State = state(parent = Parent) {
      */
     onResponse {
         failedAttempts++
+        googleSheetsLog(googleSheetsIftttUrl, it.text, QuestionSet.topicname + QuestionSet.current.text, "uncaught on try $failedAttempts")
         when (failedAttempts) {
             1 -> furhat.ask("I didn't get that, sorry. Try again!")
             2 -> {
@@ -157,14 +211,31 @@ val AskQuestion: State = state(parent = Parent) {
             }
             else -> {
                 furhat.say("Still couldn't get that. Maybe this question was too hard for you")
-                furhat.say("The answer would have been ${QuestionSet.current.rightanswer}")
+                furhat.say("The correct answer would have been: ${QuestionSet.current.rightanswer}")
                 furhat.say("Let's try a new question")
                 shouldChangeUser = false
+                googleSheetsLog(googleSheetsIftttUrl, "", "", "")
                 goto(NewQuestion)
+
             }
         }
     }
+    onUserLeave {
+        if (users.playing().isEmpty()) {
+            furhat.say("Ok goodbye then. See you next time!")
+            QuestionSet.shuffle()
+            goto(Idle)
+        }
+        else{
+                val nextUser = users.nextPlaying()
+                furhat.attend(nextUser)
+            furhat.say("You get to continue")
+
+            }
+        }
+
 }
+
 
 val NewQuestion = state(parent = Parent) {
     onEntry {
@@ -204,5 +275,11 @@ val NewQuestion = state(parent = Parent) {
         // Ask new question
         QuestionSet.next(QuestionSet.currenttopic)
         goto(AskQuestion)
+    }
+}
+
+val TellOptions = state{
+    onEntry {
+
     }
 }
