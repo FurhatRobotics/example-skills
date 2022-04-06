@@ -7,15 +7,13 @@ import java.util.*
 
 object QuestionSet {
     var count : Int = 0
-    var currenttopic : MutableList<Question> = questionsEnglish
+    var currenttopic : MutableList<Question> = questionsRandomEnglish
     var current: Question = currenttopic[Random().nextInt(currenttopic.lastIndex)]
+    var currentquestionset = mutableListOf<Question>()
+    var topicname : String = ""
 
     init {
-        questionsEnglish.shuffle()
-        questionsScienceEnglish.shuffle()
-        questionsMusicEnglish.shuffle()
-        questionsSwedenEnglish.shuffle()
-        questionsRobotEnglish.shuffle()
+        shuffle()
     }
 
     fun next(topic : MutableList<Question>) {
@@ -26,6 +24,22 @@ object QuestionSet {
         currenttopic = topic
         AnswerOption().forget()
     }
+
+    fun shuffle(){
+        questionsRandomEnglish.shuffle()
+        questionsScienceEnglish.shuffle()
+        questionsMusicEnglish.shuffle()
+        questionsSwedenEnglish.shuffle()
+        questionsRobotEnglish.shuffle()
+    }
+    //TODO: This function dynamic array
+    /*
+    fun reset(){
+        println(currentquestionset.size)
+        currentquestionset = mutableListOf<Question>()
+        println(currentquestionset.size)
+
+    }*/
 
 }
 
