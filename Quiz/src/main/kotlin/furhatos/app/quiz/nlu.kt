@@ -73,14 +73,14 @@ class Music : Intent() {
 class Robots : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
-            "Robot", "Robots")
+            "Robot", "Robots", "arrow", "Robux")
     }
 }
 
 class Mix : Intent() {
     override fun getExamples(lang: Language): List<String> {
         return listOf(
-            "everything", "all", "mix", "suprise me", "random"
+            "everything", "all", "mix", "surprise me", "random"
         )
     }
 }
