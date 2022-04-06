@@ -8,6 +8,7 @@ import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
+import furhatos.gestures.Gestures
 
 
 // End of game, announcing results
@@ -60,6 +61,34 @@ val EndGame: State = state(parent = Parent) {
         // Only one player, we simply announce the score
         else {
             furhat.say("You got ${users.current.quiz.score} points.")
+
+        }
+        if (users.current.quiz.played){
+            if (users.current.quiz.score < users.current.quiz.lastScore){
+                furhat.say{
+                    random {
+                        +"looks like these questions were too hard. Maybe next time, your score can be higher again!"
+                        +"You held back, didn't you?"
+                        +"Oh no. Next time, i will go easy on you. Then your score will look good again"
+                        +"I know, you can do better than this."
+                        // TODO: GESTURES
+                    }
+                }
+            }
+            else if (users.current.quiz.score == users.current.quiz.lastScore){
+                furhat.say("Well... There was no improvement this time. Same score again")
+                // TODO: Gestures
+            }
+            else if (users.current.quiz.score > users.current.quiz.lastScore){
+                furhat.say{
+                    random {
+                        +"good job, beating your old score!"
+                        +"I knew, you could do this. You have cracked your old score!"
+                        +"Next time i won't go easy on you. Your score is a little bit too high for my taste."
+                    }
+                }
+                furhat.gesture(Gestures.Wink)
+            }
 
         }
 
