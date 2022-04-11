@@ -85,6 +85,14 @@ class Mix : Intent() {
     }
 }
 
+class Again : Intent() {
+    override fun getExamples(lang: Language): List<String> {
+        return listOf(
+            "again", "another time", "go again", "repeat"
+        )
+    }
+}
+
 class AnswerOption : EnumEntity {
 
     var correct : Boolean = false

@@ -11,6 +11,8 @@ import furhatos.autobehavior.StopSmile
 import furhatos.autobehavior.setDefaultMicroexpression
 import furhatos.flow.kotlin.*
 import furhatos.app.quiz.setting.getQuestions
+import furhatos.app.quiz.setting.googleSheetsIftttUrl
+import furhatos.app.quiz.setting.googleSheetsLog
 
 var sheetLink = "1Deqm9Xmbm2bYplRSsPIVKZEJ1KhOfgM3EW6JB-VZySI"
 
@@ -47,64 +49,172 @@ val AskTopic = state {
 
     }
     onResponse<DontKnow> {
-        furhat.say("A little bit of everything. This will be fun!")
-        furhat.gesture(IndefiniteBigSmile)
-        delay(500)
-        furhat.gesture(StopSmile)
-        if (questionsRandomEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Random", questionsRandomEnglish) }
-        if (questionsScienceEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Science", questionsScienceEnglish) }
-        if (questionsRobotEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Robots", questionsRobotEnglish) }
-        if (questionsMusicEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Music", questionsMusicEnglish) }
-        QuestionSet.topicname = "Random: "
-        var allQuestions = (questionsRandomEnglish + questionsScienceEnglish + questionsSwedenEnglish + questionsMusicEnglish + questionsRobotEnglish).toMutableList()
-        allQuestions.shuffle()
-        QuestionSet.next(allQuestions)
+        if (QuestionSet.topicname == "" || QuestionSet.topicname != "Random: "){
+            furhat.say("A little bit of everything. This will be fun!")
+            furhat.gesture(IndefiniteBigSmile)
+            delay(500)
+            furhat.gesture(StopSmile)
+            if (questionsRandomEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Random", questionsRandomEnglish) }
+            if (questionsScienceEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Science", questionsScienceEnglish) }
+            if (questionsRobotEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Robots", questionsRobotEnglish) }
+            if (questionsMusicEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Music", questionsMusicEnglish) }
+            QuestionSet.topicname = "Random: "
+            var allQuestions = (questionsRandomEnglish + questionsScienceEnglish + questionsSwedenEnglish + questionsMusicEnglish + questionsRobotEnglish).toMutableList()
+            allQuestions.shuffle()
+            QuestionSet.currenttopic = allQuestions
+            QuestionSet.current = QuestionSet.currenttopic.first()
+        }
+        else {
+            if (QuestionSet.topicname == "Random: " && QuestionSet.currenttopic.size >= 4){
+                furhat.say("Looks like you want to have more questions.")
+                QuestionSet.next()
+                goto(AskQuestion)
+            }
+            else {
+                furhat.say("I am afraid i don't have enough questions about this topic for another round any more.")
+                furhat.say("You now have had every Question available. Come again soon!")
+                goto(Idle)
+
+            }
+        }
+
+
         furhat.attend(users.playing().first())
         goto(AskQuestion)
     }
+    onResponse<Again>{
+        if (QuestionSet.topicname != "" && QuestionSet.currenttopic.size >= 4){
+            furhat.say("Here we go again")
+            QuestionSet.next()
+            goto(AskQuestion)
 
+        }
+        else if (QuestionSet.topicname != "" && QuestionSet.currenttopic.size <= 2){
+            furhat.say("Looks like i don't have any more questions for that topic")
+            furhat.ask("Which one of the other topics do you wanna try?")
+        }
+
+        else {
+            furhat.say("I am sorry, i didn't catch that.")
+        }
+
+    }
     onResponse<Mix> {
         raise(DontKnow())
     }
 
     onResponse<Science> {
-        furhat.say("Its science time")
-        delay(200)
-        QuestionSet.topicname = "Science: "
-        if (questionsScienceEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Science", questionsScienceEnglish) }
-        QuestionSet.next(questionsScienceEnglish)
+        if (QuestionSet.topicname == "" || QuestionSet.topicname != "Science: "){
+            furhat.say("Its science time")
+            delay(200)
+            QuestionSet.topicname = "Science: "
+            if (questionsScienceEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Science", questionsScienceEnglish) }
+            questionsScienceEnglish.shuffle()
+
+            QuestionSet.currenttopic = questionsScienceEnglish
+            QuestionSet.current = QuestionSet.currenttopic.first()}
+
+        else {
+            if (QuestionSet.topicname == "Science: " && QuestionSet.currenttopic.size >= 4){
+                furhat.say("Looks like you want to have more Science questions.")
+                QuestionSet.next()
+                goto(AskQuestion)
+            }
+            else {
+                furhat.say("I am afraid i don't have enough questions about this topic for another round any more.")
+                furhat.ask("Do you want to try out another topic? Maybe you are also interested in Sweden, Robots or Music?")
+            }
+        }
         furhat.attend(users.playing().first())
         goto(AskQuestion)
     }
 
     onResponse<Sweden> {
-        furhat.say("Its time for some good questions about my native country Sweden")
-        delay(200)
-        QuestionSet.topicname = "Sweden: "
-        if (questionsSwedenEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Sweden", questionsSwedenEnglish) }
-        QuestionSet.next(questionsSwedenEnglish)
-        furhat.attend(users.playing().first())
-        goto(AskQuestion)
-    }
-    onResponse<Robots> {
-        furhat.say("I love questions about my kind")
-        delay(200)
-        QuestionSet.topicname = "Robots: "
-        if (questionsRobotEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Robots", questionsRobotEnglish) }
-        QuestionSet.next(questionsRobotEnglish)
-        furhat.attend(users.playing().first())
-        goto(AskQuestion)
-    }
-    onResponse<Music> {
-        furhat.say("Lets see how good your musical taste is")
-        delay(200)
-        QuestionSet.topicname = "Music: "
-        if (questionsMusicEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Music", questionsMusicEnglish) }
-        QuestionSet.next(questionsMusicEnglish)
+
+        if (QuestionSet.topicname == "" || QuestionSet.topicname != "Sweden: "){
+            furhat.say("Let's have some questions about my native country.")
+            delay(200)
+            QuestionSet.topicname = "Sweden: "
+            if (questionsSwedenEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Sweden", questionsSwedenEnglish) }
+            questionsSwedenEnglish.shuffle()
+
+            QuestionSet.currenttopic = questionsSwedenEnglish
+            QuestionSet.current = QuestionSet.currenttopic.first()}
+
+        else {
+            if (QuestionSet.topicname == "Sweden: " && QuestionSet.currenttopic.size >= 4){
+                furhat.say("Looks like you want to have more Sweden questions.")
+                QuestionSet.next()
+                goto(AskQuestion)
+            }
+            else {
+                furhat.say("I am afraid i don't have enough questions about this topic for another round any more.")
+                furhat.ask("Do you want to try out another topic? Maybe you are also interested in Science, Robots or Music?")
+            }
+        }
         furhat.attend(users.playing().first())
         goto(AskQuestion)
     }
 
+
+    onResponse<Robots> {
+
+        if (QuestionSet.topicname == "" || QuestionSet.topicname != "Robots: "){
+            furhat.say("I love questions about my kind!")
+            delay(200)
+            QuestionSet.topicname = "Robots: "
+            if (questionsRobotEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Robots", questionsRobotEnglish) }
+            questionsRobotEnglish.shuffle()
+
+            QuestionSet.currenttopic = questionsRobotEnglish
+            QuestionSet.current = QuestionSet.currenttopic.first()}
+
+        else {
+            if (QuestionSet.topicname == "Robots: " && QuestionSet.currenttopic.size >= 4){
+                furhat.say("Looks like you want to have more robot questions.")
+                QuestionSet.next()
+                goto(AskQuestion)
+            }
+            else {
+                furhat.say("I am afraid i don't have enough questions about this topic for another round any more.")
+                furhat.ask("Do you want to try out another topic? Maybe you are also interested in Sweden, Science or Music?")
+            }
+        }
+        furhat.attend(users.playing().first())
+        goto(AskQuestion)
+    }
+
+
+    onResponse<Music> {
+        if (QuestionSet.topicname == "" || QuestionSet.topicname != "Music: "){
+            furhat.say("Now i can find out, how good your taste in Music is")
+            delay(200)
+            QuestionSet.topicname = "Music: "
+            if (questionsMusicEnglish.isNullOrEmpty()){ getQuestions(sheetLink, "Music", questionsMusicEnglish) }
+            questionsMusicEnglish.shuffle()
+
+            QuestionSet.currenttopic = questionsMusicEnglish
+            QuestionSet.current = QuestionSet.currenttopic.first()}
+
+        else {
+            if (QuestionSet.topicname == "Music: " && QuestionSet.currenttopic.size >= 4){
+                furhat.say("Looks like you want to have more Music questions.")
+                QuestionSet.next()
+                goto(AskQuestion)
+            }
+            else {
+                furhat.say("I am afraid i don't have enough questions about this topic for another round any more.")
+                furhat.ask("Do you want to try out another topic? Maybe you are also interested in Sweden, Science or Robots?")
+            }
+        }
+        furhat.attend(users.playing().first())
+        goto(AskQuestion)
+    }
+
+    onResponse {
+        furhat.say("Sorry i didn't catch that")
+        googleSheetsLog(googleSheetsIftttUrl, it.text, "Topic selection", "uncaught")
+    }
 
 }
 

@@ -3,26 +3,32 @@ package furhatos.app.quiz.questions
 import furhatos.app.quiz.AnswerOption
 import furhatos.nlu.EnumItem
 import furhatos.nlu.TextBuilder
+
+import kotlinx.coroutines.currentCoroutineContext
 import java.util.*
 
 object QuestionSet {
-    var count : Int = 0
-    var currenttopic : MutableList<Question> = questionsRandomEnglish
-    var current: Question = currenttopic[Random().nextInt(currenttopic.lastIndex)]
-    var currentquestionset = mutableListOf<Question>()
+    //var count : Int = 0
+    var currenttopic = mutableListOf<Question>()
+    lateinit var current : Question //[Random().nextInt(currenttopic.lastIndex)]
+    //var currentquestionset = mutableListOf<Question>()
     var topicname : String = ""
 
     init {
+
         shuffle()
     }
 
-    fun next(topic : MutableList<Question>) {
-        count++
+    fun next() {
+        /*count++
         if (count >= topic.size)
             count = 0
         current = topic[count]
-        currenttopic = topic
+        currenttopic = topic*/
+        currenttopic.removeAt(0)
         AnswerOption().forget()
+        current = currenttopic.first()
+
     }
 
     fun shuffle(){
@@ -32,14 +38,13 @@ object QuestionSet {
         questionsSwedenEnglish.shuffle()
         questionsRobotEnglish.shuffle()
     }
-    //TODO: This function dynamic array
-    /*
-    fun reset(){
-        println(currentquestionset.size)
-        currentquestionset = mutableListOf<Question>()
-        println(currentquestionset.size)
 
-    }*/
+    fun reset(){
+        println(currenttopic.size)
+        currenttopic = mutableListOf<Question>()
+        println(currenttopic.size)
+
+    }
 
 }
 
