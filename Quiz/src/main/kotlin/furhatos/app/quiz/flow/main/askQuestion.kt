@@ -109,14 +109,13 @@ val AskQuestion: State = state(parent = Parent) {
              For the flow of the skill, we will continue asking the new user the next question through the
              shouldChangeUser = false flag.
              */
-            /*val availableUsers = users.notQuestioned(QuestionSet.current.text)
+            val availableUsers = users.notQuestioned(QuestionSet.current.text)
             if (!availableUsers.isEmpty()) {
                 furhat.attend(availableUsers.first())
                 shouldChangeUser = false
-                furhat.ask("Maybe you know the answer?")}*/
+                furhat.ask("Maybe you know the answer?")}
 
             delay(600)
-            // TODO:
             furhat.say("The correct answer would have been: ${QuestionSet.current.rightanswer}")
             delay(250)
             furhat.ledStrip.solid(java.awt.Color(0,0,0))
@@ -154,6 +153,7 @@ val AskQuestion: State = state(parent = Parent) {
 
     // The users answers that they don't know
     onResponse<DontKnow> {
+        ++rounds
         furhat.say{
             random{
                 +"too bad."
@@ -164,6 +164,11 @@ val AskQuestion: State = state(parent = Parent) {
         delay(600)
         furhat.say("The correct answer would have been: ${QuestionSet.current.rightanswer}")
         furhat.gesture(awaitAnswer)
+        if (rounds == maxRounds){
+            furhat.say("looks like you have reached the maximum amount of questions")
+            goto(EndGame)
+
+        }
         furhat.say("Let's proceed")
         goto(NewQuestion)
     }
@@ -273,13 +278,11 @@ val NewQuestion = state(parent = Parent) {
             }
         }
         // Ask new question
-        QuestionSet.next(QuestionSet.currenttopic)
+        if (QuestionSet.currenttopic.isNullOrEmpty()){
+            furhat.say("Oh no, you have triggered a special event. Me not knowing any more questions!")
+            goto(Idle)
+        }
+        QuestionSet.next()
         goto(AskQuestion)
-    }
-}
-
-val TellOptions = state{
-    onEntry {
-
     }
 }
