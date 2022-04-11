@@ -73,8 +73,7 @@ fun googleSheetsLog(url: String, value1: String, value2: String = "", value3: St
     rootObject.put("value1",value1)
     if (value2.isNotEmpty()) rootObject.put("value2",value2)
     if (value3.isNotEmpty()) rootObject.put("value3",value3)
-    println(rootObject.toString())
-    println(rootObject)
+
 
     runBlocking {
 
