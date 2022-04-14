@@ -9,4 +9,4 @@ Max number of users is set to: 2
 
 ### Requirements:
 API key for OpenAI GPT3 language model. Request it from https://openai.com/api/
-Character Jerry Seinfeld requires Acapela Voice 'WillFromAfar"'
+Some characters requires Acapela Voices 'WillFromAfar' that are only available on robots. 
