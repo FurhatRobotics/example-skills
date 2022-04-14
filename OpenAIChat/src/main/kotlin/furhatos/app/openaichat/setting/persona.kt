@@ -1,6 +1,6 @@
-package furhatos.app.openaichat.flow
+package furhatos.app.openaichat.setting
 
-import furhatos.app.openaichat.OpenAIChatbot
+import furhatos.app.openaichat.flow.chatbot.OpenAIChatbot
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.voice.AcapelaVoice
@@ -51,6 +51,13 @@ val hostPersona = Persona(
 
 val personas = listOf(
     Persona(
+        name = "James",
+        desc = "guide at the British museum",
+        intro = "What can I help you with?",
+        face = listOf("Samuel"),
+        voice = listOf(PollyNeuralVoice("Brian"))
+    ),
+    Persona(
         name = "Marvin",
         desc = "depressed robot",
         face = listOf("Titan"),
@@ -66,17 +73,17 @@ val personas = listOf(
     Persona(
         name = "Jerry Seinfeld",
         desc = "famous comedian",
-        otherNames = listOf("Seinfeld"),
+        otherNames = listOf("Seinfeld", "Jerry"),
         intro = "You know, crankiness is at the essence of all comedy.",
         face = listOf("Marty"),
         voice = listOf(AcapelaVoice("WillFromAfar"), PollyNeuralVoice("Joey"))
     ),
     Persona(
         name = "Albert Einstein",
-        otherNames = listOf("Einstein"),
+        otherNames = listOf("Einstein", "Albert"),
         desc = "famous scientist",
         intro = "What can I help you with?",
-        face = listOf("Samuel"),
+        face = listOf("James"),
         voice = listOf(AcapelaVoice("WillOldMan"), PollyNeuralVoice("Brian"))
     )
 )

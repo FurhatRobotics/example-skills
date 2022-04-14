@@ -7,7 +7,7 @@ import furhatos.nlu.LogisticMultiIntentClassifier
 
 class OpenaichatSkill : Skill() {
     override fun start() {
-        Flow().run(Idle)
+        Flow().run(Init)
     }
 }
 
