@@ -1,12 +1,10 @@
 package furhatos.app.openaichat.flow
 
 import furhatos.event.actions.ActionLipSync
-import furhatos.event.monitors.MonitorSpeechStart
 import furhatos.flow.kotlin.*
-import furhatos.util.*
 
 
-val Interaction: State = state {
+val Parent: State = state {
 
     onUserLeave(instant = true) {
         if (users.count > 0) {
@@ -25,6 +23,7 @@ val Interaction: State = state {
         furhat.glance(it)
     }
 
+    /** Averts the eye gaze of the robot at appropriate times to avoid robot staring at the user */
     onEvent<ActionLipSync>(instant=true) {
         var silences = it.phones.phones.dropWhile { it.name == "_s" }.dropLastWhile { it.name == "_s" }.filter { it.name == "_s" }.toMutableList()
         if (silences.isNotEmpty()) {
