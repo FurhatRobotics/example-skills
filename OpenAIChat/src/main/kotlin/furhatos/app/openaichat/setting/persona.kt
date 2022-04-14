@@ -51,13 +51,6 @@ val hostPersona = Persona(
 
 val personas = listOf(
     Persona(
-        name = "James",
-        desc = "guide at the British museum",
-        intro = "What can I help you with?",
-        face = listOf("Samuel"),
-        voice = listOf(PollyNeuralVoice("Brian"))
-    ),
-    Persona(
         name = "Marvin",
         desc = "depressed robot",
         face = listOf("Titan"),
@@ -77,6 +70,13 @@ val personas = listOf(
         intro = "You know, crankiness is at the essence of all comedy.",
         face = listOf("Marty"),
         voice = listOf(AcapelaVoice("WillFromAfar"), PollyNeuralVoice("Joey"))
+    ),
+    Persona(
+        name = "James",
+        desc = "guide at the British museum",
+        intro = "What can I help you with?",
+        face = listOf("Samuel"),
+        voice = listOf(PollyNeuralVoice("Brian"))
     ),
     Persona(
         name = "Albert Einstein",

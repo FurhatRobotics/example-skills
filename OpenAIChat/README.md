@@ -1,7 +1,8 @@
 # OpenAIChat
 
 ## Description
-This is a skill template. For more example skills go to furhat https://github.com/FurhatRobotics/
+Example skill to showcase the power of Language models like the GPT3 from OpneAI to generate natural language. 
+Create a character and instruct the chatbot with a simple prompt. 
 
 ## Usage
 Max number of users is set to: 2
