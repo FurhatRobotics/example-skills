@@ -3,7 +3,6 @@ package furhatos.app.quiz.flow
 import furhat.libraries.standard.AutomaticHeadMovements.RandomHeadMovements
 import furhat.libraries.standard.getResourceGesture
 import furhatos.app.quiz.RequestRules
-import furhatos.app.quiz.flow.customGestures.mySmile
 import furhatos.app.quiz.flow.main.Idle
 import furhatos.app.quiz.flow.main.NewQuestion
 import furhatos.app.quiz.flow.main.maxRounds
