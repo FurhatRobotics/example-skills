@@ -14,7 +14,8 @@ import furhatos.app.quiz.setting.getQuestions
 import furhatos.app.quiz.setting.googleSheetsIftttUrl
 import furhatos.app.quiz.setting.googleSheetsLog
 
-var sheetLink = "1Deqm9Xmbm2bYplRSsPIVKZEJ1KhOfgM3EW6JB-VZySI"
+var sheetLink = "1MKJb6VC71JZ2MyKrw6wS64ybP8shqtvU4VsC1Ksfse8"
+
 
 
 val NewGame = state(parent = Parent) {

@@ -20,7 +20,10 @@ import kotlinx.coroutines.*
 import java.io.*
 import java.net.*
 
-var googleSheetsIftttUrl = "https://maker.ifttt.com/trigger/furLogRow/with/key/gLV85oSCtirKda3D1KuSDLQ3V9NLQM_DeotSUokHUeH"
+var webhooksAPIKey = "gXGmMX8LHc5ghZhodhRBLHjPRqxwjcm9073MUu1jmED"
+var webhookEvent = "UnknownPhrase"
+var googleSheetsIftttUrl = "https://maker.ifttt.com/trigger/$webhookEvent/with/key/$webhooksAPIKey"
+
 
 
 fun getQuestions(sheetLink : String, topic : String, Questionlist : MutableList<Question>) {
