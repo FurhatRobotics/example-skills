@@ -208,7 +208,7 @@ val AskQuestion: State = state(parent = Parent) {
      */
     onResponse {
         failedAttempts++
-        googleSheetsLog(googleSheetsIftttUrl, it.text, QuestionSet.topicname + QuestionSet.current.text, "uncaught on try $failedAttempts")
+        googleSheetsLog(googleSheetsIftttUrl, it.text, QuestionSet.topicname + QuestionSet.current.text + " (" + QuestionSet.current.getOptionsString() +")", "uncaught on try $failedAttempts")
         when (failedAttempts) {
             1 -> furhat.ask("I didn't get that, sorry. Try again!")
             2 -> {
