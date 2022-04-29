@@ -56,66 +56,7 @@ val Idle: State = state {
         }
     }
 }
-        /*
-            Loop through all (potentially) interested users.
-            Goto calls are used since users may enter and leave
-            while we are querying other users and we want to
-            ask all users before moving on. I.e we want to update the
-            users.interested() list of users.
-          */
-        /*users.interested().forEach {
-            furhat.attend(it)
-            goto(QueryPerson(it))
-        }
-        // Once no more user, start the game with all interested users
-        if (users.playing().isNotEmpty()) {
-            furhat.attendAll()
-            goto(NewGame)
-        }*(
-    }
 
-    onUserEnter(instant = true) {
-        /* Say hi and query a new user if it's the only interested user.
-            Other interested users would already be greeted at this point.
-            If not, we glance at the user and keep doing whatever we were doing.
-         */
-        if (users.interested().count() == 1) {
-            furhat.attend(it.id)
-            furhat.say {
-                random{
-                    +"Hello there"
-                    +"Oh hi there"
-                }
-            }
-            furhat.say("It's nice to finally have someone visit me")
-            goto(QueryPerson(it))
-
-        } else {
-            furhat.glance(it.id, async=true)
-        }
-    }
-
-    onUserLeave(instant = true) {
-        if (users.count > 0) {
-            furhat.attend(users.other)
-        } else {
-            furhat.attendNobody()
-        }
-    }
-
-    onResponse{
-        reentry()
-    }
-
-    onNoResponse {
-        reentry()
-    }
-}
-
-// Variables
-
-
-*/
 fun QueryPerson(user: User) = state(parent = Parent) {
             onEntry {
         if (!user.quiz.played) {

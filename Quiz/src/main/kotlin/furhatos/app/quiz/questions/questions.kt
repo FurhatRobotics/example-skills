@@ -8,10 +8,8 @@ import kotlinx.coroutines.currentCoroutineContext
 import java.util.*
 
 object QuestionSet {
-    //var count : Int = 0
     var currenttopic = mutableListOf<Question>()
-    lateinit var current : Question //[Random().nextInt(currenttopic.lastIndex)]
-    //var currentquestionset = mutableListOf<Question>()
+    lateinit var current : Question
     var topicname : String = ""
 
     init {
@@ -20,11 +18,6 @@ object QuestionSet {
     }
 
     fun next() {
-        /*count++
-        if (count >= topic.size)
-            count = 0
-        current = topic[count]
-        currenttopic = topic*/
         currenttopic.removeAt(0)
         AnswerOption().forget()
         current = currenttopic.first()
@@ -37,13 +30,6 @@ object QuestionSet {
         questionsMusicEnglish.shuffle()
         questionsSwedenEnglish.shuffle()
         questionsRobotEnglish.shuffle()
-    }
-
-    fun reset(){
-        println(currenttopic.size)
-        currenttopic = mutableListOf<Question>()
-        println(currenttopic.size)
-
     }
 
 }

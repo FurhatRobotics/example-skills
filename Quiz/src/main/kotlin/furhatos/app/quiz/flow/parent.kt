@@ -1,5 +1,6 @@
 package furhatos.app.quiz.flow
 
+import furhat.libraries.standard.AutomaticHeadMovements.RandomHeadMovements
 import furhat.libraries.standard.getResourceGesture
 import furhatos.app.quiz.RequestRules
 import furhatos.app.quiz.flow.customGestures.mySmile
@@ -15,7 +16,7 @@ val EyebrowRaise = getResourceGesture("/json/EyebrowRaise.json")
 val surprise = getResourceGesture("/json/surprise.json")
 
 val Parent: State = state {
-
+    include(RandomHeadMovements)
     onResponse<RequestRules> {
         furhat.say("You get $maxRounds questions, each with 4 options. You get one point for each correct answer.")
         if (users.count > 1) {

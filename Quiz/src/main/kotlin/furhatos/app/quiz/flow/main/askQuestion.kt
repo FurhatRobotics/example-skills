@@ -1,5 +1,6 @@
 package furhatos.app.quiz.flow.main
 
+import furhat.libraries.standard.AutomaticHeadMovements.RandomHeadMovements
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.quiz.AnswerOption
 import furhatos.app.quiz.DontKnow
@@ -15,6 +16,7 @@ import furhatos.nlu.common.RequestRepeat
 import org.eclipse.jetty.server.Authentication.User
 
 val AskQuestion: State = state(parent = Parent) {
+
     var failedAttempts = 0
 
     onEntry {
@@ -87,7 +89,6 @@ val AskQuestion: State = state(parent = Parent) {
 
             /*
             If the user answers incorrect, we give another user the chance of answering if one is present in the game.
-            If we indeed ask another player, the furhat.ask() interrupts the rest of the handler.
              */
         } else {
             furhat.say("This answer was")
