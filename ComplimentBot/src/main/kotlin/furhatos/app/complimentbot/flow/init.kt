@@ -2,7 +2,7 @@ package furhatos.app.complimentbot.flow
 
 import furhatos.app.complimentbot.ComplimentbotSkill
 import furhatos.app.complimentbot.flow.main.ActiveIdle
-import furhatos.app.complimentbot.flow.main.startReading
+import furhatos.app.complimentbot.gestures.SmileCheckState
 import furhatos.app.complimentbot.setting.activate
 import furhatos.app.complimentbot.setting.mainPersona
 import furhatos.app.complimentbot.setting.maxNumberOfUsers
@@ -21,11 +21,9 @@ val Init: State = state(UniversalParent) {
         /** Set our main character - defined in personas */
         activate(mainPersona)
 
+        parallel(abortOnExit = false) { goto(SmileCheckState) }
+
         /** start the interaction */
-//        if (users.hasAny()) { // Triggers the NullSafeUserDataDelegate lateinit exception
-//            goto(startReading(users.current))
-//        } else {
-            goto(ActiveIdle)
-//        }
+        goto(ActiveIdle)
     }
 }

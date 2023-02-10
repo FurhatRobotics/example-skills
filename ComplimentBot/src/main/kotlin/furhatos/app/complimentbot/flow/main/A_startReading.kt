@@ -3,6 +3,7 @@ package furhatos.app.complimentbot.flow.main
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.gestures.TripleBlink
 import furhatos.app.complimentbot.gestures.rollHead
+import furhatos.app.complimentbot.hasSmiled
 import furhatos.app.complimentbot.served
 import furhatos.app.complimentbot.setting.lookForward
 import furhatos.flow.kotlin.State
@@ -74,9 +75,15 @@ fun startReading(user: User): State = state(InteractionParent) {
             +Gestures.BigSmile(0.5, 2.0)
             +delay(800)
             random {
-                +"Good bye."
                 +"That's it for now."
                 +"That was all I wanted to say."
+            }
+            if (users.current.hasSmiled) {
+                +"I’m happy I was able to put a smile on your faces."
+            }
+            random {
+                +"Goodbye."
+                +"Have a nice day."
             }
         }
         goto(EndReading)
