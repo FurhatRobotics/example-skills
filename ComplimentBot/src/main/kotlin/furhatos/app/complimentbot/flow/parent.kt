@@ -1,9 +1,40 @@
 package furhatos.app.complimentbot.flow
 
-import furhatos.app.complimentbot.flow.main.EndReading
+import furhatos.app.complimentbot.flow.main.*
 import furhatos.flow.kotlin.*
 
-val Parent: State = state {
+
+val UniversalParent = state {
+    onEntry(inherit = true, priority = true) {
+        logger.info("${thisState.name} entered")
+        propagate()
+    }
+    onReentry (inherit = true, priority = true) {
+        logger.info("${thisState.name} re-entered")
+        propagate()
+    }
+    onExit (inherit = true, priority = true) {
+//        logger.info("${thisState.name} exited")
+        propagate()
+    }
+}
+
+val IdleParent = state(UniversalParent) {
+
+    onEvent<GotoBored> {
+        goto(BoredIdle)
+    }
+    onEvent<GotoSleeping> {
+        goto(SleepingIdle)
+    }
+
+    onUserEnter {
+        goto(startReading(it))
+    }
+}
+
+
+val InteractionParent: State = state(UniversalParent) {
 
     onUserLeave(instant = true) {
         if (it == users.current) {

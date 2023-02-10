@@ -1,7 +1,8 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhatos.app.complimentbot.flow.served
+import furhatos.app.complimentbot.flow.UniversalParent
 import furhatos.app.complimentbot.gestures.FallAsleep
+import furhatos.app.complimentbot.served
 import furhatos.app.complimentbot.setting.lookDown
 import furhatos.app.complimentbot.setting.lookForward
 import furhatos.event.EventSystem
@@ -11,7 +12,7 @@ import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
 
-val EndReading = state {
+val EndReading = state(UniversalParent) {
     onEntry {
         furhat.attend(lookForward)
         delay(800)
@@ -21,11 +22,11 @@ val EndReading = state {
         EventSystem.send(ActionAttend.Builder().location(lookDown).speed(ActionGaze.Speed.XSLOW).buildEvent())
         delay(2500)
         val unServedUsers = users.list.filter { !it.served }
-        if (!unServedUsers.isEmpty()) {
-            println("There are unserved users" + unServedUsers.size)
+        if (unServedUsers.isNotEmpty()) {
+            println("There are ${unServedUsers.size} unserved users")
             goto(startReading(unServedUsers.random()))
         } else {
-            goto(Idle)
+            goto(ActiveIdle)
         }
     }
 }

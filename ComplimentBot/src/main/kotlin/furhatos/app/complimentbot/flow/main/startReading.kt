@@ -1,9 +1,9 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhatos.app.complimentbot.flow.Parent
-import furhatos.app.complimentbot.flow.served
+import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.gestures.TripleBlink
 import furhatos.app.complimentbot.gestures.rollHead
+import furhatos.app.complimentbot.served
 import furhatos.app.complimentbot.setting.lookForward
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat
@@ -14,7 +14,7 @@ import furhatos.records.User
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-fun startReading(user: User): State = state(Parent) {
+fun startReading(user: User): State = state(InteractionParent) {
     onEntry {
         furhat.attend(lookForward)
         furhat.gesture(TripleBlink, priority = 10)
