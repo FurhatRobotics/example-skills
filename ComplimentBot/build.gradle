@@ -38,13 +38,12 @@ compileTestKotlin {
 repositories {
     mavenLocal()
     maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
-    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/snapshots"}
     jcenter()
 }
 
 dependencies {
     implementation 'com.furhatrobotics.furhatos:furhat-commons:2.5.0'
-    implementation 'com.furhatrobotics.assets:StandardLibraryCollection:1.2.0-review7-SNAP'
+    implementation 'com.furhatrobotics.assets:StandardLibraryCollection:1.2.0'
 }
 
 jar {

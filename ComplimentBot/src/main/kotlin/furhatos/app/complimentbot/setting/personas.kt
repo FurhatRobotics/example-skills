@@ -16,7 +16,7 @@ fun FlowControlRunner.activate(persona: Persona) {
     }
 
     for (face in persona.face) {
-        if (furhat.faces.get(persona.mask)?.contains(face)!!) {
+        if (furhat.faces[persona.mask]?.contains(face)!!) {
             furhat.character = face
             break
         }

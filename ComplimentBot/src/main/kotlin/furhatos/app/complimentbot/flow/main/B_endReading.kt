@@ -2,7 +2,7 @@ package furhatos.app.complimentbot.flow.main
 
 import furhatos.app.complimentbot.flow.UniversalParent
 import furhatos.app.complimentbot.gestures.FallAsleep
-import furhatos.app.complimentbot.served
+import furhatos.app.complimentbot.hasBeenComplimented
 import furhatos.app.complimentbot.setting.lookDown
 import furhatos.app.complimentbot.setting.lookForward
 import furhatos.event.EventSystem
@@ -21,7 +21,7 @@ val EndReading = state(UniversalParent) {
         furhat.ledStrip.solid(java.awt.Color(0, 0, 120))
         EventSystem.send(ActionAttend.Builder().location(lookDown).speed(ActionGaze.Speed.XSLOW).buildEvent())
         delay(2500)
-        val unServedUsers = users.list.filter { !it.served }
+        val unServedUsers = users.list.filter { !it.hasBeenComplimented }
         if (unServedUsers.isNotEmpty()) {
             println("There are ${unServedUsers.size} unserved users")
             goto(startReading(unServedUsers.random()))

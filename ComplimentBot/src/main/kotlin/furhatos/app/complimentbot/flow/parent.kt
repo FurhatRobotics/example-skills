@@ -1,8 +1,15 @@
 package furhatos.app.complimentbot.flow
 
 import furhatos.app.complimentbot.flow.main.*
+import furhatos.app.complimentbot.setting.delayWhenUsersAreGone
+import furhatos.event.Event
 import furhatos.flow.kotlin.*
+import furhatos.records.User
+import java.util.*
+import kotlin.concurrent.schedule
 
+class UserGoneForAWhileInstant(val user: User): Event()
+class UserGoneForAWhile(val user: User): Event()
 
 val UniversalParent = state {
     onEntry(inherit = true, priority = true) {
@@ -36,24 +43,38 @@ val IdleParent = state(UniversalParent) {
 
 val InteractionParent: State = state(UniversalParent) {
 
-    onUserLeave(instant = true) {
-        if (it == users.current) {
-            goto(EndReading)
-        }
-        /*if (users.count > 0) {
-            if (it == users.current) {
-                furhat.attend(users.other)
-                goto(Start)
-            } else {
-                furhat.glance(it)
-            }
-        } else {
-            goto(EndReading)
-        }*/
-    }
-
     onUserEnter(instant = true) {
         furhat.glance(it)
     }
 
+    onUserLeave(instant = true) {
+        if (it == users.current) {
+            goto(EndReading)
+        }
+    }
+
+    onUserLeave(instant = true) {
+        println(this.currentState.name)
+        if (this.currentState == attentionState) {
+            if (users.hasAny()) {
+                when (it) {
+                    users.current -> furhat.attend(users.other)
+                }
+            } else {
+                goto(ActiveIdle)
+            }
+        } else {
+            Timer().schedule(delay = delayWhenUsersAreGone) {
+                send(UserGoneForAWhileInstant(it))
+            }
+        }
+    }
+    onEvent<UserGoneForAWhileInstant>(instant = true) {
+        if (!users.list.contains(it.user)) {
+            raise(UserGoneForAWhile(it.user))
+        }
+    }
+    onEvent<UserGoneForAWhile> {
+        println("User ${it.user.id} has left for $delayWhenUsersAreGone milliseconds.")
+    }
 }
