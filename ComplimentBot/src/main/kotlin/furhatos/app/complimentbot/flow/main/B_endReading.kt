@@ -2,9 +2,9 @@ package furhatos.app.complimentbot.flow.main
 
 import furhatos.app.complimentbot.flow.UniversalParent
 import furhatos.app.complimentbot.gestures.FallAsleep
-import furhatos.app.complimentbot.hasBeenComplimented
-import furhatos.app.complimentbot.setting.lookDown
-import furhatos.app.complimentbot.setting.lookForward
+import furhatos.app.complimentbot.utils.hasBeenComplimented
+import furhatos.app.complimentbot.lookDown
+import furhatos.app.complimentbot.lookForward
 import furhatos.event.EventSystem
 import furhatos.event.actions.ActionAttend
 import furhatos.event.actions.ActionGaze

@@ -1,7 +1,9 @@
-package furhatos.app.complimentbot
+package furhatos.app.complimentbot.utils
 
 import furhatos.flow.kotlin.NullSafeUserDataDelegate
 import furhatos.records.User
+
+var User.zone by NullSafeUserDataDelegate { Zone.OUT }
 
 var User.isSmiling by NullSafeUserDataDelegate { false }
 var User.hasSmiled by NullSafeUserDataDelegate { false }

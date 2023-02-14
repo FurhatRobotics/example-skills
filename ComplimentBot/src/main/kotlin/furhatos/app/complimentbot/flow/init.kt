@@ -1,22 +1,25 @@
 package furhatos.app.complimentbot.flow
 
-import furhatos.app.complimentbot.ComplimentbotSkill
+import furhatos.app.complimentbot.*
 import furhatos.app.complimentbot.flow.main.ActiveIdle
 import furhatos.app.complimentbot.gestures.SmileCheckState
-import furhatos.app.complimentbot.setting.activate
-import furhatos.app.complimentbot.setting.mainPersona
-import furhatos.app.complimentbot.setting.maxNumberOfUsers
+import furhatos.app.complimentbot.utils.ComplexEngagementPolicy
+import furhatos.app.complimentbot.utils.Zone
+import furhatos.app.complimentbot.utils.activate
+import furhatos.app.complimentbot.utils.mainPersona
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
+import furhatos.skills.UserManager
 import furhatos.util.CommonUtils
 
 val logger = CommonUtils.getLogger(ComplimentbotSkill::class.java)
 
 val Init: State = state(UniversalParent) {
     onEntry {
+
         /** Set our default interaction parameters */
-        users.setSimpleEngagementPolicy(0.5, 1.2, 1.2, 1.7, maxNumberOfUsers)
+        users.engagementPolicy = ComplexEngagementPolicy(UserManager, listOf(Zone.ZONE1, Zone.ZONE2, Zone.ZONE3))
 
         /** Set our main character - defined in personas */
         activate(mainPersona)

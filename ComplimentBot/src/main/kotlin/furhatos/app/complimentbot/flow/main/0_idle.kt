@@ -3,8 +3,8 @@ package furhatos.app.complimentbot.flow.main
 import furhat.libraries.standard.BehaviorLib
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.flow.IdleParent
-import furhatos.app.complimentbot.setting.MAX_ACTIVE_IDLE
-import furhatos.app.complimentbot.setting.MAX_BORED_IDLE
+import furhatos.app.complimentbot.MAX_ACTIVE_IDLE
+import furhatos.app.complimentbot.MAX_BORED_IDLE
 import furhatos.event.Event
 import furhatos.flow.kotlin.State
 import furhatos.flow.kotlin.furhat

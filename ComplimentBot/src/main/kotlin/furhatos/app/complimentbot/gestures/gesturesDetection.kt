@@ -1,7 +1,7 @@
 package furhatos.app.complimentbot.gestures
 
-import furhatos.app.complimentbot.hasSmiled
-import furhatos.app.complimentbot.isSmiling
+import furhatos.app.complimentbot.utils.hasSmiled
+import furhatos.app.complimentbot.utils.isSmiling
 import furhatos.flow.kotlin.onUserGesture
 import furhatos.flow.kotlin.onUserGestureEnd
 import furhatos.flow.kotlin.state

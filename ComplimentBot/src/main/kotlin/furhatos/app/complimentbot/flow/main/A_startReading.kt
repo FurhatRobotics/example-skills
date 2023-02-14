@@ -3,11 +3,9 @@ package furhatos.app.complimentbot.flow.main
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.gestures.TripleBlink
 import furhatos.app.complimentbot.gestures.rollHead
-import furhatos.app.complimentbot.hasSmiled
-import furhatos.app.complimentbot.hasBeenComplimented
-import furhatos.app.complimentbot.setting.lookForward
+import furhatos.app.complimentbot.utils.hasBeenComplimented
+import furhatos.app.complimentbot.lookForward
 import furhatos.flow.kotlin.*
-import furhatos.gestures.Gestures
 import furhatos.records.User
 
 fun startReading(user: User): State = state(InteractionParent) {

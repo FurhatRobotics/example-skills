@@ -1,7 +1,10 @@
 package furhatos.app.complimentbot.flow
 
+import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.main.*
-import furhatos.app.complimentbot.setting.delayWhenUsersAreGone
+import furhatos.app.complimentbot.utils.Zone
+import furhatos.app.complimentbot.utils.onUserEnterC
+import furhatos.app.complimentbot.utils.onUserLeaveC
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.records.User
@@ -21,7 +24,16 @@ val UniversalParent = state {
         propagate()
     }
     onExit (inherit = true, priority = true) {
-//        logger.info("${thisState.name} exited")
+        logger.info("${thisState.name} exited")
+        propagate()
+    }
+
+    onUserEnterC(instant = true, priority = true) { user: User, zone: Zone ->
+        logger.info("${user.id} entered ${zone.name}")
+        propagate()
+    }
+    onUserLeaveC(instant = true, priority = true) { user: User, zone: Zone ->
+        logger.info("${user.id} left towards ${zone.name}")
         propagate()
     }
 }
@@ -35,29 +47,26 @@ val IdleParent = state(UniversalParent) {
         goto(SleepingIdle)
     }
 
-    onUserEnter {
-        goto(startReading(it))
+    onUserEnterC { user: User, zone: Zone ->
+        if (zone == Zone.ZONE1) {
+            goto(startReading(user))
+        }
     }
 }
 
 
 val InteractionParent: State = state(UniversalParent) {
 
-    onUserEnter(instant = true) {
-        furhat.glance(it)
+    onUserEnterC(instant = true) { user: User, zone: Zone ->
+        furhat.glance(user)
     }
 
-    onUserLeave(instant = true) {
-        if (it == users.current) {
-            goto(EndReading)
-        }
-    }
+    onUserLeaveC(instant = true) { user: User, zone: Zone ->
+        println("Left state ${this.currentState.name}")
 
-    onUserLeave(instant = true) {
-        println(this.currentState.name)
         if (this.currentState == attentionState) {
             if (users.hasAny()) {
-                when (it) {
+                when (user) {
                     users.current -> furhat.attend(users.other)
                 }
             } else {
@@ -65,7 +74,7 @@ val InteractionParent: State = state(UniversalParent) {
             }
         } else {
             Timer().schedule(delay = delayWhenUsersAreGone) {
-                send(UserGoneForAWhileInstant(it))
+                send(UserGoneForAWhileInstant(user))
             }
         }
     }
@@ -76,5 +85,8 @@ val InteractionParent: State = state(UniversalParent) {
     }
     onEvent<UserGoneForAWhile> {
         println("User ${it.user.id} has left for $delayWhenUsersAreGone milliseconds.")
+        if (it.user == users.current) {
+            goto(EndReading)
+        }
     }
 }

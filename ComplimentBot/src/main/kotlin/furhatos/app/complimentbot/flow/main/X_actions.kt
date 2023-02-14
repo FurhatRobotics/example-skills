@@ -1,9 +1,9 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhatos.app.complimentbot.hasBeenComplimented
-import furhatos.app.complimentbot.hasBeenGreeted
-import furhatos.app.complimentbot.hasBeenGreetedGoodbye
-import furhatos.app.complimentbot.hasSmiled
+import furhatos.app.complimentbot.utils.hasBeenComplimented
+import furhatos.app.complimentbot.utils.hasBeenGreeted
+import furhatos.app.complimentbot.utils.hasBeenGreetedGoodbye
+import furhatos.app.complimentbot.utils.hasSmiled
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
 import furhatos.gestures.Gestures

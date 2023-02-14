@@ -1,4 +1,4 @@
-package furhatos.app.complimentbot.setting
+package furhatos.app.complimentbot.utils
 
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
