@@ -2,7 +2,7 @@ package furhatos.app.complimentbot.utils
 
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
-import furhatos.flow.kotlin.voice.PollyNeuralVoice
+import furhatos.flow.kotlin.voice.AzureVoice
 import furhatos.flow.kotlin.voice.Voice
 
 class Persona(val name: String, val mask: String = "adult", val face: List<String>, val voice: List<Voice>)
@@ -24,9 +24,7 @@ fun FlowControlRunner.activate(persona: Persona) {
 }
 
 val mainPersona = Persona(
-        name = "Isabel",
-        face = listOf(
-                "Isabel",
-                "Fedora"), // backup if Isabel is not available
-        voice = listOf(PollyNeuralVoice.Amy())
+        name = "anime",
+        face = listOf("AnimePink"), // backup if Isabel is not available
+        voice = listOf(AzureVoice("AnaNeural"), AzureVoice("MaisieNeural"), AzureVoice("AriaNeural"), AzureVoice("SaraNeural"))
 )

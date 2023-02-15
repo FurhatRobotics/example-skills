@@ -8,6 +8,7 @@ import furhatos.app.complimentbot.utils.Zone
 import furhatos.app.complimentbot.utils.activate
 import furhatos.app.complimentbot.utils.mainPersona
 import furhatos.flow.kotlin.State
+import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state
 import furhatos.flow.kotlin.users
 import furhatos.skills.UserManager
@@ -22,6 +23,7 @@ val Init: State = state(UniversalParent) {
         users.engagementPolicy = ComplexEngagementPolicy(UserManager, listOf(Zone.ZONE1, Zone.ZONE2, Zone.ZONE3))
 
         /** Set our main character - defined in personas */
+        furhat.mask = "anime [legacy]"
         activate(mainPersona)
 
         parallel(abortOnExit = false) { goto(SmileCheckState) }

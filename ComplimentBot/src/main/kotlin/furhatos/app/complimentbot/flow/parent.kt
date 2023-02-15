@@ -2,9 +2,7 @@ package furhatos.app.complimentbot.flow
 
 import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.main.*
-import furhatos.app.complimentbot.utils.Zone
-import furhatos.app.complimentbot.utils.onUserEnterC
-import furhatos.app.complimentbot.utils.onUserLeaveC
+import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.records.User
@@ -16,23 +14,23 @@ class UserGoneForAWhile(val user: User): Event()
 
 val UniversalParent = state {
     onEntry(inherit = true, priority = true) {
-        logger.info("${thisState.name} entered")
+        logger.debug("${thisState.name} entered")
         propagate()
     }
     onReentry (inherit = true, priority = true) {
-        logger.info("${thisState.name} re-entered")
+        logger.debug("${thisState.name} re-entered")
         propagate()
     }
     onExit (inherit = true, priority = true) {
-        logger.info("${thisState.name} exited")
+        logger.debug("${thisState.name} exited")
         propagate()
     }
 
-    onUserEnterC(instant = true, priority = true) { user: User, zone: Zone ->
+    onUserEnterC(instant = true, priority = true) { user, zone ->
         logger.info("${user.id} entered ${zone.name}")
         propagate()
     }
-    onUserLeaveC(instant = true, priority = true) { user: User, zone: Zone ->
+    onUserLeaveC(instant = true, priority = true) { user, zone ->
         logger.info("${user.id} left towards ${zone.name}")
         propagate()
     }
@@ -47,27 +45,26 @@ val IdleParent = state(UniversalParent) {
         goto(SleepingIdle)
     }
 
-    onUserEnterC { user: User, zone: Zone ->
-        if (zone == Zone.ZONE1) {
-            goto(startReading(user))
-        }
+    onUserEnterC { user, _ ->
+        furhat.attendC(user)
+        // Group attribution
+        groups.add(mutableListOf(user))
+        goto(attentionState)
     }
 }
 
 
 val InteractionParent: State = state(UniversalParent) {
 
-    onUserEnterC(instant = true) { user: User, zone: Zone ->
-        furhat.glance(user)
-    }
-
-    onUserLeaveC(instant = true) { user: User, zone: Zone ->
-        println("Left state ${this.currentState.name}")
-
+    onUserLeaveC(instant = true) { user, zone ->
+        println("Left state ${this.currentState.name}") // TODO Does not work...
+        if (!user.isBeingEngaged && zone == Zone.ZONE3) {
+            return@onUserLeaveC
+        }
         if (this.currentState == attentionState) {
             if (users.hasAny()) {
                 when (user) {
-                    users.current -> furhat.attend(users.other)
+                    users.current -> furhat.attendC(users.other)
                 }
             } else {
                 goto(ActiveIdle)

@@ -109,8 +109,9 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
 }
 
 
-
-
+/**
+ * Custom onUserEnter when user coming from a further zone
+ */
 fun StateBuilder.onUserEnterC(
     cond: Runner.(User, Zone) -> Boolean = { _: User, _: Zone -> true },
     instant: Boolean = false,
@@ -124,6 +125,9 @@ fun StateBuilder.onUserEnterC(
     addTrigger("event", enterTrigger)
 }
 
+/**
+ * Custom onUserLeave when user exiting to a further zone
+ */
 fun StateBuilder.onUserLeaveC(
     cond: Runner.(User, Zone) -> Boolean = { _: User, _: Zone -> true },
     instant: Boolean = false,

@@ -1,30 +1,42 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhatos.app.complimentbot.utils.hasBeenComplimented
-import furhatos.app.complimentbot.utils.hasBeenGreeted
-import furhatos.app.complimentbot.utils.hasBeenGreetedGoodbye
-import furhatos.app.complimentbot.utils.hasSmiled
+import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
+import furhatos.flow.kotlin.users
+import furhatos.flow.kotlin.voice.AzureVoice
 import furhatos.gestures.Gestures
 import furhatos.records.User
 import java.time.LocalDateTime
 
-fun FlowControlRunner.greetUser(user: User) {
-    furhat.say {
-        random {
-            +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
-            +"Hello."
-            +"Hi there."
-            +"Greetings."
-            +"Hey handsome."
-            +"Hey beautiful."
+fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = false) {
+    if (fromAfar) {
+        furhat.say {
+            random {
+                +voice!!.style("Hello over there", AzureVoice.Style.SHOUTING) // if too far away don’t goto interaction
+                +voice!!.style("Hello you there", AzureVoice.Style.EXCITED) // if too far away don’t goto interaction
+            }
+        }
+    } else {
+        furhat.say {
+            random {
+                +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
+                +"Hello."
+                +"Hi there."
+                +"Greetings."
+                +"Hey handsome."
+                +"Hey beautiful."
+            }
         }
     }
     user.hasBeenGreeted = true
 }
+fun FlowControlRunner.greetUserAttention(user: User = users.current, fromAfar: Boolean = false) {
+    greetUser(user, fromAfar)
+    user.isBeingEngaged = true
+}
 
-fun FlowControlRunner.complimentUser(user: User) {
+fun FlowControlRunner.complimentUser(user: User = users.current) {
     furhat.say {
         random {
             +"You look awesome."
@@ -47,7 +59,7 @@ fun FlowControlRunner.complimentUser(user: User) {
     user.hasBeenComplimented = true
 }
 
-fun FlowControlRunner.greetUserGoodbye(user: User) {
+fun FlowControlRunner.greetUserGoodbye(user: User = users.current) {
     furhat.say {
         +delay(800)
         random {
