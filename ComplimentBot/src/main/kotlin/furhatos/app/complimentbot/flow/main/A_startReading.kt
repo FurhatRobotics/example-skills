@@ -3,15 +3,17 @@ package furhatos.app.complimentbot.flow.main
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.gestures.TripleBlink
 import furhatos.app.complimentbot.gestures.rollHead
-import furhatos.app.complimentbot.utils.hasBeenComplimented
 import furhatos.app.complimentbot.lookForward
-import furhatos.app.complimentbot.utils.attendC
-import furhatos.app.complimentbot.utils.hasBeenGreeted
+import furhatos.app.complimentbot.main
+import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.*
 import furhatos.records.User
 
 fun startReading(user: User): State = state(InteractionParent) {
     onEntry {
+
+        greetAndComplimentGroup(users.current)
+
         furhat.attendC(lookForward)
         furhat.gesture(TripleBlink, priority = 10)
         delay(200)
@@ -30,5 +32,27 @@ fun startReading(user: User): State = state(InteractionParent) {
         complimentUser(users.current)
 
         goto(EndReading)
+    }
+
+    onUserEnterC { user, zone ->
+        val activeGroupIndex = findGroup(users.current)
+        if (zone.ordinal <= Zone.ZONE2.ordinal) {
+            if (activeGroupIndex == userGroups.lastIndex) {
+                userGroups.add(mutableListOf(user))
+            } else {
+                userGroups[userGroups.size-1].add(user)
+            }
+        }
+    }
+}
+
+fun FlowControlRunner.greetAndComplimentGroup(mainUser: User) {
+    val users = getGroup(mainUser)
+    if (!mainUser.hasBeenGreeted) {
+        greetUser(mainUser)
+    }
+    val usersNotGreeted = users.filter { !it.hasBeenGreeted && it != mainUser }
+    for (user in usersNotGreeted) {
+        greetUser(isOtherGreet = true)
     }
 }

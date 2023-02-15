@@ -9,13 +9,21 @@ import furhatos.gestures.Gestures
 import furhatos.records.User
 import java.time.LocalDateTime
 
-fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = false) {
+fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = false, isOtherGreet: Boolean = false) {
     if (fromAfar) {
         furhat.say {
             random {
                 +voice!!.style("Hello over there", AzureVoice.Style.SHOUTING) // if too far away don’t goto interaction
                 +voice!!.style("Hello you there", AzureVoice.Style.EXCITED) // if too far away don’t goto interaction
             }
+        }
+    } else if (isOtherGreet) {
+        furhat.say {
+            random {
+                +"And hello there to you too"
+                +"And hello to you"
+            }
+            +Gestures.BigSmile
         }
     } else {
         furhat.say {

@@ -28,10 +28,14 @@ val attentionState: State = state(InteractionParent) {
 
     onResponse<Greeting> {
         // TODO : Check sound ?? not reliable
-        if (!users.current.hasBeenGreeted) {
+        if (users.current.zone != Zone.ZONE3) { //TODO : Add some delays for the zone 2
+            goto(startReading(users.current))
+        }
+        // Rest happens only for far away users
+        else if (!users.current.hasBeenGreeted) {
             greetUser(users.current)
         }
-        goto(startReading(users.current))
+        furhat.say("Can you step closer please?")
     }
     onResponse<CanIGetCompliment> {
         furhat.say {
@@ -49,7 +53,7 @@ val attentionState: State = state(InteractionParent) {
         furhat.say {
             random {
                 +"Hello ?"
-                +"You can step forward"
+                +"You can come closer if you want"
             }
         }
         furhat.listen()

@@ -48,7 +48,7 @@ val IdleParent = state(UniversalParent) {
     onUserEnterC { user, _ ->
         furhat.attendC(user)
         // Group attribution
-        groups.add(mutableListOf(user))
+        userGroups.add(mutableListOf(user))
         goto(attentionState)
     }
 }
