@@ -4,6 +4,7 @@ import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.nlu.CanIGetCompliment
 import furhatos.app.complimentbot.utils.*
+import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.Greeting
 import furhatos.records.User
@@ -11,6 +12,7 @@ import java.util.LinkedList
 import java.util.Queue
 
 var userQueue: Queue<User> = LinkedList()
+class UserEnteredEvent(val user: User, val zone: Zone): Event()
 
 val attentionState: State = state(InteractionParent) {
 
@@ -75,24 +77,30 @@ val attentionState: State = state(InteractionParent) {
         handleNext()
     }
 
-    onUserEnterC { user, zone -> //TODO PROBLEM ! if non instant that trigger stops listening actions...
-        if (user == users.current) {
-            if (zone == Zone.ZONE1) {
+    onUserEnterC(instant = true) { user, zone ->
+        if (user != users.current && users.current.isBeingEngaged){
+            // Don't interrupt if interacting with current user, but keep in mind that the user has to be engaged.
+            userQueue.add(user)
+        } else {
+            // We have to separate instant and non-instant behavior here
+            send(UserEnteredEvent(user, zone))
+        }
+    }
+
+    onEvent<UserEnteredEvent> {
+        if (it.user == users.current) {
+            if (it.zone == Zone.ZONE1) {
                 goto(startReading(users.current))
-            } else if (zone == Zone.ZONE2) {
+            } else if (it.zone == Zone.ZONE2) {
                 reentry() //Entering from zone3
             }
         } else if (!users.current.isBeingEngaged) {
-            furhat.attendC(user)
-            if (zone == Zone.ZONE1) {
+            furhat.attendC(it.user)
+            if (it.zone == Zone.ZONE1) {
                 goto(startReading(users.current))
             } else { //Entering zone 2 or 3
                 reentry()
             }
-        } else {
-            // Don't interrupt if interacting with current user, but keep in mind that the user has to be engaged.
-            userQueue.add(user)
-            furhat.listen()
         }
     }
 
