@@ -5,7 +5,8 @@ import furhatos.app.complimentbot.averageAttentionCapacity
 import furhatos.flow.kotlin.NullSafeUserDataDelegate
 import furhatos.records.User
 
-var userGroups = mutableListOf<MutableList<User>>()
+var activeGroup = mutableListOf<User>()
+var nextGroup = mutableListOf<User>()
 
 var User.zone by NullSafeUserDataDelegate { Zone.OUT }
 var User.isBeingEngaged by NullSafeUserDataDelegate { false }
@@ -30,9 +31,8 @@ fun getAttentionConfidence(user: User): Double {
     return user.attentionAverage.list.count { it }.toDouble() / user.attentionAverage.list.size
 }
 
-fun findGroup(user: User): Int {
-    return userGroups.lastIndexOf(userGroups.lastOrNull { group -> group.contains(user) }?: mutableListOf() )
-}
-fun getGroup(user: User): MutableList<User> {
-    return userGroups.lastOrNull { group -> group.contains(user) }?: mutableListOf(user)
+fun handleUserGroupEntry(user: User) {
+    if (user.zone.isFurther(Zone.ZONE2) && !(activeGroup+nextGroup).contains(user) ) {
+        nextGroup.add(user)
+    }
 }

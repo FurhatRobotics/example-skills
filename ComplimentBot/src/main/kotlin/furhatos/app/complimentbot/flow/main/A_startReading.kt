@@ -9,8 +9,10 @@ import furhatos.records.User
 
 fun startReading(user: User): State = state(InteractionParent) {
     onEntry {
+        activeGroup = nextGroup
+        nextGroup = mutableListOf()
 
-        greetAndComplimentGroup(users.current)
+        greatActiveGroup(users.current)
 
         furhat.gesture(GesturesLib.PerformTripleBlink, priority = 10)
         delay(200)
@@ -23,33 +25,27 @@ fun startReading(user: User): State = state(InteractionParent) {
         }
 
         // reading for user
-        furhat.gesture(rollHead(-20.0, 2.3)) //TODO : way to fast
+        furhat.gesture(rollHead(2.0, 2.3))
         delay(1200)
         complimentUser(users.current)
         user.hasBeenComplimented = true
 
         goto(EndReading)
     }
-
-    onUserEnterC { user, zone ->
-        val activeGroupIndex = findGroup(users.current)
-        if (zone.ordinal <= Zone.ZONE2.ordinal) {
-            if (activeGroupIndex == userGroups.lastIndex) {
-                userGroups.add(mutableListOf(user))
-            } else {
-                userGroups[userGroups.size-1].add(user)
-            }
-        }
-    }
 }
 
-fun FlowControlRunner.greetAndComplimentGroup(mainUser: User) {
-    val users = getGroup(mainUser)
-    if (!mainUser.hasBeenGreeted) {
-        greetUser(mainUser)
+fun FlowControlRunner.greatActiveGroup(leader: User) {
+    if (!leader.hasBeenGreeted) {
+        greetUser(leader)
     }
-    val usersNotGreeted = users.filter { !it.hasBeenGreeted && it != mainUser }
+    val usersNotGreeted = activeGroup.filter { !it.hasBeenGreeted && it != leader }
     for (user in usersNotGreeted) {
-        greetUser(isOtherGreet = true)
+        if (user.zone < Zone.ZONE2) {
+            furhat.attendC(user)
+            greetUser(isOtherGreet = true)
+        }
+    }
+    if (leader.zone.isCloser(Zone.ZONE2)) {
+        furhat.attendC(leader)
     }
 }

@@ -77,13 +77,13 @@ val attentionState: State = state(InteractionParent) {
         handleNext()
     }
 
-    onUserEnterC(instant = true) { user, zone ->
-        if (user != users.current && users.current.isBeingEngaged){
+    onUserEnter(instant = true) {
+        if (it != users.current && users.current.isBeingEngaged) {
             // Don't interrupt if interacting with current user, but keep in mind that the user has to be engaged.
-            userQueue.add(user)
+            userQueue.add(it)
         } else {
             // We have to separate instant and non-instant behavior here
-            send(UserEnteredEvent(user, zone))
+            send(UserEnteredEvent(it, it.zone))
         }
     }
 
@@ -114,7 +114,7 @@ val attentionState: State = state(InteractionParent) {
 fun FlowControlRunner.handleNext() {
     try {
         val next = userQueue.remove()
-        if (next.zone.ordinal <= Zone.ZONE2.ordinal) { // Treat only if the user is active
+        if (next.zone.isCloser(Zone.ZONE3)) { // Treat only if the user is active
             furhat.attendC(next)
             reentry()
         }

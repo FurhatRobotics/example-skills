@@ -11,8 +11,7 @@ val EndReading = state(UniversalParent) {
 
         greetUserGoodbye(users.current)
 
-        val userGroup = findGroup(users.current)
-        val unServedGroupUsers = users.list.filter { !it.hasBeenComplimented && findGroup(it) == userGroup && (it.zone == Zone.ZONE1 || it.zone == Zone.ZONE2) }
+        val unServedGroupUsers = users.list.filter { !it.hasBeenComplimented && activeGroup.contains(it) && (it.zone == Zone.ZONE1 || it.zone == Zone.ZONE2) }
         if (unServedGroupUsers.isNotEmpty()) {
             println("There are ${unServedGroupUsers.size} unserved users")
             goto(startReading(unServedGroupUsers.random()))

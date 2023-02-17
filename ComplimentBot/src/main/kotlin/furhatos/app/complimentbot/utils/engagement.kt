@@ -1,15 +1,13 @@
 package furhatos.app.complimentbot.utils
 
-import furhatos.app.complimentbot.*
-import furhatos.event.Event
+import furhatos.app.complimentbot.origin
+import furhatos.app.complimentbot.zone1Params
+import furhatos.app.complimentbot.zone2Params
+import furhatos.app.complimentbot.zone3Params
 import furhatos.event.EventSystem
 import furhatos.event.senses.SenseInteractionSpaces
 import furhatos.event.senses.SenseUserEnter
 import furhatos.event.senses.SenseUserLeave
-import furhatos.flow.kotlin.Runner
-import furhatos.flow.kotlin.StateBuilder
-import furhatos.flow.kotlin.Trigger
-import furhatos.flow.kotlin.TriggerRunner
 import furhatos.records.Ellipse
 import furhatos.records.Space
 import furhatos.records.User
@@ -32,10 +30,6 @@ enum class Zone(val space: Space) {
     override fun toString(): String {
         return "Zone(name=$name, space=$space)"
     }
-}
-
-fun getZoneFromName(name: String): Zone {
-    return Zone.values().firstOrNull { it.name == name } ?: Zone.OUT
 }
 
 /**
@@ -107,39 +101,6 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
         }
         return Zone.OUT
     }
-}
-
-
-/**
- * Custom onUserEnter when user coming from a further zone
- */
-fun StateBuilder.onUserEnterC(
-    cond: Runner.(User, Zone) -> Boolean = { _: User, _: Zone -> true },
-    instant: Boolean = false,
-    priority : Boolean = false,
-    trigger: TriggerRunner<*>.(User, Zone) -> Unit) {
-    val enterTrigger = Trigger<Event>(
-        { trigger(UserManager.getUser((it as SenseUserEnter).userId), getZoneFromName(it.space)) },
-        instant, priority,
-        {it is SenseUserEnter && cond(UserManager.getUser(it.userId), getZoneFromName(it.space))}
-    )
-    addTrigger("event", enterTrigger)
-}
-
-/**
- * Custom onUserLeave when user exiting to a further zone
- */
-fun StateBuilder.onUserLeaveC(
-    cond: Runner.(User, Zone) -> Boolean = { _: User, _: Zone -> true },
-    instant: Boolean = false,
-    priority : Boolean = false,
-    trigger: TriggerRunner<*>.(User, Zone) -> Unit) {
-    val leaveTrigger = Trigger<Event>(
-        { trigger(UserManager.getUser((it as SenseUserLeave).userId), getZoneFromName(it.space)) },
-        instant, priority,
-        {it is SenseUserLeave && cond(UserManager.getUser(it.userId), getZoneFromName(it.space))}
-    )
-    addTrigger("event", leaveTrigger)
 }
 
 fun updateActiveAttention(user: User) {

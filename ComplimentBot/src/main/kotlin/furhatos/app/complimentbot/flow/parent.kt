@@ -26,12 +26,13 @@ val UniversalParent = state {
         propagate()
     }
 
-    onUserEnterC(instant = true, priority = true) { user, zone ->
-        logger.info("${user.id} entered ${zone.name}")
+    onUserEnter(instant = true, priority = true) {
+        logger.info("${it.id} entered ${it.zone.name}")
+        handleUserGroupEntry(it)
         propagate()
     }
-    onUserLeaveC(instant = true, priority = true) { user, zone ->
-        logger.info("${user.id} left towards ${zone.name}")
+    onUserLeave(instant = true, priority = true) {
+        logger.info("${it.id} left towards ${it.zone.name}")
         propagate()
     }
 }
@@ -45,10 +46,10 @@ val IdleParent = state(UniversalParent) {
         goto(SleepingIdle)
     }
 
-    onUserEnterC { user, _ ->
-        furhat.attendC(user)
+    onUserEnter {
+        furhat.attendC(it)
         // Group attribution
-        userGroups.add(mutableListOf(user))
+        nextGroup.add(it)
         goto(attentionState)
     }
 }
@@ -56,14 +57,14 @@ val IdleParent = state(UniversalParent) {
 
 val InteractionParent: State = state(UniversalParent) {
 
-    onUserLeaveC(instant = true) { user, zone ->
+    onUserLeave(instant = true) {
         println("Left state ${this.currentState.name}") // TODO Does not work...
-        if (!user.isBeingEngaged && zone == Zone.ZONE3) {
-            return@onUserLeaveC
+        if (!it.isBeingEngaged && it.zone == Zone.ZONE3) {
+            return@onUserLeave
         }
         if (this.currentState == attentionState) {
             if (users.hasAny()) {
-                when (user) {
+                when (it) {
                     users.current -> furhat.attendC(users.other)
                 }
             } else {
@@ -71,7 +72,7 @@ val InteractionParent: State = state(UniversalParent) {
             }
         } else {
             Timer().schedule(delay = delayWhenUsersAreGone) {
-                send(UserGoneForAWhileInstant(user))
+                send(UserGoneForAWhileInstant(it))
             }
         }
     }
