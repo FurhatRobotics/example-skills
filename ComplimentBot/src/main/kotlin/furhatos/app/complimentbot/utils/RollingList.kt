@@ -10,21 +10,11 @@ import furhatos.records.GenericRecord
  * @param capacity The capacity of this list.
  */
 class RollingList<T>(private val capacity: Int): GenericRecord<T>() {
-    /** The items in this rolling list.  */
+
     private val items: MutableList<T> = ArrayList()
 
-    /**
-     * Retrieves the current position within the list.
-     *
-     * @return This list's positional pointer
-     */
-    /**
-     * Sets the positional pointer of this list.
-     *
-     * @param position The new position
-     */
     /** This list's position pointer.  */
-    var position = 0
+    private var position = 0
 
     /** Whether to add a fake empty item to the end of this list.  */
     private var addEmpty: Boolean = false
@@ -81,13 +71,6 @@ class RollingList<T>(private val capacity: Int): GenericRecord<T>() {
     }
 
     /**
-     * Clears all items from this list.
-     */
-    fun clear() {
-        items.clear()
-    }
-
-    /**
      * Adds the specified item to this list. If the list has reached its
      * maximum capacity, this method will remove elements from the start of the
      * list until there is sufficient room for the new element.
@@ -112,12 +95,12 @@ class RollingList<T>(private val capacity: Int): GenericRecord<T>() {
         return items.size > position + 1 || items.size > position && addEmpty
     }
 
+    /**
+     * Retrieves the element after the positional pointer of the list.
+     *
+     * @return The next element in the list
+     */
     val next: T?
-        /**
-         * Retrieves the element after the positional pointer of the list.
-         *
-         * @return The next element in the list
-         */
         get() = if (items.size > position + 1 || !addEmpty) {
             get(++position)
         } else {
@@ -126,41 +109,10 @@ class RollingList<T>(private val capacity: Int): GenericRecord<T>() {
         }
 
     /**
-     * Determines if there is an element befpre the positional pointer of the list.
+     * Retrieves a list of items that this rolling list contains.
      *
-     * @return True if there is an element, false otherwise.
+     * @return A list of items in this rolling list.
      */
-    fun hasPrevious(): Boolean {
-        return 0 < position
-    }
-
-    val previous: T
-        /**
-         * Retrieves the element before the positional pointer of the list.
-         *
-         * @return The previous element in the list
-         */
-        get() = get(--position)
-
-    /**
-     * Sets the positional pointer of this list to the end.
-     */
-    fun seekToEnd() {
-        position = items.size
-    }
-
-    /**
-     * Sets the positional pointer of this list to the start.
-     */
-    fun seekToStart() {
-        position = 0
-    }
-
     val list: List<T>
-        /**
-         * Retrieves a list of items that this rolling list contains.
-         *
-         * @return A list of items in this rolling list.
-         */
         get() = ArrayList(items)
 }

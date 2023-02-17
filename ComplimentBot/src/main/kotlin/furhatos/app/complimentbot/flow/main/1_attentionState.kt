@@ -111,6 +111,9 @@ val attentionState: State = state(InteractionParent) {
     }
 }
 
+/**
+ * Flow function to handle users entering zones while furhat is trying to get zone 2 users' attention
+ */
 fun FlowControlRunner.handleNext() {
     try {
         val next = userQueue.remove()

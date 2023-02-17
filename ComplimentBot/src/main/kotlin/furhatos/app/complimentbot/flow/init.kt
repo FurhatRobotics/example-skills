@@ -33,7 +33,13 @@ val Init: State = state(UniversalParent) {
     }
 }
 
-fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int, leaveBufferTime: Int) {
+/**
+ * Checks/sets the vision.properties file on the robot.
+ *
+ * @param enterBufferTime the entering buffer time to detect a user
+ * @param leaveBufferTime the leaving buffer time to detect a leaving user
+ */
+fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBufferTime: Int = 2500) {
     val timingParameters = mapOf("enterBufferTime" to enterBufferTime, "leaveBufferTime" to leaveBufferTime)
     if (!furhat.isVirtual() && (System.getProperty("furhatos.skills.brokeraddress") == null)) { //Only applies to the real robot
         val visionProps = File("/usr/share/furhat/properties/", "vision.properties")

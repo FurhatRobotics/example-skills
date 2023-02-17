@@ -26,6 +26,6 @@ fun FlowControlRunner.activate(persona: Persona) {
 
 val mainPersona = Persona(
         name = "anime",
-        face = listOf("AnimePink"), // backup if Isabel is not available
+        face = listOf("AnimePink"),
         voice = listOf(PollyNeuralVoice.Aria(), AzureVoice("AnaNeural"), AzureVoice("MaisieNeural"), AzureVoice("AriaNeural"), AzureVoice("SaraNeural"))
 )
