@@ -1,10 +1,8 @@
 package furhatos.app.complimentbot
 
-import furhatos.records.Ellipse
 import furhatos.records.Location
 
 /** Interaction space parameters */
-const val maxNumberOfUsers = 4
 val lookForward = Location(0.0, 0.0, 1.0)
 val origin = Location(0, 0, 0)
 
@@ -13,9 +11,12 @@ val zone2Params = Pair(1.2, 1.7)
 val zone3Params = Pair(1.9, 3.2)
 
 /** Interaction timing parameters */
-const val enterBufferTime = 0
+const val enterBufferTime = 500
 const val leaveBufferTime = 2500
-val timingParameters = mapOf("enterBufferTime" to enterBufferTime, "leaveBufferTime" to leaveBufferTime)
+
+// Supposed to happen 10 times per second
+const val averageAttentionCapacity = 5 * 10 // 5 sec average for now
+const val attentionThreshold: Double = 0.70 // Percentage of attention we need in the last $averageAttentionCapacity time
 
 /** Idle parameters */
 const val MAX_ACTIVE_IDLE: Long = 5 * 1000

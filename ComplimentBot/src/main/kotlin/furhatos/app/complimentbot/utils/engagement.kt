@@ -50,6 +50,7 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
         val engagedUsers = userManager.list.map { user -> user.id }
 
         userManager.all.forEach { user ->
+            updateActiveAttention(user)
             val activeZone = findUserZone(user)
 
             // 1. Check engagement
@@ -139,4 +140,8 @@ fun StateBuilder.onUserLeaveC(
         {it is SenseUserLeave && cond(UserManager.getUser(it.userId), getZoneFromName(it.space))}
     )
     addTrigger("event", leaveTrigger)
+}
+
+fun updateActiveAttention(user: User) {
+    user.attentionAverage.add(user.isAttendingFurhat)
 }

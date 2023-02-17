@@ -1,10 +1,8 @@
 package furhatos.app.complimentbot.flow.main
 
+import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.flow.InteractionParent
-import furhatos.app.complimentbot.gestures.TripleBlink
 import furhatos.app.complimentbot.gestures.rollHead
-import furhatos.app.complimentbot.lookForward
-import furhatos.app.complimentbot.main
 import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.*
 import furhatos.records.User
@@ -14,10 +12,8 @@ fun startReading(user: User): State = state(InteractionParent) {
 
         greetAndComplimentGroup(users.current)
 
-        furhat.attendC(lookForward)
-        furhat.gesture(TripleBlink, priority = 10)
+        furhat.gesture(GesturesLib.PerformTripleBlink, priority = 10)
         delay(200)
-        user.hasBeenComplimented = true
         furhat.attendC(user)
         furhat.ledStrip.solid(java.awt.Color(0, 120, 0))
 
@@ -27,9 +23,10 @@ fun startReading(user: User): State = state(InteractionParent) {
         }
 
         // reading for user
-        furhat.gesture(rollHead(-20.0, 2.3))
+        furhat.gesture(rollHead(-20.0, 2.3)) //TODO : way to fast
         delay(1200)
         complimentUser(users.current)
+        user.hasBeenComplimented = true
 
         goto(EndReading)
     }

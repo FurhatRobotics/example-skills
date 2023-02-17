@@ -1,10 +1,10 @@
 package furhatos.app.complimentbot.flow.main
 
+import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.users
-import furhatos.flow.kotlin.voice.AzureVoice
 import furhatos.gestures.Gestures
 import furhatos.records.User
 import java.time.LocalDateTime
@@ -13,8 +13,9 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
     if (fromAfar) {
         furhat.say {
             random {
-                +voice!!.style("Hello over there", AzureVoice.Style.SHOUTING) // if too far away don’t goto interaction
-                +voice!!.style("Hello you there", AzureVoice.Style.EXCITED) // if too far away don’t goto interaction
+                //TODO : with voice styles ?
+                +"Hello over there" // if too far away don’t goto interaction
+                +"Hello you there" // if too far away don’t goto interaction
             }
         }
     } else if (isOtherGreet) {
@@ -28,7 +29,6 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
     } else {
         furhat.say {
             random {
-                +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
                 +"Hello."
                 +"Hi there."
                 +"Greetings."
@@ -39,9 +39,17 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
     }
     user.hasBeenGreeted = true
 }
-fun FlowControlRunner.greetUserAttention(user: User = users.current, fromAfar: Boolean = false) {
-    greetUser(user, fromAfar)
-    user.isBeingEngaged = true
+
+fun FlowControlRunner.positiveSecondGreeting() {
+    random(
+        furhat.say {
+            random {
+                +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
+                +"What a lovely day !"
+            }
+        },
+        furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5))
+    )
 }
 
 fun FlowControlRunner.complimentUser(user: User = users.current) {
