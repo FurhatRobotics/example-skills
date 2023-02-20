@@ -6,11 +6,10 @@ import furhatos.app.complimentbot.gestures.SmileCheckState
 import furhatos.app.complimentbot.utils.ComplexEngagementPolicy
 import furhatos.app.complimentbot.utils.Zone
 import furhatos.app.complimentbot.utils.activate
-import furhatos.app.complimentbot.utils.mainPersona
+import furhatos.app.complimentbot.utils.setEngagementTimings
 import furhatos.flow.kotlin.*
 import furhatos.skills.UserManager
 import furhatos.util.CommonUtils
-import java.io.File
 
 val logger = CommonUtils.getLogger(ComplimentbotSkill::class.java)
 
@@ -30,35 +29,5 @@ val Init: State = state(UniversalParent) {
 
         /** start the interaction */
         goto(ActiveIdle)
-    }
-}
-
-/**
- * Checks/sets the vision.properties file on the robot.
- *
- * @param enterBufferTime the entering buffer time to detect a user
- * @param leaveBufferTime the leaving buffer time to detect a leaving user
- */
-fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBufferTime: Int = 2500) {
-    val timingParameters = mapOf("enterBufferTime" to enterBufferTime, "leaveBufferTime" to leaveBufferTime)
-    if (!furhat.isVirtual() && (System.getProperty("furhatos.skills.brokeraddress") == null)) { //Only applies to the real robot
-        val visionProps = File("/usr/share/furhat/properties/", "vision.properties")
-        try {
-            val props = visionProps.readLines().associate { stringProp -> stringProp.split("=")[0] to stringProp.split("=")[1].toInt() }
-            if (props["enterBufferTime"] != enterBufferTime || props["leaveBufferTime"] != leaveBufferTime) {
-                throw Exception("New vision parameters detected")
-            } else {
-                logger.info("Vision parameters are correctly set up.")
-            }
-        } catch (e: Exception) {
-            logger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
-            visionProps.printWriter().use { out ->
-                timingParameters.forEach {
-                    out.println("${it.key}=${it.value}")
-                }
-            }
-        }
-    } else {
-        logger.warn("Did not rewrite the engagement timings, machine is not a robot.")
     }
 }

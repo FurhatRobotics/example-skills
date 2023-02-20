@@ -1,16 +1,18 @@
 package furhatos.app.complimentbot.flow
 
-import furhatos.app.complimentbot.delayWhenUsersAreGone
-import furhatos.app.complimentbot.flow.main.*
-import furhatos.app.complimentbot.utils.*
+import furhatos.app.complimentbot.flow.main.attentionState
+import furhatos.app.complimentbot.utils.attendC
+import furhatos.app.complimentbot.utils.handleUserGroupEntry
+import furhatos.app.complimentbot.utils.zone
 import furhatos.event.Event
-import furhatos.flow.kotlin.*
+import furhatos.flow.kotlin.furhat
+import furhatos.flow.kotlin.onUserEnter
+import furhatos.flow.kotlin.onUserLeave
+import furhatos.flow.kotlin.state
 import furhatos.records.User
-import java.util.*
-import kotlin.concurrent.schedule
 
-class UserGoneForAWhileInstant(val user: User): Event()
-class UserGoneForAWhile(val user: User): Event()
+class LeaderGoneForAWhileInstant(val user: User): Event()
+class LeaderGoneForAWhile(val user: User): Event()
 
 val UniversalParent = state {
     onEntry(inherit = true, priority = true) {
@@ -38,53 +40,8 @@ val UniversalParent = state {
 }
 
 val IdleParent = state(UniversalParent) {
-
-    onEvent<GotoBored> {
-        goto(BoredIdle)
-    }
-    onEvent<GotoSleeping> {
-        goto(SleepingIdle)
-    }
-
     onUserEnter {
         furhat.attendC(it)
-        // Group attribution
-        nextGroup.add(it)
         goto(attentionState)
-    }
-}
-
-
-val InteractionParent: State = state(UniversalParent) {
-
-    onUserLeave(instant = true) {
-        println("Left state ${this.currentState.name}") // TODO Does not work...
-        if (!it.isBeingEngaged && it.zone == Zone.ZONE3) {
-            return@onUserLeave
-        }
-        if (this.currentState == attentionState) {
-            if (users.hasAny()) {
-                when (it) {
-                    users.current -> furhat.attendC(users.other)
-                }
-            } else {
-                goto(ActiveIdle)
-            }
-        } else {
-            Timer().schedule(delay = delayWhenUsersAreGone) {
-                send(UserGoneForAWhileInstant(it))
-            }
-        }
-    }
-    onEvent<UserGoneForAWhileInstant>(instant = true) {
-        if (!users.list.contains(it.user)) {
-            raise(UserGoneForAWhile(it.user))
-        }
-    }
-    onEvent<UserGoneForAWhile> {
-        println("User ${it.user.id} has left for $delayWhenUsersAreGone milliseconds.")
-        if (it.user == users.current) {
-            goto(EndReading)
-        }
     }
 }

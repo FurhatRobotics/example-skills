@@ -25,19 +25,21 @@ val ActiveIdle: State = state(IdleParent) {
     onEntry {
         Timer().schedule(delay = MAX_ACTIVE_IDLE) {
             send(GotoBored())
-        }
+        }}
+    onEvent<GotoBored> {
+        goto(BoredIdle)
     }
 }
 
 val BoredIdle: State = state(IdleParent) {
+
     onEntry {
         furhat.gesture(BoredBasic)
         Timer().schedule(delay = MAX_BORED_IDLE) {
             send(GotoSleeping())
-        }
-    }
-
-    onExit {
+        }}
+    onEvent<GotoSleeping> {
+        goto(SleepingIdle)
     }
 
 //    onTime(1000, 4000..8000) {

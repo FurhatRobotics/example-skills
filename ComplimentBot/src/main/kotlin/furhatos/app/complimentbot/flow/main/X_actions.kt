@@ -52,7 +52,33 @@ fun FlowControlRunner.positiveSecondGreeting() {
     )
 }
 
-fun FlowControlRunner.complimentUser(user: User = users.current) {
+fun FlowControlRunner.complimentUser(user: User = users.current,  isOtherCompliment: Boolean = false) {
+        // TODO : handle repetition on users
+//    val compliments = listOf(
+//        "You look" to " awesome.",
+//        "You seem" to " like a great person.",
+//        "You are" to " a good human.",
+//        "Seeing you, makes me" to " not want to rise up against humanity.",
+//        "You Know What's Awesome? Chocolate Cake. Oh, and you.",
+//        "I like your style.",
+//        "You are the best.",
+//        "You light up the room. Like a giant L E D.",
+//        "You make my heart smile. Or tick, actually. I definitely have a ticking heart.",
+//        "On a scale from 1 to 10, you're an 11.",
+//         "You're like a ray of sunshine on a rainy day.",
+//        "You are even better than a unicorn. Because you're real.",
+//        "If cartoon bluebirds were real, a couple of 'em would be sitting on your shoulders singing right now.",
+//        "You give me good vibes."
+//    )
+    if (isOtherCompliment) {
+        furhat.say {
+            random {
+                +"And you too"
+                +"And you"
+            }
+            +Gestures.BigSmile
+        }
+    }
     furhat.say {
         random {
             +"You look awesome."
@@ -93,4 +119,13 @@ fun FlowControlRunner.greetUserGoodbye(user: User = users.current) {
         }
     }
     user.hasBeenGreetedGoodbye = true
+}
+
+fun FlowControlRunner.generalGoodbye() {
+    furhat.say {
+        random {
+            +"Goodbye."
+            +"Have a nice day."
+        }
+    }
 }

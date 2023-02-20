@@ -1,26 +1,33 @@
 package furhatos.app.complimentbot.flow.main
 
 import furhat.libraries.standard.GesturesLib
-import furhatos.app.complimentbot.flow.InteractionParent
+import furhatos.app.complimentbot.delayWhenUsersAreGone
+import furhatos.app.complimentbot.flow.UniversalParent
+import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
+import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
 import furhatos.app.complimentbot.nlu.CanIGetCompliment
+import furhatos.app.complimentbot.utils.Zone
+import furhatos.app.complimentbot.utils.attendC
+import furhatos.app.complimentbot.utils.attendNobodyC
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.Greeting
 import furhatos.records.User
-import java.util.LinkedList
-import java.util.Queue
+import java.util.*
+import kotlin.concurrent.schedule
 
 var userQueue: Queue<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
+class UserLeftEvent(val user: User): Event()
 
-val attentionState: State = state(InteractionParent) {
+val attentionState: State = state(UniversalParent) {
 
     onEntry { reentry() }
     onReentry {
         println("Attention confidence : ${getAttentionConfidence(users.current)}")
         when (users.current.zone) {
-            Zone.ZONE1 -> goto(startReading(users.current))
+            Zone.ZONE1 -> goto(complimentNextGroup(users.current))
             Zone.ZONE2 -> {
                 if (isAttendingFurhatAvg(users.current) && !users.current.hasBeenGreeted) {
                     users.current.isBeingEngaged = true
@@ -35,7 +42,7 @@ val attentionState: State = state(InteractionParent) {
 
     onResponse<Greeting> {
         if (users.current.zone == Zone.ZONE1) {
-            goto(startReading(users.current))
+            goto(complimentNextGroup(users.current))
         }
         // Rest happens only for far away users
         else {
@@ -60,14 +67,16 @@ val attentionState: State = state(InteractionParent) {
         }
         furhat.gesture(GesturesLib.SmileRandom())
         users.current.hasBeenGreeted = true
-        goto(startReading(users.current))
+        goto(complimentNextGroup(users.current))
     }
     onResponse {
-        //goto interaction here seems risky
-        furhat.say {
-            random {
-                +"Hello ?"
-                +"You can come closer if you want"
+        if (users.current.zone.isCloser(Zone.ZONE3)) {
+            //goto interaction here seems risky
+            furhat.say {
+                random {
+                    +"Hello ?"
+                    +"You can come closer if you want"
+                }
             }
         }
         handleNext()
@@ -84,27 +93,49 @@ val attentionState: State = state(InteractionParent) {
         } else {
             // We have to separate instant and non-instant behavior here
             send(UserEnteredEvent(it, it.zone))
-        }
-    }
-
+        }}
     onEvent<UserEnteredEvent> {
         if (it.user == users.current) {
             if (it.zone == Zone.ZONE1) {
-                goto(startReading(users.current))
+                goto(complimentNextGroup(users.current))
             } else if (it.zone == Zone.ZONE2) {
                 reentry() //Entering from zone3
             }
         } else if (!users.current.isBeingEngaged) {
             furhat.attendC(it.user)
             if (it.zone == Zone.ZONE1) {
-                goto(startReading(users.current))
+                goto(complimentNextGroup(users.current))
             } else { //Entering zone 2 or 3
                 reentry()
             }
         }
     }
 
-    //TODO :onUserLeave (maybe in the parent)
+    onUserLeave(instant = true) {
+        if (it.isBeingEngaged && it == users.current) {
+            Timer().schedule(delay = delayWhenUsersAreGone) {
+                send(LeaderGoneForAWhileInstant(it))
+            }
+        } else {
+            send(UserLeftEvent(it))
+        }}
+    onEvent<UserLeftEvent> {
+        if (users.hasAny() && it.user == users.current) {
+            furhat.attendC(users.other)
+        } else {
+            furhat.attendNobodyC()
+            goto(ActiveIdle)
+        }
+    }
+
+    onEvent<LeaderGoneForAWhileInstant>(instant = true) {
+        if (!users.list.contains(it.user)) {
+            raise(LeaderGoneForAWhile(it.user))
+        }}
+    onEvent<LeaderGoneForAWhile> {
+        users.current.isBeingEngaged = false
+        handleNext()
+    }
 
     onExit {
         users.current.isBeingEngaged = false

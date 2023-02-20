@@ -8,11 +8,14 @@ import furhatos.event.EventSystem
 import furhatos.event.senses.SenseInteractionSpaces
 import furhatos.event.senses.SenseUserEnter
 import furhatos.event.senses.SenseUserLeave
+import furhatos.flow.kotlin.FlowControlRunner
+import furhatos.flow.kotlin.furhat
 import furhatos.records.Ellipse
 import furhatos.records.Space
 import furhatos.records.User
 import furhatos.skills.EngagementPolicy
 import furhatos.skills.UserManager
+import java.io.File
 
 enum class Zone(val space: Space) {
     ZONE1(Ellipse("zone1", origin, zone1Params.first, zone1Params.second)),
@@ -105,4 +108,36 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
 
 fun updateActiveAttention(user: User) {
     user.attentionAverage.add(user.isAttendingFurhat)
+}
+
+
+
+/**
+ * Checks/sets the vision.properties file on the robot.
+ *
+ * @param enterBufferTime the entering buffer time to detect a user
+ * @param leaveBufferTime the leaving buffer time to detect a leaving user
+ */
+fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBufferTime: Int = 2500) {
+    val timingParameters = mapOf("enterBufferTime" to enterBufferTime, "leaveBufferTime" to leaveBufferTime)
+    if (!furhat.isVirtual() && (System.getProperty("furhatos.skills.brokeraddress") == null)) { //Only applies to the real robot
+        val visionProps = File("/usr/share/furhat/properties/", "vision.properties")
+        try {
+            val props = visionProps.readLines().associate { stringProp -> stringProp.split("=")[0] to stringProp.split("=")[1].toInt() }
+            if (props["enterBufferTime"] != enterBufferTime || props["leaveBufferTime"] != leaveBufferTime) {
+                throw Exception("New vision parameters detected")
+            } else {
+                furhatos.app.complimentbot.flow.logger.info("Vision parameters are correctly set up.")
+            }
+        } catch (e: Exception) {
+            furhatos.app.complimentbot.flow.logger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
+            visionProps.printWriter().use { out ->
+                timingParameters.forEach {
+                    out.println("${it.key}=${it.value}")
+                }
+            }
+        }
+    } else {
+        furhatos.app.complimentbot.flow.logger.warn("Did not rewrite the engagement timings, machine is not a robot.")
+    }
 }

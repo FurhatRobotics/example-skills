@@ -1,9 +1,11 @@
 package furhatos.app.complimentbot
 
+import furhatos.app.complimentbot.utils.Persona
+import furhatos.flow.kotlin.voice.AzureVoice
+import furhatos.flow.kotlin.voice.PollyNeuralVoice
 import furhatos.records.Location
 
 /** Interaction space parameters */
-val lookForward = Location(0.0, 0.0, 1.0)
 val origin = Location(0, 0, 0)
 
 val zone1Params = Pair(0.2, 1.2)
@@ -23,3 +25,10 @@ const val MAX_ACTIVE_IDLE: Long = 5 * 1000
 const val MAX_BORED_IDLE: Long = 5 * 1000
 
 const val delayWhenUsersAreGone: Long = 1500
+
+/** Furhat character */
+val mainPersona = Persona(
+    name = "anime",
+    face = listOf("AnimePink"),
+    voice = listOf(PollyNeuralVoice.Aria(), AzureVoice("AnaNeural"), AzureVoice("MaisieNeural"), AzureVoice("AriaNeural"), AzureVoice("SaraNeural"))
+)
