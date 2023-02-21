@@ -8,7 +8,6 @@ import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
 import furhatos.app.complimentbot.nlu.CanIGetCompliment
 import furhatos.app.complimentbot.utils.Zone
 import furhatos.app.complimentbot.utils.attendC
-import furhatos.app.complimentbot.utils.attendNobodyC
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
@@ -17,7 +16,7 @@ import furhatos.records.User
 import java.util.*
 import kotlin.concurrent.schedule
 
-var userQueue: Queue<User> = LinkedList()
+var userQueue: LinkedList<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
 class UserLeftEvent(val user: User): Event()
 
@@ -25,7 +24,6 @@ val attentionState: State = state(UniversalParent) {
 
     onEntry { reentry() }
     onReentry {
-        println("Attention confidence : ${getAttentionConfidence(users.current)}")
         when (users.current.zone) {
             Zone.ZONE1 -> goto(complimentNextGroup(users.current))
             Zone.ZONE2 -> {
@@ -36,7 +34,6 @@ val attentionState: State = state(UniversalParent) {
                 furhat.listen()
             }
             else -> furhat.attendC(users.current)
-            //TODO : seek attention more than that ?
         }
     }
 
@@ -89,7 +86,12 @@ val attentionState: State = state(UniversalParent) {
     onUserEnter(instant = true) {
         if (it != users.current && users.current.isBeingEngaged) {
             // Don't interrupt if interacting with current user, but keep in mind that the user has to be engaged.
-            userQueue.add(it)
+            // If a user enter the zone 1 he becomes the next target
+            if (it.zone == Zone.ZONE1) {
+                userQueue.push(it)
+            } else {
+                userQueue.add(it)
+            }
         } else {
             // We have to separate instant and non-instant behavior here
             send(UserEnteredEvent(it, it.zone))
@@ -112,11 +114,13 @@ val attentionState: State = state(UniversalParent) {
     }
 
     onUserLeave(instant = true) {
+        // Only care about the main user in the attention state
         if (it.isBeingEngaged && it == users.current) {
+            // If the user is being engaged we don't want to interrupt a listen
             Timer().schedule(delay = delayWhenUsersAreGone) {
                 send(LeaderGoneForAWhileInstant(it))
             }
-        } else {
+        } else if (it == users.current) {
             send(UserLeftEvent(it))
         }}
     onEvent<UserLeftEvent> {
@@ -136,10 +140,6 @@ val attentionState: State = state(UniversalParent) {
         users.current.isBeingEngaged = false
         handleNext()
     }
-
-    onExit {
-        users.current.isBeingEngaged = false
-    }
 }
 
 /**
@@ -148,7 +148,7 @@ val attentionState: State = state(UniversalParent) {
 fun FlowControlRunner.handleNext() {
     try {
         val next = userQueue.remove()
-        if (next.zone.isCloser(Zone.ZONE3)) { // Treat only if the user is active
+        if (next.zone <= Zone.ZONE2) { // Treat only if the user is active
             furhat.attendC(next)
             reentry()
         }

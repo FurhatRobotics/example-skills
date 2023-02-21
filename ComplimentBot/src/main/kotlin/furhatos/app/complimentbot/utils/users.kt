@@ -32,7 +32,7 @@ fun getAttentionConfidence(user: User): Double {
 }
 
 fun handleUserGroupEntry(user: User) {
-    if (user.zone.isFurther(Zone.ZONE2) && !(activeGroup+nextGroup).contains(user) ) {
+    if (user.zone <= Zone.ZONE2 && !(activeGroup+nextGroup).contains(user) ) {
         nextGroup.add(user)
     }
 }

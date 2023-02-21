@@ -2,29 +2,34 @@ package furhatos.app.complimentbot.flow.main
 
 import furhatos.app.complimentbot.flow.UniversalParent
 import furhatos.app.complimentbot.origin
-import furhatos.app.complimentbot.utils.activeGroup
-import furhatos.app.complimentbot.utils.attendNobodyC
-import furhatos.app.complimentbot.utils.nextGroup
+import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.state
-import furhatos.flow.kotlin.users
 import furhatos.records.User
 
+/**
+ * Greets goodbye after complimenting users.
+ * If the leader is null, Furhat will proceed to a general goodbye
+ */
 fun EndReading(leader: User? = null) = state(UniversalParent) {
     onEntry {
-
-        if (leader == null) {
+        //Put the leader in first position
+        val remainingUsers = (listOfNotNull(leader)+activeGroup.filter{ it != leader }).filter { it.zone.isCloser(Zone.ZONE3) }
+        if (leader == null || remainingUsers.isEmpty()) {
             generalGoodbye()
         } else {
-            for (user in activeGroup.sortedBy { it == leader }) {
-                greetUserGoodbye(users.current) // TODO : do we want a "other greet" ?
+            endCompliments(remainingUsers)
+            for (user in remainingUsers) {
+                furhat.attendC(user)
+                greetUserGoodbye(user) // TODO : do we want a "other greet" ?
             }
         }
 
-        delay(1500)
+        delay(2000)
 
         if (nextGroup.isNotEmpty()) {
-            complimentNextGroup(nextGroup.minBy { it.head.location.distance(origin) }!!)
+            furhat.attendC(nextGroup.minBy { it.head.location.distance(origin) }!!)
+            goto(attentionState)
         } else {
             furhat.attendNobodyC()
             goto(ActiveIdle)

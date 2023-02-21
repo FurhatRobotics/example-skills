@@ -40,7 +40,7 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
     user.hasBeenGreeted = true
 }
 
-fun FlowControlRunner.positiveSecondGreeting() {
+fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
     random(
         furhat.say {
             random {
@@ -50,9 +50,10 @@ fun FlowControlRunner.positiveSecondGreeting() {
         },
         furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5))
     )
+    user.hasBeenGreeted = true
 }
 
-fun FlowControlRunner.complimentUser(user: User = users.current,  isOtherCompliment: Boolean = false) {
+fun FlowControlRunner.complimentUser(user: User = users.current, isOtherCompliment: Boolean = false) {
         // TODO : handle repetition on users
 //    val compliments = listOf(
 //        "You look" to " awesome.",
@@ -101,21 +102,35 @@ fun FlowControlRunner.complimentUser(user: User = users.current,  isOtherComplim
     user.hasBeenComplimented = true
 }
 
-fun FlowControlRunner.greetUserGoodbye(user: User = users.current) {
+
+fun FlowControlRunner.endCompliments(users: List<User>) {
     furhat.say {
         +delay(800)
-        random {
+                random {
             +"That's it for now."
             +"That was all I wanted to say."
         }
-
-        //TODO : should move out ?
-        if (user.hasSmiled) {
-            +"I’m happy I was able to put a smile on your face."
+    }
+    if (users.any { it.hasSmiled }) {
+        furhat.say {
+            +"I’m happy I was able to put a smile on your face${if(users.count{ it.hasSmiled }>1) "s" else ""}."
         }
-        random {
-            +"Goodbye."
-            +"Have a nice day."
+    }
+}
+fun FlowControlRunner.greetUserGoodbye(user: User = users.current, isOtherGoodbye: Boolean = false) {
+    if (!isOtherGoodbye) {
+        furhat.say {
+            +delay(800)
+            random {
+                +"Goodbye."
+                +"Have a nice day."
+            }
+        }
+    } else {
+        furhat.say {
+            random {
+                +"Good day to you too."
+            }
         }
     }
     user.hasBeenGreetedGoodbye = true

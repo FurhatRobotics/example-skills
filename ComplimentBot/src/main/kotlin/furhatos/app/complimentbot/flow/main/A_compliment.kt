@@ -5,8 +5,6 @@ import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
 import furhatos.app.complimentbot.flow.UniversalParent
-import furhatos.app.complimentbot.utils.Zone
-import furhatos.app.complimentbot.utils.attendC
 import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.*
 import furhatos.records.User
@@ -28,11 +26,14 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
         } else {
             furhat.gesture(GesturesLib.SmileRandom())
         }
-        val usersNotGreeted = activeGroup.filter { it != leader }
-        for (user in usersNotGreeted) {
-            if (user.zone < Zone.ZONE2) {
+        for (user in activeGroup.filter { it != leader }) {
+            if (user.zone <= Zone.ZONE2) {
                 furhat.attendC(user)
-                greetUser(isOtherGreet = true)
+                if (user.hasBeenGreeted) {
+                    furhat.gesture(GesturesLib.PerformBigSmile1)
+                } else {
+                    greetUser(isOtherGreet = true)
+                }
             }
         }
 
@@ -40,18 +41,18 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
         delay(200)
         furhat.ledStrip.solid(Color(0, 120, 0))
 
-        if (leader.zone.isCloser(Zone.ZONE2)) {
+        if (leader.zone <= Zone.ZONE2) {
             furhat.attendC(leader)
             complimentUser(leader)
         }
         for (user in activeGroup.filter { it != leader }) {
-            if (user.zone < Zone.ZONE2) {
+            if (user.zone <= Zone.ZONE2) {
                 furhat.attendC(user)
                 complimentUser(isOtherCompliment = true)
             }
         }
 
-        if (leader.zone.isCloser(Zone.ZONE2)) {
+        if (leader.zone <= Zone.ZONE2) {
             furhat.attendC(leader)
         }
 
@@ -64,17 +65,20 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
                 send(LeaderGoneForAWhileInstant(userThatLeft))
             }
         }}
-    onEvent<LeaderGoneForAWhileInstant>(instant = true) {
-        if (!users.list.contains(it.user)) {
-            raise(LeaderGoneForAWhile(it.user))
+    onEvent<LeaderGoneForAWhileInstant>(instant = true) {event ->
+        println("User ${event.user.id} has left compliment for $delayWhenUsersAreGone milliseconds.")
+        // React only if the leader has left
+        if (!users.list.contains(event.user)) {
+            if (activeGroup.any { member -> member != leader }) {
+                // Assign the leader position to another user from the same group
+                leader = activeGroup.find { it != leader }?:leader
+                println("new leader : ${leader.id}")
+            } else {
+                raise(LeaderGoneForAWhile(event.user))
+            }
         }}
-    onEvent<LeaderGoneForAWhile> { event ->
-        println("User ${event.user.id} has left for $delayWhenUsersAreGone milliseconds.")
-        if (activeGroup.any { it != leader }) {
-            leader = activeGroup.find { it != leader }?:leader // Assign the leader position to another user from the same group
-        } else {
-            goto(EndReading())
-        }
+    onEvent<LeaderGoneForAWhile> {
+        goto(EndReading())
     }
 
     onExit {

@@ -60,11 +60,11 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
             if (user.isEngaged && user.isVisible) {
                 if (activeZone.isCloser(user.zone)) {
                     user.zone = activeZone
-                    sendSenseEnter(user.id, activeZone.name)
+                    sendSenseEnter(user.id)
                 }
                 else if (activeZone.isFurther(user.zone)) {
                     user.zone = activeZone
-                    sendSenseLeave(user.id, activeZone.name)
+                    sendSenseLeave(user.id)
                     if (activeZone == Zone.OUT) {
                         user.isEngaged = false
                     }
@@ -72,7 +72,8 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
             } else if (user.isEngaged && !user.isVisible) {
                 // User left
                 user.isEngaged = false
-                sendSenseLeave(user.id, Zone.OUT.name)
+                user.zone = Zone.OUT
+                sendSenseLeave(user.id)
             }
         }
 
@@ -87,12 +88,12 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
         EventSystem.send(SenseInteractionSpaces.Builder().spaces(zones.map { it.space }).buildEvent())
     }
 
-    private fun sendSenseLeave(userId: String, space: String) {
-        EventSystem.send(SenseUserLeave.Builder().userId(userId).space(space).buildEvent())
+    private fun sendSenseLeave(userId: String) {
+        EventSystem.send(SenseUserLeave.Builder().userId(userId).buildEvent())
     }
 
-    private fun sendSenseEnter(userId: String, space: String) {
-        EventSystem.send(SenseUserEnter.Builder().userId(userId).space(space).buildEvent())
+    private fun sendSenseEnter(userId: String) {
+        EventSystem.send(SenseUserEnter.Builder().userId(userId).buildEvent())
     }
 
     private fun findUserZone(user: User): Zone {
