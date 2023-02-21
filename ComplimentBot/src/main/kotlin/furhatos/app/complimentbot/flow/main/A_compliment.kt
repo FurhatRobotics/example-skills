@@ -30,7 +30,7 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
             if (user.zone <= Zone.ZONE2) {
                 furhat.attendC(user)
                 if (user.hasBeenGreeted) {
-                    furhat.gesture(GesturesLib.PerformBigSmile1)
+                    furhat.gesture(GesturesLib.PerformBigSmile1) //TODO : add delay ? does not wait for it
                 } else {
                     greetUser(isOtherGreet = true)
                 }
@@ -69,9 +69,9 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
         println("User ${event.user.id} has left compliment for $delayWhenUsersAreGone milliseconds.")
         // React only if the leader has left
         if (!users.list.contains(event.user)) {
-            if (activeGroup.any { member -> member != leader }) {
+            if (activeGroup.any { it != leader && it.zone < Zone.ZONE2}) {
                 // Assign the leader position to another user from the same group
-                leader = activeGroup.find { it != leader }?:leader
+                leader = activeGroup.find { it != leader && it.zone < Zone.ZONE2}?:leader
                 println("new leader : ${leader.id}")
             } else {
                 raise(LeaderGoneForAWhile(event.user))

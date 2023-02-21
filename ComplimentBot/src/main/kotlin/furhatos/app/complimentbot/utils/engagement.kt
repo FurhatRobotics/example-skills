@@ -1,9 +1,6 @@
 package furhatos.app.complimentbot.utils
 
-import furhatos.app.complimentbot.origin
-import furhatos.app.complimentbot.zone1Params
-import furhatos.app.complimentbot.zone2Params
-import furhatos.app.complimentbot.zone3Params
+import furhatos.app.complimentbot.*
 import furhatos.event.EventSystem
 import furhatos.event.senses.SenseInteractionSpaces
 import furhatos.event.senses.SenseUserEnter
@@ -16,6 +13,8 @@ import furhatos.records.User
 import furhatos.skills.EngagementPolicy
 import furhatos.skills.UserManager
 import java.io.File
+import java.util.*
+import kotlin.concurrent.schedule
 
 enum class Zone(val space: Space) {
     ZONE1(Ellipse("zone1", origin, zone1Params.first, zone1Params.second)),
@@ -88,12 +87,12 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
         EventSystem.send(SenseInteractionSpaces.Builder().spaces(zones.map { it.space }).buildEvent())
     }
 
-    private fun sendSenseLeave(userId: String) {
-        EventSystem.send(SenseUserLeave.Builder().userId(userId).buildEvent())
-    }
-
     private fun sendSenseEnter(userId: String) {
         EventSystem.send(SenseUserEnter.Builder().userId(userId).buildEvent())
+    }
+
+    private fun sendSenseLeave(userId: String) {
+        EventSystem.send(SenseUserLeave.Builder().userId(userId).buildEvent())
     }
 
     private fun findUserZone(user: User): Zone {

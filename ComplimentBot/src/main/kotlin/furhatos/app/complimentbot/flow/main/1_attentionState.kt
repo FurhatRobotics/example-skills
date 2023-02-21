@@ -43,7 +43,6 @@ val attentionState: State = state(UniversalParent) {
         }
         // Rest happens only for far away users
         else {
-            //
             if (!users.current.hasBeenGreeted) {
                 greetUser()
                 furhat.say("Can you maybe step closer?")
@@ -131,13 +130,12 @@ val attentionState: State = state(UniversalParent) {
             goto(ActiveIdle)
         }
     }
-
     onEvent<LeaderGoneForAWhileInstant>(instant = true) {
         if (!users.list.contains(it.user)) {
             raise(LeaderGoneForAWhile(it.user))
         }}
     onEvent<LeaderGoneForAWhile> {
-        users.current.isBeingEngaged = false
+        it.user.isBeingEngaged = false
         handleNext()
     }
 }
@@ -153,6 +151,12 @@ fun FlowControlRunner.handleNext() {
             reentry()
         }
     } catch (_: NoSuchElementException) {
-        furhat.listen()
+        // If no next user we either continue to attend the current one or go back to Idle
+        if (users.list.none { it.zone >= Zone.ZONE3 }) {
+            furhat.attendNobodyC()
+            goto(ActiveIdle)
+        } else {
+            furhat.listen()
+        }
     }
 }

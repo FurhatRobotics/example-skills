@@ -5,6 +5,9 @@ import furhatos.flow.kotlin.voice.AzureVoice
 import furhatos.flow.kotlin.voice.PollyNeuralVoice
 import furhatos.records.Location
 
+/** Debug parameters */
+const val doubleUserEventDelay: Long = 10
+
 /** Interaction space parameters */
 val origin = Location(0, 0, 0)
 
