@@ -24,8 +24,8 @@ const val averageAttentionCapacity = 5 * 10 // 5 sec average for now
 const val attentionThreshold: Double = 0.70 // Percentage of attention we need in the last $averageAttentionCapacity time
 
 /** Idle parameters */
-const val MAX_ACTIVE_IDLE: Long = 5 * 1000
-const val MAX_BORED_IDLE: Long = 5 * 1000
+const val MAX_ACTIVE_IDLE: Long = 15 * 1000
+const val MAX_BORED_IDLE: Long = 30 * 1000
 
 const val delayWhenUsersAreGone: Long = 1500
 

@@ -1,5 +1,6 @@
 package furhatos.app.complimentbot.flow
 
+import furhat.libraries.standard.BehaviorLib
 import furhatos.app.complimentbot.doubleUserEventDelay
 import furhatos.app.complimentbot.flow.main.attentionState
 import furhatos.app.complimentbot.utils.*
@@ -63,4 +64,8 @@ val IdleParent = state(UniversalParent) {
         furhat.attendC(it)
         goto(attentionState)
     }
+}
+
+val InteractionParent = state(UniversalParent) {
+    include(BehaviorLib.AutomaticMovements.randomHeadMovements())
 }

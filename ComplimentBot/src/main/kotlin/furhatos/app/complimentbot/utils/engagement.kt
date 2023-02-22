@@ -13,8 +13,6 @@ import furhatos.records.User
 import furhatos.skills.EngagementPolicy
 import furhatos.skills.UserManager
 import java.io.File
-import java.util.*
-import kotlin.concurrent.schedule
 
 enum class Zone(val space: Space) {
     ZONE1(Ellipse("zone1", origin, zone1Params.first, zone1Params.second)),
@@ -68,8 +66,8 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
                         user.isEngaged = false
                     }
                 }
-            } else if (user.isEngaged && !user.isVisible) {
-                // User left
+            } else if (!user.isVisible) {
+                // Engaged user left
                 user.isEngaged = false
                 user.zone = Zone.OUT
                 sendSenseLeave(user.id)

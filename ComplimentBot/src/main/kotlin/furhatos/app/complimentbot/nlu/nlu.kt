@@ -13,7 +13,8 @@ class CanIGetCompliment : Intent() {
             "I want to hear something",
             "Tell me something",
             "May I get some attention",
-            "Could I have a compliment"
+            "Could I have a compliment",
+            "Can you do your thing"
         )
     }
 }

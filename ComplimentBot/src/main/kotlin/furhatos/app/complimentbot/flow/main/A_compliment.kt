@@ -2,9 +2,9 @@ package furhatos.app.complimentbot.flow.main
 
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.delayWhenUsersAreGone
+import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
-import furhatos.app.complimentbot.flow.UniversalParent
 import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.*
 import furhatos.records.User
@@ -12,7 +12,7 @@ import java.awt.Color
 import java.util.*
 import kotlin.concurrent.schedule
 
-fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
+fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
 
     var leader = groupLeader
 
@@ -29,8 +29,10 @@ fun complimentNextGroup(groupLeader: User): State = state(UniversalParent) {
         for (user in activeGroup.filter { it != leader }) {
             if (user.zone <= Zone.ZONE2) {
                 furhat.attendC(user)
+                delay(500)
                 if (user.hasBeenGreeted) {
-                    furhat.gesture(GesturesLib.PerformBigSmile1) //TODO : add delay ? does not wait for it
+                    furhat.gesture(GesturesLib.PerformBigSmile1)
+                    delay(1000)
                 } else {
                     greetUser(isOtherGreet = true)
                 }

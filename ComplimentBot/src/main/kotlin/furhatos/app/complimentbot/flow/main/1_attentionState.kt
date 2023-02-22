@@ -1,13 +1,9 @@
 package furhatos.app.complimentbot.flow.main
 
-import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.delayWhenUsersAreGone
-import furhatos.app.complimentbot.flow.UniversalParent
+import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
-import furhatos.app.complimentbot.nlu.CanIGetCompliment
-import furhatos.app.complimentbot.utils.Zone
-import furhatos.app.complimentbot.utils.attendC
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
@@ -20,7 +16,9 @@ var userQueue: LinkedList<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
 class UserLeftEvent(val user: User): Event()
 
-val attentionState: State = state(UniversalParent) {
+val attentionState: State = state(InteractionParent) {
+
+    include(attentionGeneralIntents)
 
     onEntry { reentry() }
     onReentry {
@@ -52,18 +50,6 @@ val attentionState: State = state(UniversalParent) {
             users.current.isBeingEngaged = false
             handleNext()
         }
-    }
-    onResponse<CanIGetCompliment> {
-        furhat.say {
-            random {
-                +"Sure!"
-                +"For sure"
-                +"Of course!"
-            }
-        }
-        furhat.gesture(GesturesLib.SmileRandom())
-        users.current.hasBeenGreeted = true
-        goto(complimentNextGroup(users.current))
     }
     onResponse {
         if (users.current.zone.isCloser(Zone.ZONE3)) {
