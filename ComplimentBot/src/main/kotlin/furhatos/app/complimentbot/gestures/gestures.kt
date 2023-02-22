@@ -1,77 +1,98 @@
 package furhatos.app.complimentbot.gestures
 
+import furhatos.gestures.ARKitParams
 import furhatos.gestures.BasicParams
 import furhatos.gestures.defineGesture
 
-val cSmile = defineGesture("cSmile") {
-    frame(0.5, persist = true){
-        BasicParams.BLINK_LEFT to 1.0
-        BasicParams.BLINK_RIGHT to 1.0
-    }
-
-}
-
-fun rollHead(strength: Double = 1.0, duration: Double = 1.0) =
-        defineGesture("rollHead") {
-            frame(0.4, duration) {
-                BasicParams.NECK_ROLL to strength
-            }
-            reset(duration+0.1)
+const val blinkBoredRightValue = 0.25
+const val blinkBoredLeftValue = 0.18
+val BoredBlink =
+    defineGesture("BoredBlink") {
+        frame(0.2) {
+            BasicParams.BLINK_RIGHT to 1.0
+            BasicParams.BLINK_LEFT to 1.0
         }
-
-val FallAsleep = defineGesture("FallAsleep") {
-    frame(0.5, persist = true){
-        BasicParams.BLINK_LEFT to 1.0
-        BasicParams.BLINK_RIGHT to 1.0
+        frame(0.4) {
+            BasicParams.BLINK_RIGHT to blinkBoredRightValue
+            BasicParams.BLINK_LEFT to blinkBoredLeftValue
+        }
     }
 
+val BoredBasic = defineGesture {
+    frame(1.0, persist = true) {
+        BasicParams.BROW_UP_LEFT to 0.42
+        BasicParams.BROW_UP_RIGHT to -0.25
+        BasicParams.PHONE_B_M_P to 1.40
+        BasicParams.BLINK_LEFT to blinkBoredLeftValue
+        BasicParams.BLINK_RIGHT to blinkBoredRightValue
+        ARKitParams.BROW_DOWN_RIGHT to 0.45
+    }
 }
 
-val MySmile = defineGesture("MySmile") {
-    frame(0.32, 0.72) {
-        BasicParams.SMILE_CLOSED to 2.0
+val BoredLookAround = defineGesture {
+    frame(1.5) {
+        BasicParams.BROW_UP_LEFT to 0.6
+        BasicParams.BROW_UP_RIGHT to 0.6
+        BasicParams.BLINK_LEFT to 0.0
+        BasicParams.BLINK_RIGHT to 0.0
+
+        BasicParams.LOOK_UP to 1.25
+        BasicParams.LOOK_RIGHT to 1.20
+
+        BasicParams.NECK_ROLL to -4.0
+        BasicParams.NECK_TILT to -15.0
+        BasicParams.NECK_PAN to -20.0
     }
-    frame(0.2, 0.72){
-        BasicParams.BROW_UP_LEFT to 4.0
-        BasicParams.BROW_UP_RIGHT to 4.0
+    frame(4.5) {
+        BasicParams.BROW_UP_LEFT to 0.6
+        BasicParams.BROW_UP_RIGHT to 0.6
+        BasicParams.BLINK_LEFT to 0.0
+        BasicParams.BLINK_RIGHT to 0.0
+
+        BasicParams.LOOK_UP to 1.25
+        BasicParams.LOOK_RIGHT to 1.20
+
+        BasicParams.NECK_ROLL to -4.0
+        BasicParams.NECK_TILT to -15.0
+        BasicParams.NECK_PAN to -20.0
     }
-    frame(0.16, 0.72){
-        BasicParams.BLINK_LEFT to 1.0
-        BasicParams.BLINK_RIGHT to 0.1
+
+    frame(5.5) {
+        BasicParams.LOOK_UP to 0.0
+        BasicParams.LOOK_RIGHT to 0.0
+        BasicParams.LOOK_LEFT to 0.80
+
+        BasicParams.NECK_ROLL to 0.0
+        BasicParams.NECK_TILT to 0.0
+        BasicParams.NECK_PAN to 22.0
     }
-    reset(1.04)
+
+    frame(8.0) {
+        BasicParams.LOOK_UP to 0.0
+        BasicParams.LOOK_LEFT to 0.80
+
+        BasicParams.NECK_ROLL to 0.0
+        BasicParams.NECK_TILT to 0.0
+        BasicParams.NECK_PAN to 22.0
+    }
+
+    frame(9.0) { // RESET
+        BasicParams.BROW_UP_LEFT to 0.6
+        BasicParams.BROW_UP_RIGHT to 0.6
+        BasicParams.BLINK_LEFT to blinkBoredLeftValue
+        BasicParams.BLINK_RIGHT to blinkBoredRightValue
+        BasicParams.LOOK_LEFT to 0.0
+        BasicParams.NECK_PAN to 0.0
+    }
 }
 
-val TripleBlink = defineGesture("TripleBlink") {
-    frame(0.1, 0.3){
-        BasicParams.BLINK_LEFT to 1.0
+
+val FallAsleepPersist = defineGesture("PerformFallAsleepPersist") {
+    frame(1.4, persist = true) {
         BasicParams.BLINK_RIGHT to 1.0
-    }
-    frame(0.3, 0.5){
-        BasicParams.BLINK_LEFT to 0.1
-        BasicParams.BLINK_RIGHT to 0.1
-    }
-    frame(0.5, 0.7){
         BasicParams.BLINK_LEFT to 1.0
-        BasicParams.BLINK_RIGHT to 1.0
+        BasicParams.NECK_TILT to 20.0
+        BasicParams.PHONE_OH to 0.4
+        BasicParams.PHONE_B_M_P to 1.0
     }
-    frame(0.7, 0.9){
-        BasicParams.BLINK_LEFT to 0.1
-        BasicParams.BLINK_RIGHT to 0.1
-        BasicParams.BROW_UP_LEFT to 2.0
-        BasicParams.BROW_UP_RIGHT to 2.0
-    }
-    frame(0.9, 1.1){
-        BasicParams.BLINK_LEFT to 1.0
-        BasicParams.BLINK_RIGHT to 1.0
-    }
-    frame(1.1, 1.4){
-        BasicParams.BLINK_LEFT to 0.1
-        BasicParams.BLINK_RIGHT to 0.1
-    }
-    frame(1.4, 1.5){
-        BasicParams.BROW_UP_LEFT to 0
-        BasicParams.BROW_UP_RIGHT to 0
-    }
-    reset(1.5)
 }

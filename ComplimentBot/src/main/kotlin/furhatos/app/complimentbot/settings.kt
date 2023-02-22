@@ -10,6 +10,7 @@ const val doubleUserEventDelay: Long = 10
 
 /** Interaction space parameters */
 val origin = Location(0, 0, 0)
+val topLeft = Location(3, 0, 3)
 
 val zone1Params = Pair(0.2, 1.2)
 val zone2Params = Pair(1.2, 1.7)
@@ -24,8 +25,8 @@ const val averageAttentionCapacity = 5 * 10 // 5 sec average for now
 const val attentionThreshold: Double = 0.70 // Percentage of attention we need in the last $averageAttentionCapacity time
 
 /** Idle parameters */
-const val MAX_ACTIVE_IDLE: Long = 5 * 1000
-const val MAX_BORED_IDLE: Long = 300 * 1000
+const val MAX_ACTIVE_IDLE: Long = 10 * 1000
+const val MAX_BORED_IDLE: Long = 45 * 1000
 
 const val delayWhenUsersAreGone: Long = 1500
 

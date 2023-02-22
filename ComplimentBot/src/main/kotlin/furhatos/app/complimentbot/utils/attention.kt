@@ -12,8 +12,8 @@ fun Furhat.attendC(user: User) {
     attend(user, gazeMode = gazeMode, slack = attentionSlack)
 }
 
-fun Furhat.attendC(loc: Location) {
-    attend(loc, gazeMode = gazeMode, slack = attentionSlack)
+fun Furhat.attendCSlow(loc: Location) {
+    attend(loc, gazeMode = gazeMode, slack = attentionSlack, speed = ActionGaze.Speed.SLOW)
 }
 
 fun Furhat.attendNobodyC() {
