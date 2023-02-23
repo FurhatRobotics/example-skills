@@ -71,14 +71,10 @@ val BoredIdle: State = state(IdleParent) {
         goto(SleepingIdle)
     }
 
-    onExit {
-        println("On exit bored idle")
+    onExit(priority = true) {
         furhat.setDefaultMicroexpression(blinking = true)
-        println("On exit bored idle with micro-expressions")
         timer.cancel() // If we come back to the state afterwards we don't want the hanging event
-        println("On exit bored idle with timer")
         furhat.stopGestures()
-        println("Stop gestures called")
     }
 }
 

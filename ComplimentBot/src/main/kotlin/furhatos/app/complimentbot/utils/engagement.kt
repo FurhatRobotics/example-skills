@@ -66,7 +66,7 @@ class ComplexEngagementPolicy(private val userManager: UserManager, private var 
                         user.isEngaged = false
                     }
                 }
-            } else if (!user.isVisible) {
+            } else if (user.isEngaged) {
                 // Engaged user left
                 user.isEngaged = false
                 user.zone = Zone.OUT

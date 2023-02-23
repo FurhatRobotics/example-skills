@@ -3,10 +3,12 @@ package furhatos.app.complimentbot.flow.main
 import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.utils.*
 import furhatos.flow.kotlin.FlowControlRunner
+import furhatos.flow.kotlin.RandomPolicy
 import furhatos.flow.kotlin.furhat
 import furhatos.flow.kotlin.users
 import furhatos.gestures.Gestures
 import furhatos.records.User
+import furhatos.util.randomWithPolicy
 import java.time.LocalDateTime
 
 fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = false, isOtherGreet: Boolean = false) {
@@ -41,15 +43,20 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
 }
 
 fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
-    random(
-        furhat.say {
-            random {
-                +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
-                +"What a lovely day !"
-            }
-        },
-        furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5))
-    )
+    furhat.say {
+        random {
+            +"Happy ${LocalDateTime.now().dayOfWeek.name}!"
+            +"What a lovely day !"
+            +"I won't bite, you can come closer if you want"
+            +"I hope you succeed in life!"
+            +"Did you know ? ${didYouKnowList.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)}"
+        }
+    }
+    random (
+        {},
+        {furhat.gesture(GesturesLib.PerformBigSmile1)},
+        {furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5))},
+        policy = RandomPolicy.DICE)
     delay(1000)
     user.hasBeenGreeted = true
 }
@@ -135,3 +142,15 @@ fun FlowControlRunner.generalGoodbye() {
         }
     }
 }
+
+
+val didYouKnowList = listOf(
+    "Sharks love the taste of internet",
+    "There are actually two Air Force Ones",
+    "Liechtenstein has just one jail",
+    "The filling in Kit Kats is made from damaged Kit Kats",
+    "The youngest Olympian was 10 years old",
+    "it's illegal to own just one guinea pig in Switzerland",
+    "a penguin achieved knighthood",
+    "the Statue of Liberty wears a size 879 shoe"
+)

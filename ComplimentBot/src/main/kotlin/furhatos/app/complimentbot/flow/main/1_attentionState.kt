@@ -46,6 +46,7 @@ val attentionState: State = state(InteractionParent) {
                 furhat.say("Can you maybe step closer?")
             } else {
                 positiveSecondGreeting()
+                delay(1000)
             }
             users.current.isBeingEngaged = false
             handleNext()
@@ -136,13 +137,18 @@ fun FlowControlRunner.handleNext() {
             furhat.attendC(next)
             reentry()
         }
+        // no else listen here because we don't want users in zone 3 to be able to interact
     } catch (_: NoSuchElementException) {
-        // If no next user we either continue to attend the current one or go back to Idle
-        if (users.list.none { it.zone >= Zone.ZONE3 }) {
+        // If no next user we either continue to attend the current one
+        if (users.list.any {it.zone <= Zone.ZONE2 } ) {
+            furhat.listen()
+        } else if (users.list.any {it.zone == Zone.ZONE3 }) {
+            // Used if active users leave and some other users still engaged behind zone 3
+            furhat.attendC(users.list.find {it.zone == Zone.ZONE3 }!!)
+        } else {
+            // Or go back to Idle
             furhat.attendNobodyC()
             goto(ActiveIdle)
-        } else {
-            furhat.listen()
         }
     }
 }
