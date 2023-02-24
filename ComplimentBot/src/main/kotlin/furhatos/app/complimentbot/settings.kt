@@ -30,6 +30,7 @@ const val MAX_ACTIVE_IDLE = 10 * 1000
 const val MAX_BORED_IDLE = 45 * 1000
 
 const val delayWhenUsersAreGone: Long = 1500
+const val maxTimeAttendingAUser = 10 * 1000
 
 /** Furhat character */
 val mainPersona = Persona(

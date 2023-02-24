@@ -4,6 +4,7 @@ import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
+import furhatos.app.complimentbot.maxTimeAttendingAUser
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
@@ -20,9 +21,10 @@ val attentionState: State = state(InteractionParent) {
 
     include(attentionGeneralIntents)
 
-    //TODO : eventually go back to Idle
-
-    onEntry { reentry() }
+    onEntry {
+        parallel(abortOnExit = true) { goto(ParallelCheckMaxAttentionToGoIdle) }
+        reentry()
+    }
     onReentry {
         when (users.current.zone) {
             Zone.ZONE1 -> goto(complimentNextGroup(users.current))
@@ -33,7 +35,9 @@ val attentionState: State = state(InteractionParent) {
                 }
                 furhat.listen()
             }
-            else -> furhat.attendC(users.current)
+            else -> {
+                furhat.attendC(users.current)
+            }
         }
     }
 
@@ -170,4 +174,8 @@ fun addNewUserToQueue(user: User) {
     } else {
         userQueue.add(user)
     }
+}
+
+val ParallelCheckMaxAttentionToGoIdle = state {
+
 }

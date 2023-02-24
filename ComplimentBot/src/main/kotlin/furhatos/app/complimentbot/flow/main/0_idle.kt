@@ -12,7 +12,6 @@ import furhatos.app.complimentbot.utils.*
 import furhatos.autobehavior.setDefaultMicroexpression
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
-import furhatos.records.User
 
 class GotoAttentionIfPresent: Event()
 
@@ -20,7 +19,7 @@ val ActiveIdle: State = state(IdleParent) {
     include(BehaviorLib.AutomaticMovements.randomHeadMovements(repetitionPeriod = 2500..5000))
 
     onTime(MAX_ACTIVE_IDLE) {
-        goto(SleepingIdle)
+        goto(BoredIdle)
     }
 }
 

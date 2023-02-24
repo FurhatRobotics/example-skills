@@ -38,6 +38,7 @@ compileTestKotlin {
 repositories {
     mavenLocal()
     maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
+    maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/snapshots" }
     jcenter()
 }
 
