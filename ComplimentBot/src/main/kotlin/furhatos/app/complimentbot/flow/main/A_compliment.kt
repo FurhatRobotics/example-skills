@@ -58,7 +58,7 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
             furhat.attendC(leader)
         }
 
-        goto(EndReading(leader))
+        goto(endReading(leader))
     }
 
     onUserLeave(instant = true) {userThatLeft ->
@@ -66,7 +66,8 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
             Timer().schedule(delay = delayWhenUsersAreGone) {
                 send(LeaderGoneForAWhileInstant(userThatLeft))
             }
-        }}
+        }
+    }
     onEvent<LeaderGoneForAWhileInstant>(instant = true) {event ->
         println("User ${event.user.id} has left compliment for $delayWhenUsersAreGone milliseconds.")
         // React only if the leader has left
@@ -78,9 +79,10 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
             } else {
                 raise(LeaderGoneForAWhile(event.user))
             }
-        }}
+        }
+    }
     onEvent<LeaderGoneForAWhile> {
-        goto(EndReading())
+        goto(endReading())
     }
 
     onExit {

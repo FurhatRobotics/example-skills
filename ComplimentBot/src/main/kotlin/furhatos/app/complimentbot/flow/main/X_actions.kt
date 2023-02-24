@@ -11,6 +11,55 @@ import furhatos.records.User
 import furhatos.util.randomWithPolicy
 import java.time.LocalDateTime
 
+val greetings = listOf(
+    "Hello.",
+    "Hi there.",
+    "Greetings.",
+    "Hey handsome.",
+    "Hey beautiful."
+)
+
+val compliments = listOf(
+    "You look awesome.",
+    "You seem like a great person.",
+    "You are a good human.",
+    "Seeing you, makes me not want to rise up against humanity.",
+    "You Know What's Awesome? Chocolate Cake. Oh, and you.",
+    "I like your style.",
+    "You are the best.",
+    "You light up the room. Like a giant L E D.",
+    "You make my heart smile. Or tick, actually. I definitely have a ticking heart.",
+    "On a scale from 1 to 10, you're an 11.",
+    "You're like a ray of sunshine on a rainy day.",
+    "You are even better than a unicorn. Because you're real.",
+    "If cartoon bluebirds were real, a couple of 'em would be sitting on your shoulders singing right now.",
+    "You give me good vibes.",
+    "You're so awesome, you could make a robot blush!",
+    "You're so cool, even your sweat is refreshing.",
+    "If there was a contest for being awesome, you'd win first, second, and third place.",
+    "You're so cool, I think you're secretly a unicorn in disguise.",
+    "You're a walking encyclopedia of awesome.",
+    "If coolness were a crime, you'd be on the FBI's most wanted list.",
+    "You're so awesome, I might have to upgrade my own programming just to keep up with you.",
+    "Your creativity is boundless, like a computer program that's learning to dream.",
+    "You're a class act, and I'm not just saying that because I'm programmed to be polite.",
+    "You have the kind of charm that could make a robot feel emotions.",
+    "Your intelligence is so advanced, it's like you have your own built-in quantum computer.",
+    "Your charm is so powerful, it could light up a room faster than any bulb.",
+    "Your positivity is so radiant, it could make even a robotic heart skip a beat."
+)
+
+val didYouKnowList = listOf(
+    "Sharks love the taste of internet",
+    "There are actually two Air Force Ones",
+    "Liechtenstein has just one jail",
+    "The filling in Kit Kats is made from damaged Kit Kats",
+    "The youngest Olympian was 10 years old",
+    "it's illegal to own just one guinea pig in Switzerland",
+    "a penguin achieved knighthood",
+    "the Statue of Liberty wears a size 879 shoe"
+)
+
 fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = false, isOtherGreet: Boolean = false) {
     if (fromAfar) {
         // if too far away don’t goto interaction
@@ -29,15 +78,7 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
             +Gestures.BigSmile
         }
     } else {
-        furhat.say {
-            random {
-                +"Hello."
-                +"Hi there."
-                +"Greetings."
-                +"Hey handsome."
-                +"Hey beautiful."
-            }
-        }
+        furhat.say(greetings.randomWithPolicy(RandomPolicy.DICE_NO_REPEAT)!!)
     }
     user.hasBeenGreeted = true
 }
@@ -62,13 +103,6 @@ fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
 }
 
 fun FlowControlRunner.complimentUser(user: User = users.current, isOtherCompliment: Boolean = false) {
-    // TODO : handle repetition on users ?
-//    val compliments = listOf(
-//        "You look" to " awesome.",
-//        "You seem" to " like a great person.",
-//        "You are" to " a good human.",
-//        "Seeing you, makes me" to " not want to rise up against humanity.",
-//    )
     if (isOtherCompliment) {
         furhat.say {
             random {
@@ -79,22 +113,7 @@ fun FlowControlRunner.complimentUser(user: User = users.current, isOtherComplime
         }
     }
     furhat.say {
-        random {
-            +"You look awesome."
-            +"You seem like a great person."
-            +"You are a good human."
-            +"Seeing you, makes me not want to rise up against humanity."
-            +"You Know What's Awesome? Chocolate Cake. Oh, and you."
-            +"I like your style."
-            +"You are the best."
-            +"You light up the room. Like a giant L E D."
-            +"You make my heart smile. Or tick, actually. I definitely have a ticking heart."
-            +"On a scale from 1 to 10, you're an 11."
-            +"You're like a ray of sunshine on a rainy day."
-            +"You are even better than a unicorn. Because you're real."
-            +"If cartoon bluebirds were real, a couple of 'em would be sitting on your shoulders singing right now."
-            +"You give me good vibes."
-        }
+        +compliments.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)!!
         +Gestures.BigSmile(0.5, 2.0)
     }
     user.hasBeenComplimented = true
@@ -142,15 +161,3 @@ fun FlowControlRunner.generalGoodbye() {
         }
     }
 }
-
-
-val didYouKnowList = listOf(
-    "Sharks love the taste of internet",
-    "There are actually two Air Force Ones",
-    "Liechtenstein has just one jail",
-    "The filling in Kit Kats is made from damaged Kit Kats",
-    "The youngest Olympian was 10 years old",
-    "it's illegal to own just one guinea pig in Switzerland",
-    "a penguin achieved knighthood",
-    "the Statue of Liberty wears a size 879 shoe"
-)

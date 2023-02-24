@@ -86,13 +86,11 @@ val BoredLookAround = defineGesture {
     }
 }
 
-
-val FallAsleepPersist = defineGesture("PerformFallAsleepPersist") {
-    frame(1.4, persist = true) {
-        BasicParams.BLINK_RIGHT to 1.0
-        BasicParams.BLINK_LEFT to 1.0
-        BasicParams.NECK_TILT to 20.0
-        BasicParams.PHONE_OH to 0.4
-        BasicParams.PHONE_B_M_P to 1.0
-    }
+val resetBoredFace = defineGesture {
+    BasicParams.BROW_UP_LEFT to 0.0
+    BasicParams.BROW_UP_RIGHT to 0.0
+    BasicParams.PHONE_B_M_P to 0.0
+    BasicParams.BLINK_LEFT to 0.0
+    BasicParams.BLINK_RIGHT to 0.0
+    ARKitParams.BROW_DOWN_RIGHT to 0.0
 }

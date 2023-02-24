@@ -42,8 +42,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.5.0'
-    implementation 'com.furhatrobotics.assets:StandardLibraryCollection:1.2.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.5.0-stopGesturesModifReset-SNAP'
+    implementation 'com.furhatrobotics.assets:StandardLibraryCollection:1.2.0-stopGesturesModifReset-SNAP'
 }
 
 jar {

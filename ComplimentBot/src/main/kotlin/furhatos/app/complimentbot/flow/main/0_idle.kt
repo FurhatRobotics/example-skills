@@ -1,92 +1,102 @@
 package furhatos.app.complimentbot.flow.main
 
 import furhat.libraries.standard.BehaviorLib
-import furhat.libraries.standard.GesturesLib
 import furhatos.app.complimentbot.flow.IdleParent
 import furhatos.app.complimentbot.MAX_ACTIVE_IDLE
 import furhatos.app.complimentbot.MAX_BORED_IDLE
-import furhatos.app.complimentbot.gestures.BoredBasic
-import furhatos.app.complimentbot.gestures.BoredBlink
-import furhatos.app.complimentbot.gestures.BoredLookAround
-import furhatos.app.complimentbot.gestures.FallAsleepPersist
+import furhatos.app.complimentbot.flow.UniversalParent
+import furhatos.app.complimentbot.gestures.*
+import furhatos.app.complimentbot.straightAhead
 import furhatos.app.complimentbot.topLeft
-import furhatos.app.complimentbot.utils.attendCSlow
-import furhatos.app.complimentbot.utils.attendNobodyC
+import furhatos.app.complimentbot.utils.*
 import furhatos.autobehavior.setDefaultMicroexpression
 import furhatos.event.Event
-import furhatos.flow.kotlin.State
-import furhatos.flow.kotlin.furhat
-import furhatos.flow.kotlin.state
-import java.util.*
-import kotlin.concurrent.schedule
+import furhatos.flow.kotlin.*
+import furhatos.records.User
 
-class GotoBored: Event()
-class GotoSleeping: Event()
+class GotoAttentionIfPresent: Event()
 
 val ActiveIdle: State = state(IdleParent) {
-    lateinit var timer: Timer
-
     include(BehaviorLib.AutomaticMovements.randomHeadMovements(repetitionPeriod = 2500..5000))
 
-    onEntry {
-        timer = Timer()
-        timer.schedule(delay = MAX_ACTIVE_IDLE) {
-            send(GotoBored())
-        }}
-    onEvent<GotoBored> {
-        goto(BoredIdle)
-    }
-
-    onExit {
-        timer.cancel() // If we come back to the state afterwards we don't want the hanging event
+    onTime(MAX_ACTIVE_IDLE) {
+        goto(SleepingIdle)
     }
 }
 
 val BoredIdle: State = state(IdleParent) {
-    lateinit var timer: Timer
-
     include(BehaviorLib.AutomaticMovements.randomHeadMovements(repetitionPeriod = 5000..9000))
+
+    onEntry {
+        furhat.setDefaultMicroexpression(blinking = false) // Replaced by the custom blink
+        furhat.gesture(BoredBasic)
+    }
 
     // Custom blink that defaults back to the bored eyes openness
     onTime(100,2000..8000) {
-        furhat.gesture(BoredBlink)
+        furhat.gesture(BoredBlink, async = true)
     }
-    onTime(MAX_BORED_IDLE.toInt() / 3) {
+
+    onTime(MAX_BORED_IDLE / 3) {
         furhat.gesture(BoredLookAround, priority = 10)
     }
-    onTime(MAX_BORED_IDLE.toInt() * 2 / 3) {
+    onTime(MAX_BORED_IDLE * 2 / 3) {
         furhat.attendCSlow(topLeft)
-        delay(4000)
-        furhat.attendNobodyC()
     }
-    onEntry {
-        timer = Timer()
-        furhat.setDefaultMicroexpression(blinking = false) // Replaced by the custom blink
-        furhat.gesture(BoredBasic)
-
-        timer.schedule(delay = MAX_BORED_IDLE) {
-            send(GotoSleeping())
-        }}
-    onEvent<GotoSleeping> {
+    onTime((MAX_BORED_IDLE * 2 / 3) + 4000) {
+        furhat.attendCSlow(straightAhead)
+    }
+    onTime(MAX_BORED_IDLE) {
         goto(SleepingIdle)
     }
 
     onExit(priority = true) {
         furhat.setDefaultMicroexpression(blinking = true)
-        timer.cancel() // If we come back to the state afterwards we don't want the hanging event
-        furhat.stopGestures()
+        furhat.stopGestures(reset = false)
+        furhat.gesture(resetBoredFace)
     }
 }
 
-val SleepingIdle: State = state(IdleParent) {
+val SleepingIdle: State = state(UniversalParent) {
+
+    var isWakingUp = false
 
     onEntry {
+        furhat.setDefaultMicroexpression(blinking = false)
         delay(1000)
-        furhat.gesture(FallAsleepPersist, priority = 10)
+        furhat.gesture(fallAsleep, priority = 10)
     }
 
-    onExit {
-        furhat.gesture(GesturesLib.PerformWakeUpWithHeadShake, priority = 10)
-         // TODO : find a way to have a delay included here somewhere
+    onTime(3000, 4000..6000, cond = {!isWakingUp}) {
+        random(
+            {furhat.gesture(sleep1, priority = 10)},
+            {furhat.gesture(sleep2, priority = 10)},
+            policy = RandomPolicy.DICE
+        )
+    }
+
+    onUserEnter(instant = true) {
+        if (!isWakingUp) {
+            isWakingUp = true
+            furhat.setDefaultMicroexpression(blinking = true)
+            furhat.stopGestures(reset = false)
+            furhat.gesture(wakeUp, priority = 10)
+            furhat.attendC(it)
+            raise(GotoAttentionIfPresent())
+        } else {
+            addNewUserToQueue(it)
+        }
+    }
+    onEvent<GotoAttentionIfPresent> {
+        delay(4000)
+        try {
+            if (!users.current.isEngaged) {
+                furhat.attendC(users.list.first())
+            }
+            goto(attentionState)
+        } catch (_: NoSuchElementException) {
+            furhat.attendNobodyC()
+            goto(ActiveIdle)
+        }
     }
 }

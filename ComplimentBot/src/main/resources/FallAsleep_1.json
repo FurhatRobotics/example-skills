@@ -1,0 +1,128 @@
+{
+  "frames": [
+    {
+      "time": [
+        0.5
+      ],
+      "persist": false,
+      "params": {
+        "NECK_TILT": 0.0,
+        "NECK_ROLL": 0.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        1.0
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 0.0,
+        "BLINK_RIGHT": 0.0,
+        "NECK_TILT": -2.0,
+        "NECK_ROLL": 0.0,
+        "NECK_PAN": -1.0
+      }
+    },
+    {
+      "time": [
+        1.75
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 0.8,
+        "BLINK_RIGHT": 0.8,
+        "NECK_TILT": 10.0,
+        "NECK_ROLL": 6.0,
+        "NECK_PAN": -4.0
+      }
+    },
+    {
+      "time": [
+        2.0
+      ],
+      "persist": false,
+      "params": {
+        "LOOK_RIGHT_LEFT": 0.0,
+        "LOOK_LEFT_RIGHT": 0.0
+      }
+    },
+    {
+      "time": [
+        2.17
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 0.3,
+        "BLINK_RIGHT": 0.3,
+        "NECK_TILT": 10.0,
+        "NECK_ROLL": 5.0,
+        "NECK_PAN": -3.0
+      }
+    },
+    {
+      "time": [
+        2.5
+      ],
+      "persist": false,
+      "params": {
+        "LOOK_DOWN": 0.0,
+        "BLINK_LEFT": 0.3,
+        "BLINK_RIGHT": 0.3
+      }
+    },
+    {
+      "time": [
+        3.0
+      ],
+      "persist": false,
+      "params": {
+        "LOOK_RIGHT_LEFT": 1.0,
+        "LOOK_LEFT_RIGHT": 1.0,
+        "LOOK_DOWN": 0.3
+      }
+    },
+    {
+      "time": [
+        3.75
+      ],
+      "persist": false,
+      "params": {
+        "BLINK_LEFT": 1.0,
+        "BLINK_RIGHT": 1.0,
+        "NECK_TILT": 20.0,
+        "NECK_ROLL": 0.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        4.58
+      ],
+      "persist": false,
+      "params": {
+        "NECK_TILT": 18.0,
+        "NECK_ROLL": 0.0,
+        "NECK_PAN": 0.0
+      }
+    },
+    {
+      "time": [
+        5.08
+      ],
+      "persist": true,
+      "params": {
+        "NECK_TILT": 18.0,
+        "NECK_ROLL": 0.0,
+        "NECK_PAN": 0.0,
+        "EyebrowNarrower": 1.0,
+        "EyebrowDown": 1.0,
+        "BLINK_LEFT": 1.0,
+        "BLINK_RIGHT": 1.0
+      }
+    }
+
+  ],
+  "name": "FallAsleep_1",
+  "class": "furhatos.gestures.Gesture"
+}

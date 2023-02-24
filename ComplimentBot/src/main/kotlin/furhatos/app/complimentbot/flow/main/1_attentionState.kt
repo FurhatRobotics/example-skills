@@ -20,6 +20,8 @@ val attentionState: State = state(InteractionParent) {
 
     include(attentionGeneralIntents)
 
+    //TODO : eventually go back to Idle
+
     onEntry { reentry() }
     onReentry {
         when (users.current.zone) {
@@ -73,15 +75,12 @@ val attentionState: State = state(InteractionParent) {
         if (it != users.current && users.current.isBeingEngaged) {
             // Don't interrupt if interacting with current user, but keep in mind that the user has to be engaged.
             // If a user enter the zone 1 he becomes the next target
-            if (it.zone == Zone.ZONE1) {
-                userQueue.push(it)
-            } else {
-                userQueue.add(it)
-            }
+            addNewUserToQueue(it)
         } else {
             // We have to separate instant and non-instant behavior here
             send(UserEnteredEvent(it, it.zone))
-        }}
+        }
+    }
     onEvent<UserEnteredEvent> {
         if (it.user == users.current) {
             if (it.zone == Zone.ZONE1) {
@@ -108,7 +107,8 @@ val attentionState: State = state(InteractionParent) {
             }
         } else if (it == users.current) {
             send(UserLeftEvent(it))
-        }}
+        }
+    }
     onEvent<UserLeftEvent> {
         if (users.hasAny() && it.user == users.current) {
             furhat.attendC(users.other)
@@ -120,7 +120,8 @@ val attentionState: State = state(InteractionParent) {
     onEvent<LeaderGoneForAWhileInstant>(instant = true) {
         if (!users.list.contains(it.user)) {
             raise(LeaderGoneForAWhile(it.user))
-        }}
+        }
+    }
     onEvent<LeaderGoneForAWhile> {
         it.user.isBeingEngaged = false
         handleNext()
@@ -132,7 +133,11 @@ val attentionState: State = state(InteractionParent) {
  */
 fun FlowControlRunner.handleNext() {
     try {
-        val next = userQueue.remove()
+        var next = userQueue.remove()
+        if (!next.isEngaged) {
+            // Don't treat users that left
+            next = userQueue.remove()
+        }
         if (next.zone <= Zone.ZONE2) { // Treat only if the user is active
             furhat.attendC(next)
             reentry()
@@ -140,7 +145,12 @@ fun FlowControlRunner.handleNext() {
         // no else listen here because we don't want users in zone 3 to be able to interact
     } catch (_: NoSuchElementException) {
         // If no next user we either continue to attend the current one
-        if (users.list.any {it.zone <= Zone.ZONE2 } ) {
+        if (users.current.isEngaged && users.current.zone <= Zone.ZONE2) {
+            furhat.listen()
+        }
+        // or an old one if current left
+        else if (users.list.any {it.zone <= Zone.ZONE2 } ) {
+            furhat.attendC(users.list.find {it.zone == Zone.ZONE2 }!!)
             furhat.listen()
         } else if (users.list.any {it.zone == Zone.ZONE3 }) {
             // Used if active users leave and some other users still engaged behind zone 3
@@ -150,5 +160,14 @@ fun FlowControlRunner.handleNext() {
             furhat.attendNobodyC()
             goto(ActiveIdle)
         }
+    }
+}
+
+
+fun addNewUserToQueue(user: User) {
+    if (user.zone == Zone.ZONE1) {
+        userQueue.push(user)
+    } else {
+        userQueue.add(user)
     }
 }
