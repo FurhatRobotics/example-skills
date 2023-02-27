@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.concurrent.schedule
 
+// Attention timeout to no attend an inactive user for too long
 var lastAttentionChange: LocalDateTime = LocalDateTime.now()
 var userQueue: LinkedList<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
@@ -65,14 +66,17 @@ val attentionState: State = state(InteractionParent) {
         }
     }
     onResponse {
-        if (users.current.zone.isCloser(Zone.ZONE3)) {
+        // Encourage users only once
+        if (users.current.zone.isCloser(Zone.ZONE3) && users.current.hasReceivedGeneralResponse) {
             //goto interaction here seems risky
             furhat.say {
                 random {
-                    +"Hello ?"
+                    +"Feel free to move closer"
                     +"You can come closer if you want"
+                    +"You can come closer if you'd like"
                 }
             }
+            users.current.hasReceivedGeneralResponse = true
             resetLastAttentionCheck()
         }
         handleNext()
@@ -121,6 +125,7 @@ val attentionState: State = state(InteractionParent) {
         }
     }
     onEvent<UserLeftEvent> {
+        it.user.hasReceivedGeneralResponse = false
         if (users.hasAny() && it.user == users.current) {
             furhat.attendC(users.other)
         } else {
@@ -135,6 +140,7 @@ val attentionState: State = state(InteractionParent) {
     }
     onEvent<LeaderGoneForAWhile> {
         it.user.isBeingEngaged = false
+        it.user.hasReceivedGeneralResponse = false
         handleNext()
     }
 

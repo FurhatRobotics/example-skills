@@ -102,7 +102,7 @@ fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
     user.hasBeenGreeted = true
 }
 
-fun FlowControlRunner.complimentUser(user: User = users.current, isOtherCompliment: Boolean = false) {
+fun FlowControlRunner.complimentUser(isOtherCompliment: Boolean = false) {
     if (isOtherCompliment) {
         furhat.say {
             random {
@@ -116,7 +116,6 @@ fun FlowControlRunner.complimentUser(user: User = users.current, isOtherComplime
         +compliments.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)!!
         +Gestures.BigSmile(0.5, 2.0)
     }
-    user.hasBeenComplimented = true
 }
 
 
@@ -134,7 +133,7 @@ fun FlowControlRunner.endCompliments(users: List<User>) {
         }
     }
 }
-fun FlowControlRunner.greetUserGoodbye(user: User = users.current, isOtherGoodbye: Boolean = false) {
+fun FlowControlRunner.greetUserGoodbye(isOtherGoodbye: Boolean = false) {
     if (!isOtherGoodbye) {
         furhat.say {
             +delay(800)
@@ -150,7 +149,6 @@ fun FlowControlRunner.greetUserGoodbye(user: User = users.current, isOtherGoodby
             }
         }
     }
-    user.hasBeenGreetedGoodbye = true
 }
 
 fun FlowControlRunner.generalGoodbye() {

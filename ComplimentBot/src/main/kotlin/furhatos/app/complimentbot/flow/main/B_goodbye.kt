@@ -21,7 +21,7 @@ fun endReading(leader: User? = null) = state(InteractionParent) {
             endCompliments(remainingUsers)
             for (user in remainingUsers) {
                 furhat.attendC(user)
-                greetUserGoodbye(user)
+                greetUserGoodbye()
             }
         }
 

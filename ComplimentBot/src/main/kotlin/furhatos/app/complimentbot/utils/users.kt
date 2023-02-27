@@ -10,13 +10,11 @@ var nextGroup = mutableListOf<User>()
 
 var User.zone by NullSafeUserDataDelegate { Zone.OUT }
 var User.isBeingEngaged by NullSafeUserDataDelegate { false }
+var User.hasReceivedGeneralResponse by NullSafeUserDataDelegate { false }
+var User.hasBeenGreeted by NullSafeUserDataDelegate { false }
 
 var User.isSmiling by NullSafeUserDataDelegate { false }
 var User.hasSmiled by NullSafeUserDataDelegate { false }
-
-var User.hasBeenGreeted by NullSafeUserDataDelegate { false }
-var User.hasBeenComplimented by NullSafeUserDataDelegate { false }
-var User.hasBeenGreetedGoodbye by NullSafeUserDataDelegate { false }
 
 var User.attentionAverage by NullSafeUserDataDelegate { RollingList<Boolean>(averageAttentionCapacity) }
 fun isAttendingFurhatAvg(user: User): Boolean {
