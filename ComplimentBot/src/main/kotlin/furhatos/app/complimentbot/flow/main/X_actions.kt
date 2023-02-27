@@ -15,6 +15,8 @@ val greetings = listOf(
     "Hello.",
     "Hi there.",
     "Greetings.",
+    "Howdy!",
+    "Salutations!",
     "Hey handsome.",
     "Hey beautiful."
 )
@@ -114,8 +116,9 @@ fun FlowControlRunner.complimentUser(isOtherCompliment: Boolean = false) {
     }
     furhat.say {
         +compliments.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)!!
-        +Gestures.BigSmile(0.5, 2.0)
+        +Gestures.BigSmile(1.5, 2.0)
     }
+    delay(1000)
 }
 
 

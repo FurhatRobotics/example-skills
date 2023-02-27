@@ -13,9 +13,9 @@ val origin = Location(0, 0, 0)
 val topLeft = Location(3, 0, 3)
 val straightAhead = Location(0, 0, 10)
 
-val zone1Params = Pair(0.2, 1.2)
-val zone2Params = Pair(1.2, 1.7)
-val zone3Params = Pair(1.9, 3.2)
+val zone1Params = Pair(0.5, 1.5)
+val zone2Params = Pair(1.0, 2.5)
+val zone3Params = Pair(1.5, 3.5)
 
 /** Interaction timing parameters */
 const val enterBufferTime = 500

@@ -45,7 +45,7 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
 
         if (leader.zone <= Zone.ZONE2) {
             furhat.attendC(leader)
-            complimentUser(leader)
+            complimentUser()
         }
         for (user in activeGroup.filter { it != leader }) {
             if (user.zone <= Zone.ZONE2) {
