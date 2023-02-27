@@ -52,7 +52,7 @@ val BoredIdle: State = state(IdleParent) {
     onExit(priority = true) {
         furhat.setDefaultMicroexpression(blinking = true)
         furhat.stopGestures(reset = false)
-        furhat.gesture(resetBoredFace)
+        furhat.gesture(resetBoredFace, priority = 10)
     }
 }
 

@@ -4,28 +4,33 @@ import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
+import furhatos.app.complimentbot.flow.logger
 import furhatos.app.complimentbot.maxTimeAttendingAUser
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
 import furhatos.flow.kotlin.*
 import furhatos.nlu.common.Greeting
 import furhatos.records.User
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.concurrent.schedule
 
+var lastAttentionChange: LocalDateTime = LocalDateTime.now()
 var userQueue: LinkedList<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
 class UserLeftEvent(val user: User): Event()
+class MaxAttentionWithoutActivity: Event()
 
 val attentionState: State = state(InteractionParent) {
 
     include(attentionGeneralIntents)
 
     onEntry {
-        parallel(abortOnExit = true) { goto(ParallelCheckMaxAttentionToGoIdle) }
         reentry()
     }
     onReentry {
+        resetLastAttentionCheck()
         when (users.current.zone) {
             Zone.ZONE1 -> goto(complimentNextGroup(users.current))
             Zone.ZONE2 -> {
@@ -55,6 +60,7 @@ val attentionState: State = state(InteractionParent) {
                 delay(1000)
             }
             users.current.isBeingEngaged = false
+            resetLastAttentionCheck()
             handleNext()
         }
     }
@@ -67,6 +73,7 @@ val attentionState: State = state(InteractionParent) {
                     +"You can come closer if you want"
                 }
             }
+            resetLastAttentionCheck()
         }
         handleNext()
     }
@@ -130,6 +137,17 @@ val attentionState: State = state(InteractionParent) {
         it.user.isBeingEngaged = false
         handleNext()
     }
+
+    onTime(1000, 1000, instant = true) {
+        if (ChronoUnit.SECONDS.between(lastAttentionChange, LocalDateTime.now()) > maxTimeAttendingAUser) {
+            logger.info("Max attention time reached, going back to idle")
+            send(MaxAttentionWithoutActivity())
+        }
+    }
+    onEvent<MaxAttentionWithoutActivity> {
+        furhat.attendNobodyC()
+        goto(ActiveIdle)
+    }
 }
 
 /**
@@ -176,6 +194,7 @@ fun addNewUserToQueue(user: User) {
     }
 }
 
-val ParallelCheckMaxAttentionToGoIdle = state {
-
+fun resetLastAttentionCheck() {
+    logger.debug("Resetting attention")
+    lastAttentionChange = LocalDateTime.now()
 }

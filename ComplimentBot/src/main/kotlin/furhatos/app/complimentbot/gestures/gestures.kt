@@ -87,10 +87,12 @@ val BoredLookAround = defineGesture {
 }
 
 val resetBoredFace = defineGesture {
-    BasicParams.BROW_UP_LEFT to 0.0
-    BasicParams.BROW_UP_RIGHT to 0.0
-    BasicParams.PHONE_B_M_P to 0.0
-    BasicParams.BLINK_LEFT to 0.0
-    BasicParams.BLINK_RIGHT to 0.0
-    ARKitParams.BROW_DOWN_RIGHT to 0.0
+    frame(0.5) {
+        BasicParams.BROW_UP_LEFT to 0.0
+        BasicParams.BROW_UP_RIGHT to 0.0
+        BasicParams.PHONE_B_M_P to 0.0
+        BasicParams.BLINK_LEFT to 0.0
+        BasicParams.BLINK_RIGHT to 0.0
+        ARKitParams.BROW_DOWN_RIGHT to 0.0
+    }
 }
