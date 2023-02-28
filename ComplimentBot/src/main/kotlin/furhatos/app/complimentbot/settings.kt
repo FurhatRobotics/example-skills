@@ -20,6 +20,7 @@ val zone3Params = Pair(1.5, 3.5)
 /** Interaction timing parameters */
 const val enterBufferTime = 500
 const val leaveBufferTime = 2500
+const val faceDetectionThreshold = 0.9
 
 // Supposed to happen 10 times per second
 const val averageAttentionCapacity = 5 * 10 // 5 sec average for now

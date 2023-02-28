@@ -1,6 +1,12 @@
 package furhatos.app.complimentbot.utils
 
-import furhatos.app.complimentbot.*
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.gson.GsonBuilder
+import furhatos.app.complimentbot.flow.logger
+import furhatos.app.complimentbot.origin
+import furhatos.app.complimentbot.zone1Params
+import furhatos.app.complimentbot.zone2Params
+import furhatos.app.complimentbot.zone3Params
 import furhatos.event.EventSystem
 import furhatos.event.senses.SenseInteractionSpaces
 import furhatos.event.senses.SenseUserEnter
@@ -13,6 +19,7 @@ import furhatos.records.User
 import furhatos.skills.EngagementPolicy
 import furhatos.skills.UserManager
 import java.io.File
+import java.io.FileWriter
 
 enum class Zone(val space: Space) {
     ZONE1(Ellipse("zone1", origin, zone1Params.first, zone1Params.second)),
@@ -125,10 +132,10 @@ fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBuff
             if (props["enterBufferTime"] != enterBufferTime || props["leaveBufferTime"] != leaveBufferTime) {
                 throw Exception("New vision parameters detected")
             } else {
-                furhatos.app.complimentbot.flow.logger.info("Vision parameters are correctly set up.")
+                logger.info("Vision parameters are correctly set up.")
             }
         } catch (e: Exception) {
-            furhatos.app.complimentbot.flow.logger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
+            logger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
             visionProps.printWriter().use { out ->
                 timingParameters.forEach {
                     out.println("${it.key}=${it.value}")
@@ -136,6 +143,45 @@ fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBuff
             }
         }
     } else {
-        furhatos.app.complimentbot.flow.logger.warn("Did not rewrite the engagement timings, machine is not a robot.")
+        logger.warn("Did not rewrite the engagement timings, machine is not a robot.")
     }
+}
+
+/**
+ * Sets the camcore config.json file on the robot.
+ */
+fun FlowControlRunner.setCamcoreFaceDetectionThreshold(faceDetectionThreshold: Double = 0.9) {
+    if (!furhat.isVirtual() && (System.getProperty("furhatos.skills.brokeraddress") == null)) { //Only applies to the real robot
+        val configFile = File("/usr/local/furhatcamcore/", "config.json")
+
+        val root = ObjectMapper().readValue(configFile, CamcoreConfig::class.java)
+        val previousThreshold = root.faceDetectionThreshold
+
+        //Compare values
+        if (faceDetectionThreshold != previousThreshold) {
+            //Update value in object
+            root.faceDetectionThreshold = faceDetectionThreshold
+
+            FileWriter("/usr/local/furhatcamcore/config.json").use { file ->
+                file.write(GsonBuilder().setPrettyPrinting().create().toJson(root))
+                logger.info("Successfully updated faceDetectionThreshold. Please restart your robot to take the changes into account")
+            }
+        } else {
+            logger.info("faceDetectionThreshold is correctly set up")
+        }
+    } else {
+        logger.warn("Did not rewrite camcore detection threshold, machine is not a robot.")
+    }
+}
+
+/**
+ * Class used for JSON serialization.
+ * The class default values are overridden by existing ones, but if the file is lacking a field it's going to be added.
+ * All the fields must be present if we don't want a serialization exception.
+ */
+class CamcoreConfig {
+    var frameIntervalToProcess = 0.0
+    var faceDetectionDevice = ""
+    var faceDetectionBBEnlargeCoeff = 0.0
+    var faceDetectionThreshold = 0.0
 }
