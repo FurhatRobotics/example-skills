@@ -17,7 +17,7 @@ val zone1Params = Pair(0.5, 1.5)
 val zone2Params = Pair(1.0, 2.5)
 val zone3Params = Pair(1.5, 3.5)
 
-/** Interaction timing parameters */
+/** Furhat timing parameters */
 const val enterBufferTime = 500
 const val leaveBufferTime = 2500
 const val faceDetectionThreshold = 0.9
@@ -32,6 +32,7 @@ const val MAX_BORED_IDLE = 45 * 1000
 
 const val delayWhenUsersAreGone: Long = 1500
 const val maxTimeAttendingAUser = 15 // In seconds
+const val delayToRecompliment = 20 // In seconds
 
 /** Furhat character */
 val mainPersona = Persona(

@@ -1,5 +1,6 @@
 package furhatos.app.complimentbot.flow.main
 
+import furhatos.app.complimentbot.delayToRecompliment
 import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
@@ -16,8 +17,9 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.concurrent.schedule
 
-// Attention timeout to no attend an inactive user for too long
+/** Attention timeout to no attend an inactive user for too long */
 var lastAttentionChange: LocalDateTime = LocalDateTime.now()
+/** Queue for users not to be forgotten if they enter when something else is happening */
 var userQueue: LinkedList<User> = LinkedList()
 class UserEnteredEvent(val user: User, val zone: Zone): Event()
 class UserLeftEvent(val user: User): Event()
@@ -33,13 +35,17 @@ val attentionState: State = state(InteractionParent) {
     onReentry {
         resetLastAttentionCheck()
         when (users.current.zone) {
-            Zone.ZONE1 -> goto(complimentNextGroup(users.current))
-            Zone.ZONE2 -> {
-                if (isAttendingFurhatAvg(users.current) && !users.current.hasBeenGreeted) {
-                    users.current.isBeingEngaged = true
-                    greetUser(fromAfar = true)
+            Zone.ZONE1 -> {
+                // Don't recompliment a user directly onEntry if they just got out of one (could be a flickering security)
+                if (isReadyToBeComplimented(users.current)) {
+                    goto(complimentNextGroup(users.current))
+                } else {
+                    logger.info("User entered within $delayToRecompliment sec of compliment, waiting to interact again.")
+                    engageOrListen()
                 }
-                furhat.listen()
+            }
+            Zone.ZONE2 -> {
+                engageOrListen()
             }
             else -> {
                 furhat.attendC(users.current)
@@ -98,18 +104,10 @@ val attentionState: State = state(InteractionParent) {
     }
     onEvent<UserEnteredEvent> {
         if (it.user == users.current) {
-            if (it.zone == Zone.ZONE1) {
-                goto(complimentNextGroup(users.current))
-            } else if (it.zone == Zone.ZONE2) {
-                reentry() //Entering from zone3
-            }
+            reentry()
         } else if (!users.current.isBeingEngaged) {
             furhat.attendC(it.user)
-            if (it.zone == Zone.ZONE1) {
-                goto(complimentNextGroup(users.current))
-            } else { //Entering zone 2 or 3
-                reentry()
-            }
+            reentry()
         }
     }
 
@@ -154,6 +152,14 @@ val attentionState: State = state(InteractionParent) {
         furhat.attendNobodyC()
         goto(ActiveIdle)
     }
+}
+
+fun FlowControlRunner.engageOrListen() {
+    if (isAttendingFurhatAvg(users.current) && !users.current.hasBeenGreeted) {
+        users.current.isBeingEngaged = true
+        greetUser(fromAfar = true)
+    }
+    furhat.listen()
 }
 
 /**

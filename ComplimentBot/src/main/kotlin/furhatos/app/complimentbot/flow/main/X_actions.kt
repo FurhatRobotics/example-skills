@@ -104,7 +104,7 @@ fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
     user.hasBeenGreeted = true
 }
 
-fun FlowControlRunner.complimentUser(isOtherCompliment: Boolean = false) {
+fun FlowControlRunner.complimentUser(user: User = users.current, isOtherCompliment: Boolean = false) {
     if (isOtherCompliment) {
         furhat.say {
             random {
@@ -118,6 +118,7 @@ fun FlowControlRunner.complimentUser(isOtherCompliment: Boolean = false) {
         +compliments.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)!!
         +Gestures.BigSmile(1.5, 2.0)
     }
+    user.lastComplimented = LocalDateTime.now()
     delay(1000)
 }
 
