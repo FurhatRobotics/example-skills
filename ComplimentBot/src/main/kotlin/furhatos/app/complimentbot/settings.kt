@@ -36,7 +36,7 @@ const val delayToRecompliment = 20 // In seconds
 
 /** Furhat character */
 val mainPersona = Persona(
-    name = "anime",
-    face = listOf("AnimePink"),
-    voice = listOf(PollyNeuralVoice.Aria(), AzureVoice("AnaNeural"), AzureVoice("MaisieNeural"), AzureVoice("AriaNeural"), AzureVoice("SaraNeural"))
+    name = "Alex",
+    face = listOf("Alex"),
+    voice = listOf(PollyNeuralVoice("Matthew"))
 )

@@ -39,7 +39,7 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
             }
         }
 
-        furhat.gesture(GesturesLib.PerformTripleBlink, priority = 10)
+        //furhat.gesture(GesturesLib.PerformTripleBlink, priority = 10) //Does not mix well with the waking gesture
         delay(200)
         furhat.ledStrip.solid(Color(0, 120, 0))
 

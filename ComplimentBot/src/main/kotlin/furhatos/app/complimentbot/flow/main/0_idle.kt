@@ -46,7 +46,7 @@ val BoredIdle: State = state(IdleParent) {
         furhat.attendCSlow(straightAhead)
     }
     onTime(MAX_BORED_IDLE) {
-        goto(SleepingIdle)
+        goto(SleepingIdle())
     }
 
     onExit(priority = true) {
@@ -56,9 +56,10 @@ val BoredIdle: State = state(IdleParent) {
     }
 }
 
-val SleepingIdle: State = state(UniversalParent) {
+fun SleepingIdle(withTriggers: Boolean = false): State = state(UniversalParent) {
 
     var isWakingUp = false
+    var activated = withTriggers
 
     onEntry {
         furhat.setDefaultMicroexpression(blinking = false)
@@ -74,7 +75,15 @@ val SleepingIdle: State = state(UniversalParent) {
         )
     }
 
-    onUserEnter(instant = true) {
+    onButton("Disactivate furhat", color = Color.Red) {
+        activated = false
+    }
+
+    onButton("Reactivate furhat", color = Color.Green) {
+        activated = true
+    }
+
+    onUserEnter(instant = true, cond = {activated}) {
         if (!isWakingUp) {
             isWakingUp = true
             furhat.setDefaultMicroexpression(blinking = true)
