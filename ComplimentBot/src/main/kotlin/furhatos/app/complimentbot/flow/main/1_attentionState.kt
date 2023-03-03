@@ -6,6 +6,7 @@ import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
 import furhatos.app.complimentbot.flow.logger
+import furhatos.app.complimentbot.gestures.resetEyes
 import furhatos.app.complimentbot.maxTimeAttendingAUser
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
@@ -21,7 +22,7 @@ import kotlin.concurrent.schedule
 var lastAttentionChange: LocalDateTime = LocalDateTime.now()
 /** Queue for users not to be forgotten if they enter when something else is happening */
 var userQueue: LinkedList<User> = LinkedList()
-class UserEnteredEvent(val user: User, val zone: Zone): Event()
+class UserEnteredEvent(val user: User): Event()
 class UserLeftEvent(val user: User): Event()
 class MaxAttentionWithoutActivity: Event()
 
@@ -30,6 +31,7 @@ val attentionState: State = state(InteractionParent) {
     include(attentionGeneralIntents)
 
     onEntry {
+        furhat.gesture(resetEyes)
         reentry()
     }
     onReentry {
@@ -99,7 +101,7 @@ val attentionState: State = state(InteractionParent) {
             addNewUserToQueue(it)
         } else {
             // We have to separate instant and non-instant behavior here
-            send(UserEnteredEvent(it, it.zone))
+            send(UserEnteredEvent(it))
         }
     }
     onEvent<UserEnteredEvent> {

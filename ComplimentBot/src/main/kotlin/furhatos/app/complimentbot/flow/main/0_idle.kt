@@ -66,12 +66,8 @@ val SleepingIdle: State = state(UniversalParent) {
         furhat.gesture(fallAsleep, priority = 10)
     }
 
-    onTime(3000, 4000..6000, cond = {!isWakingUp}) {
-        random(
-            {furhat.gesture(sleep1, priority = 10)},
-            {furhat.gesture(sleep2, priority = 10)},
-            policy = RandomPolicy.DICE
-        )
+    onTime(8000, 25000..30000, cond = { !isWakingUp }) {
+        furhat.gesture(sleep1, priority = 10)
     }
 
     onUserEnter(instant = true) {
