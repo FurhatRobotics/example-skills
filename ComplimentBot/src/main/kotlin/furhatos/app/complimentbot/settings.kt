@@ -17,7 +17,7 @@ val zone1Params = Pair(0.5, 1.5)
 val zone2Params = Pair(1.0, 2.5)
 val zone3Params = Pair(1.5, 3.5)
 
-/** Furhat timing parameters */
+/** Furhat timing parameters - require robot reboot on change */
 const val enterBufferTime = 500
 const val leaveBufferTime = 2500
 const val faceDetectionThreshold = 0.9

@@ -24,6 +24,11 @@ fun endReading(leader: User? = null) = state(InteractionParent) {
                 greetUserGoodbye()
             }
         }
+        // Reset users' interaction parameters - we leave greeted as it was though
+        activeGroup.forEach{
+            it.hasSmiled = false
+            it.hasReceivedGeneralResponse = false
+        }
 
         delay(2000)
 

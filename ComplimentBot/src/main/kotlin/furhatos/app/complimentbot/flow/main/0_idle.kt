@@ -66,7 +66,7 @@ val SleepingIdle: State = state(UniversalParent) {
         furhat.gesture(fallAsleep, priority = 10)
     }
 
-    onTime(8000, 25000..30000, cond = { !isWakingUp }) {
+    onTime(8000, 22000..25000, cond = { !isWakingUp }) {
         furhat.gesture(sleep1, priority = 10)
     }
 

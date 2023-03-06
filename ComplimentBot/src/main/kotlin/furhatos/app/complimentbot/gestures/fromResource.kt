@@ -18,6 +18,5 @@ fun getResourceGesture(filePath: String): Gesture {
 }
 
 val sleep1 = getResourceGesture("/Sleeping_1.json")
-val sleep2 = getResourceGesture("/Sleeping_2.json")
 val fallAsleep = getResourceGesture("/FallAsleep_1.json")
 val wakeUp = getResourceGesture("/WakeUp_1.json")
