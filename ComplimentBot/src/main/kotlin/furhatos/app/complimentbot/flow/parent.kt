@@ -1,14 +1,12 @@
 package furhatos.app.complimentbot.flow
 
 import furhat.libraries.standard.BehaviorLib
+import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.doubleUserEventDelay
 import furhatos.app.complimentbot.flow.main.attentionState
 import furhatos.app.complimentbot.utils.*
 import furhatos.event.Event
-import furhatos.flow.kotlin.furhat
-import furhatos.flow.kotlin.onUserEnter
-import furhatos.flow.kotlin.onUserLeave
-import furhatos.flow.kotlin.state
+import furhatos.flow.kotlin.*
 import furhatos.records.User
 import java.util.*
 import kotlin.concurrent.schedule
@@ -46,6 +44,15 @@ val UniversalParent = state {
         }
     }
     onUserLeave(instant = true, priority = true) {user ->
+        // Since the user identification is currently not really reliable we want to reinitialize the greeted variable if the user leaves.
+        if (user.zone == Zone.OUT && user.hasBeenGreeted) {
+            Timer().schedule(delay = delayWhenUsersAreGone) {
+                if (!users.list.contains(user)) {
+                    user.hasBeenGreeted = false
+                }
+            }
+        }
+
         if (userLeaveLocks[user.id] != true) { // Is null if lock not yet attributed
             userLeaveLocks[user.id] = true
             Timer().schedule(delay = doubleUserEventDelay) {
