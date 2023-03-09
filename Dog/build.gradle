@@ -36,6 +36,7 @@ compileTestKotlin {
 }
 
 repositories {
+    jcenter()
     mavenLocal()
     mavenCentral()
     maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
