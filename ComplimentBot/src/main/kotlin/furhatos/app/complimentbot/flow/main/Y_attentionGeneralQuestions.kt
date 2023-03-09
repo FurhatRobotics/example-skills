@@ -11,10 +11,11 @@ val attentionGeneralIntents = partialState {
     onResponse<AskName>{
         //goto interaction here seems risky
         furhat.say {
+            +"I'm a furhat robot, "
             random {
-                +"My name is Furhat"
-                +"I am Furhat"
-                +"You can call me Furhat"
+                +"but you can call me Chloe. "
+                +"but If you like, you can call me Chloe. "
+                +"but some people just call me Chloe. "
             }
         }
         handleNext()

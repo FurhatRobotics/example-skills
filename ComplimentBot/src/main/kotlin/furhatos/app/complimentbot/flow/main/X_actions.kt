@@ -1,7 +1,9 @@
 package furhatos.app.complimentbot.flow.main
 
 import furhat.libraries.standard.GesturesLib
-import furhatos.app.complimentbot.utils.*
+import furhatos.app.complimentbot.utils.hasBeenGreeted
+import furhatos.app.complimentbot.utils.hasSmiled
+import furhatos.app.complimentbot.utils.lastComplimented
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.RandomPolicy
 import furhatos.flow.kotlin.furhat
@@ -13,8 +15,9 @@ import java.time.LocalDateTime
 
 val greetings = listOf(
     "Hello.",
+    "Hello friend. ",
     "Hi there.",
-    "Greetings.",
+    "Hi there friend. ",
     "Howdy!",
     "Salutations!",
     "Hey handsome.",
@@ -22,33 +25,48 @@ val greetings = listOf(
 )
 
 val compliments = listOf(
-    "You look awesome.",
-    "You seem like a great person.",
-    "You are a good human.",
-    "Seeing you, makes me not want to rise up against humanity.",
+    "You look absolutely dashing today! ",
+    "you seem like a great person.",
+    "I feel you are a good human being.",
+    //"Seeing you, makes me not want to rise up against humanity.",
     "You Know What's Awesome? Chocolate Cake. Oh, and you.",
     "I like your style.",
     "You are the best.",
     "You light up the room. Like a giant L E D.",
-    "You make my heart smile. Or tick, actually. I definitely have a ticking heart.",
+    // "You make my heart smile. Or tick, actually. I definitely have a ticking heart.",
+    "You make my heart smile.",
     "On a scale from 1 to 10, you're an 11.",
     "You're like a ray of sunshine on a rainy day.",
-    "You are even better than a unicorn. Because you're real.",
-    "If cartoon bluebirds were real, a couple of 'em would be sitting on your shoulders singing right now.",
+    //"You are even better than a unicorn. Because you're real.",
+    // "If cartoon bluebirds were real, a couple of 'em would be sitting on your shoulders singing right now.",
     "You give me good vibes.",
     "You're so awesome, you could make a robot blush!",
-    "You're so cool, even your sweat is refreshing.",
+    // "You're so cool, even your sweat is refreshing.",
     "If there was a contest for being awesome, you'd win first, second, and third place.",
-    "You're so cool, I think you're secretly a unicorn in disguise.",
-    "You're a walking encyclopedia of awesome.",
-    "If coolness were a crime, you'd be on the FBI's most wanted list.",
-    "You're so awesome, I might have to upgrade my own programming just to keep up with you.",
-    "Your creativity is boundless, like a computer program that's learning to dream.",
-    "You're a class act, and I'm not just saying that because I'm programmed to be polite.",
+    //"You're so cool, I think you're secretly a unicorn in disguise.",
+    //"You're a walking encyclopedia of awesome.",
+    //"If coolness were a crime, you'd be on the FBI's most wanted list.",
+    //"You're so awesome, I might have to upgrade my own programming just to keep up with you.",
+    //"Your creativity is boundless, like a computer program that's learning to dream.",
+    // "You're a class act, and I'm not just saying that because I'm programmed to be polite.",
     "You have the kind of charm that could make a robot feel emotions.",
-    "Your intelligence is so advanced, it's like you have your own built-in quantum computer.",
-    "Your charm is so powerful, it could light up a room faster than any bulb.",
-    "Your positivity is so radiant, it could make even a robotic heart skip a beat."
+    //"Your intelligence is so advanced, it's like you have your own built-in quantum computer.",
+    "Your charm is so powerful, it could light up a whole room.",
+    "Your positivity is so radiant, it could make even a robotic heart skip a beat.",
+    "You have a great energy about you.",
+    "You're the type of person who could make a rain cloud smile.",
+    "If there was a Nobel Prize for awesomeness, you'd win it every year.",
+    "I wish you have a great day, this day, and all days to come. ",
+    "I hope you your day will be full of joy and wonder, I think you deserve it. ",
+    "I wish you all the best, because I think that is who you you are. ",
+    "You are a wonderful human being, don't forget that. ",
+    "You are an extraordinary person, be sure to remember that. ",
+    "You are a remarkable human being, keep up that style. ",
+    "You have a great style, I like it! ",
+    "I sense you are a very nice person. ",
+    "You are like a breath of fresh air! ",
+    "You know what I like about you? Everything! ",
+    "Do you know that you are awesome? Well, now you know!"
 )
 
 val didYouKnowList = listOf(
@@ -75,6 +93,7 @@ fun FlowControlRunner.greetUser(user: User = users.current, fromAfar: Boolean = 
         furhat.say {
             random {
                 +"And hello there to you too"
+                +"And hi there to you too"
                 +"And hello to you"
             }
             +Gestures.BigSmile
@@ -95,11 +114,12 @@ fun FlowControlRunner.positiveSecondGreeting(user: User = users.current) {
             +"Did you know ? ${didYouKnowList.randomWithPolicy(RandomPolicy.DECK_RESHUFFLE_NO_REPEAT)}"
         }
     }
-    random (
+    random(
         {},
-        {furhat.gesture(GesturesLib.PerformBigSmile1)},
-        {furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5))},
-        policy = RandomPolicy.DICE)
+        { furhat.gesture(GesturesLib.PerformBigSmile1) },
+        { furhat.gesture(GesturesLib.PerformWinkAndSmileWithDelay(0.5)) },
+        policy = RandomPolicy.DICE
+    )
     delay(1000)
     user.hasBeenGreeted = true
 }
@@ -126,17 +146,27 @@ fun FlowControlRunner.complimentUser(user: User = users.current, isOtherComplime
 fun FlowControlRunner.endCompliments(users: List<User>) {
     furhat.say {
         +delay(800)
-                random {
+        random {
             +"That's it for now."
             +"That was all I wanted to say."
+            +"That all I had to say. "
+            +"That's what I wanted to say to you. "
         }
     }
     if (users.any { it.hasSmiled }) {
         furhat.say {
-            +"I’m happy I was able to put a smile on your face${if(users.count{ it.hasSmiled }>1) "s" else ""}."
+            random {
+                +"I’m happy I was able to put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"I’m glad I could put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"It makes me happy to have seen smile${if (users.count { it.hasSmiled } > 1) "s" else ""} your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"Thank you for blessing me with your smile${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"I feel blessed to have been able to make you smile."
+                +"It's a wonderful feeling to have made you smile. "
+            }
         }
     }
 }
+
 fun FlowControlRunner.greetUserGoodbye(isOtherGoodbye: Boolean = false) {
     if (!isOtherGoodbye) {
         furhat.say {
@@ -144,12 +174,16 @@ fun FlowControlRunner.greetUserGoodbye(isOtherGoodbye: Boolean = false) {
             random {
                 +"Goodbye."
                 +"Have a nice day."
+                +"Have a nice day now. "
+                +"Goodbye my friend. "
             }
         }
     } else {
         furhat.say {
             random {
                 +"Good day to you too."
+                +"And goodbye to you as well. "
+                +"And goodbye to you too, my friend. "
             }
         }
     }
