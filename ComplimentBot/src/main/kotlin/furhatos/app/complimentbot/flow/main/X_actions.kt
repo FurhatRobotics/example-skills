@@ -158,7 +158,7 @@ fun FlowControlRunner.endCompliments(users: List<User>) {
             random {
                 +"I’m happy I was able to put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
                 +"I’m glad I could put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
-                +"It makes me happy to have seen smile${if (users.count { it.hasSmiled } > 1) "s" else ""} your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"It makes me happy to have seen smile${if (users.count { it.hasSmiled } > 1) "s" else ""} on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
                 +"Thank you for blessing me with your smile${if (users.count { it.hasSmiled } > 1) "s" else ""}."
                 +"I feel blessed to have been able to make you smile."
                 +"It's a wonderful feeling to have made you smile. "

@@ -2,7 +2,7 @@ package furhatos.app.complimentbot.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.gson.GsonBuilder
-import furhatos.app.complimentbot.flow.logger
+import furhatos.app.complimentbot.flow.skillLogger
 import furhatos.app.complimentbot.origin
 import furhatos.app.complimentbot.zone1Params
 import furhatos.app.complimentbot.zone2Params
@@ -132,10 +132,10 @@ fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBuff
             if (props["enterBufferTime"] != enterBufferTime || props["leaveBufferTime"] != leaveBufferTime) {
                 throw Exception("New vision parameters detected")
             } else {
-                logger.info("Vision parameters are correctly set up.")
+                skillLogger.info("Vision parameters are correctly set up.")
             }
         } catch (e: Exception) {
-            logger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
+            skillLogger.warn("Rewriting the vision parameters : ${e.message}. Please restart your robot for them to take effect.")
             visionProps.printWriter().use { out ->
                 timingParameters.forEach {
                     out.println("${it.key}=${it.value}")
@@ -143,7 +143,7 @@ fun FlowControlRunner.setEngagementTimings(enterBufferTime: Int = 500, leaveBuff
             }
         }
     } else {
-        logger.warn("Did not rewrite the engagement timings, machine is not a robot.")
+        skillLogger.warn("Did not rewrite the engagement timings, machine is not a robot.")
     }
 }
 
@@ -164,13 +164,13 @@ fun FlowControlRunner.setCamcoreFaceDetectionThreshold(faceDetectionThreshold: D
 
             FileWriter("/usr/local/furhatcamcore/config.json").use { file ->
                 file.write(GsonBuilder().setPrettyPrinting().create().toJson(root))
-                logger.info("Successfully updated faceDetectionThreshold. Please restart your robot to take the changes into account")
+                skillLogger.info("Successfully updated faceDetectionThreshold. Please restart your robot to take the changes into account")
             }
         } else {
-            logger.info("faceDetectionThreshold is correctly set up")
+            skillLogger.info("faceDetectionThreshold is correctly set up")
         }
     } else {
-        logger.warn("Did not rewrite camcore detection threshold, machine is not a robot.")
+        skillLogger.warn("Did not rewrite camcore detection threshold, machine is not a robot.")
     }
 }
 

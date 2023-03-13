@@ -8,7 +8,7 @@ import furhatos.flow.kotlin.*
 import furhatos.skills.UserManager
 import furhatos.util.CommonUtils
 
-val logger = CommonUtils.getLogger(ComplimentbotSkill::class.java)
+val skillLogger = CommonUtils.getLogger(ComplimentbotSkill::class.java)
 
 val Init: State = state(UniversalParent) {
     onEntry {

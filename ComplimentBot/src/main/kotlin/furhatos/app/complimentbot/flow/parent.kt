@@ -18,15 +18,15 @@ class LeaderGoneForAWhile(val user: User): Event()
 
 val UniversalParent = state {
     onEntry(inherit = true, priority = true) {
-        logger.debug("${thisState.name} entered")
+        skillLogger.debug("${thisState.name} entered")
         propagate()
     }
     onReentry (inherit = true, priority = true) {
-        logger.debug("${thisState.name} re-entered")
+        skillLogger.debug("${thisState.name} re-entered")
         propagate()
     }
     onExit (inherit = true, priority = true) {
-        logger.debug("${thisState.name} exited")
+        skillLogger.debug("${thisState.name} exited")
         propagate()
     }
 
@@ -36,7 +36,7 @@ val UniversalParent = state {
             Timer().schedule(delay = doubleUserEventDelay) {
                 userEnterLocks[user.id] = false
             }
-            logger.info("${user.id} entered ${user.zone.name}")
+            skillLogger.info("${user.id} entered ${user.zone.name}")
             handleUserGroupEntry(user)
             propagate()
         } else {
@@ -58,7 +58,7 @@ val UniversalParent = state {
             Timer().schedule(delay = doubleUserEventDelay) {
                 userLeaveLocks[user.id] = false
             }
-            logger.info("${user.id} left towards ${user.zone.name}")
+            skillLogger.info("${user.id} left towards ${user.zone.name}")
             propagate()
         } else {
             println("userLeave event sensed twice")

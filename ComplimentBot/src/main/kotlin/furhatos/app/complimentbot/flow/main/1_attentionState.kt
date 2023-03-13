@@ -5,7 +5,7 @@ import furhatos.app.complimentbot.delayWhenUsersAreGone
 import furhatos.app.complimentbot.flow.InteractionParent
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhile
 import furhatos.app.complimentbot.flow.LeaderGoneForAWhileInstant
-import furhatos.app.complimentbot.flow.logger
+import furhatos.app.complimentbot.flow.skillLogger
 import furhatos.app.complimentbot.gestures.resetEyes
 import furhatos.app.complimentbot.maxTimeAttendingAUser
 import furhatos.app.complimentbot.utils.*
@@ -42,7 +42,7 @@ val attentionState: State = state(InteractionParent) {
                 if (isReadyToBeComplimented(users.current)) {
                     goto(complimentNextGroup(users.current))
                 } else {
-                    logger.info("User entered within $delayToRecompliment sec of compliment, waiting to interact again.")
+                    skillLogger.info("User entered within $delayToRecompliment sec of compliment, waiting to interact again.")
                     engageOrListen()
                 }
             }
@@ -146,7 +146,7 @@ val attentionState: State = state(InteractionParent) {
 
     onTime(1000, 1000, instant = true) {
         if (ChronoUnit.SECONDS.between(lastAttentionChange, LocalDateTime.now()) > maxTimeAttendingAUser) {
-            logger.info("Max attention time reached, going back to idle")
+            skillLogger.info("Max attention time reached, going back to idle")
             send(MaxAttentionWithoutActivity())
         }
     }
@@ -209,6 +209,6 @@ fun addNewUserToQueue(user: User) {
 }
 
 fun resetLastAttentionCheck() {
-    logger.debug("Resetting attention")
+    skillLogger.debug("Resetting attention")
     lastAttentionChange = LocalDateTime.now()
 }
