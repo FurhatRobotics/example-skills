@@ -49,8 +49,7 @@ fun complimentNextGroup(groupLeader: User): State = state(InteractionParent) {
         furhat.ledStrip.solid(Color(0, 120, 0))
 
         //Defining the list here in case the leader changes while furhat is complimenting people
-        val activeGroupWithLeader = activeGroup.filter { it != leader }.toMutableList()
-        activeGroupWithLeader.add(0, leader)
+        val activeGroupWithLeader = listOf(leader) + activeGroup.filter { it != leader }.toMutableList()
         // When the first user has been complimented add link words - "And you", ...
         var isOtherCompliment = false
         for (user in activeGroupWithLeader) {

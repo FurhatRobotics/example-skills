@@ -154,12 +154,13 @@ fun FlowControlRunner.endCompliments(users: List<User>) {
         }
     }
     if (users.any { it.hasSmiled }) {
+        val plural = users.count { it.hasSmiled } > 1
         furhat.say {
             random {
-                +"I’m happy I was able to put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
-                +"I’m glad I could put a smile on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
-                +"It makes me happy to have seen smile${if (users.count { it.hasSmiled } > 1) "s" else ""} on your face${if (users.count { it.hasSmiled } > 1) "s" else ""}."
-                +"Thank you for blessing me with your smile${if (users.count { it.hasSmiled } > 1) "s" else ""}."
+                +"I’m happy I was able to put a smile on your face${if (plural) "s" else ""}."
+                +"I’m glad I could put a smile on your face${if (plural) "s" else ""}."
+                +"It makes me happy to have seen smile${if (plural) "s" else ""} on your face${if (plural) "s" else ""}."
+                +"Thank you for blessing me with your smile${if (plural) "s" else ""}."
                 +"I feel blessed to have been able to make you smile."
                 +"It's a wonderful feeling to have made you smile. "
             }

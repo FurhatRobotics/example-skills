@@ -14,14 +14,17 @@ import furhatos.records.User
 fun endReading(leader: User? = null) = state(InteractionParent) {
     onEntry {
         //Put the leader in first position
-        val remainingUsers = (listOfNotNull(leader)+activeGroup.filter{ it != leader }).filter { it.zone.isCloser(Zone.ZONE3) }
-        if (leader == null || remainingUsers.isEmpty()) {
+        val remainingUsers = listOfNotNull(leader)+activeGroup.filter{ it != leader }
+        // Note that if the leader is explicitly null no goodbye is given (happens when compliment state is not exited properly)
+        if (remainingUsers.isEmpty()) {
             generalGoodbye()
-        } else {
+        } else if (leader != null) {
             endCompliments(remainingUsers)
             for (user in remainingUsers) {
-                furhat.attendC(user)
-                greetUserGoodbye()
+                if (user.zone <= Zone.ZONE2) {
+                    furhat.attendC(user)
+                    greetUserGoodbye()
+                }
             }
         }
         // Reset users' interaction parameters - we leave greeted as it was though
