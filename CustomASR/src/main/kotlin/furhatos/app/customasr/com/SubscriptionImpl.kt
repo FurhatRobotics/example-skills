@@ -51,7 +51,7 @@ class SubscriptionImpl internal constructor(
         val audioBytes = ByteArray(CHUNK_SIZE_IN_BYTES)
         var len = 0
         try {
-            Thread.sleep(20) //Microphone data is a bit slow
+            Thread.sleep(params.microphoneTimeoutInMillis) //Microphone data is a bit slow
             len = inputStream.read(audioBytes)
             return if (len <= 0) {
                 ByteBuffer.allocate(0)
