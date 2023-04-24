@@ -22,8 +22,8 @@ import static furhatos.app.customasr.com.TranscriptBehaviorKt.getTranscriptor;
 public class TranscribeApp {
     private Region region = Region.EU_WEST_1;
     private String encoding = "pcm";
-    private String pollyKey = "XXX";
-    private String pollySecret = "XXX";
+    private String pollyKey = params.INSTANCE.getAPI_KEY();
+    private String pollySecret = params.INSTANCE.getAPI_SECRET();
 
     private TranscribeStreamingRetryClient client;
 
@@ -35,7 +35,8 @@ public class TranscribeApp {
     }
 
     public String startListen(
-            Language lang, FurhatAudioStream furhatStream, Long maxSpeech
+            Language lang, FurhatAudioStream furhatStream,
+            Long timeout, Long endSil, Long maxSpeech
     ) throws InterruptedException, ExecutionException {
         TranscribeStreamingAsyncClient client = TranscribeStreamingAsyncClient
                 .builder()

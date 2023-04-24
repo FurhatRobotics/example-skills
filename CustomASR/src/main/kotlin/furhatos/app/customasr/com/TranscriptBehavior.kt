@@ -33,9 +33,9 @@ fun getTranscriptor(): StartStreamTranscriptionResponseHandler {
             if (results.size > 0) {
                 if (results[0].alternatives().size > 0) {
                     if (results[0].alternatives()[0].transcript().isNotEmpty()) {
-                        val message = results[0].alternatives()[0].transcript()
-                        println(message)
-                        EventSystem.send(InterimResult(message))
+                        val result = results[0]
+                        val message = result.alternatives()[0].transcript()
+                        EventSystem.send(InterimResult(message, result.isPartial))
                     }
                 }
             }

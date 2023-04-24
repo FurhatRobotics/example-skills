@@ -7,7 +7,7 @@ import furhatos.event.EventSystem
 import furhatos.flow.kotlin.state
 
 /**
- * Listens to event send by the [furhatos.app.customasr.com.StreamTranscriptionBehaviorImpl]
+ * Listens to event send by the [furhatos.app.customasr.com.getTranscriptor]
  */
 val ListenState = state {
     var fullText = ""
@@ -20,26 +20,29 @@ val ListenState = state {
     }
 
     onEvent<InterimResult> {
-        println("Received interim result")
-        if (!fullText.contains(it.interimText)) { // AWS likes repeating itself
+        if (!it.isPartial) {
             fullText += "${it.interimText} "
+        } else {
+            println("INTERIM: ${it.interimText}")
         }
     }
 
     onEvent<ListenDone> {
         println("Listen done")
         var eventSend = false
+        /**
+         * It would be wise to implement a smarter NLU here.
+         */
         NLUList.forEach { (example, constructor) ->
             if(fullText.contains(example, ignoreCase = true)) {
-                println("Sending an event")
                 eventSend = true
                 EventSystem.send(
-                    constructor.invoke(fullText, loudness)
+                    constructor.invoke(fullText, loudness) // Send the specific Intent Event
                 )
             }
         }
         if (!eventSend) {
-            EventSystem.send(TextAndMetrics(fullText, loudness))
+            EventSystem.send(TextAndMetrics(fullText, loudness)) // If no specific intent was sent, send a generic one.
         }
     }
 }

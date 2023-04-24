@@ -2,6 +2,7 @@ package furhatos.app.customasr.com
 
 import furhatos.monitor.FurhatAudioFeedStreamer
 import java.io.InputStream
+import java.nio.ByteBuffer
 
 class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     InputStream() {
@@ -17,18 +18,25 @@ class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     override fun audioStreamingStarted() {}
     override fun audioStreamingStopped() {}
 
+    fun resetForListen() {
+        active = true
+        index = 0
+        data = byteArrayOf()
+    }
+
     /**
      * Only store microphone data if active.
-     * Converts the 2 channel (Robot + User) into Mono (User) data and stores it.
+     * Converts the 2 channel (Robot + User) into Single channel (User) data and stores it.
      */
     override fun audioStreamingData(data: ByteArray) {
         if (active) {
             val audioData = data.copyOf()
-            for (i in 0 until audioData.size / 4) {
-                audioData[i * 4 + 2] = audioData[i * 4]
-                audioData[i * 4 + 3] = audioData[i * 4 + 1]
+            val buffer = ByteBuffer.allocate(audioData.size / 2)
+            for (i in audioData.indices step 4) {
+                buffer.put(audioData[i])
+                buffer.put(audioData[i + 1])
             }
-            this.data += audioData
+            this.data += buffer.array()
         }
     }
 
@@ -41,7 +49,6 @@ class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     override fun read(newArr: ByteArray, offSet: Int, length: Int): Int {
         val bytesToRead = (data.size - index).coerceAtMost(length)
         if (bytesToRead == 0 || length == 0) {
-            logger.warn("Data is empty?")
             return 0
         }
         data.copyInto(

@@ -7,10 +7,10 @@ open class TextAndMetrics(
     val loudness: Int
 ) : Event()
 
-class Hmm(t: String, l: Int): TextAndMetrics(t, l) // An Intent
+class Yes(t: String, l: Int): TextAndMetrics(t, l) // An Intent
 class No(t: String, l: Int): TextAndMetrics(t, l) // An Intent
 
 val NLUList = mapOf<String, (text: String, loudness: Int) -> TextAndMetrics>( // Maps words to Intents
-    "Hmm" to { text, loudness -> Hmm(text, loudness) },
+    "Yes" to { text, loudness -> Yes(text, loudness) },
     "No" to { text, loudness -> No(text, loudness) }
 )
