@@ -1,9 +1,9 @@
 package furhatos.app.customasr.com
 
 object params {
-    val endSil = 1000L
-    val maxSpeech = 15000L
-    val timeout = 5000L
-    val API_KEY = ""
-    val API_SECRET = ""
+    const val endSil = 1000L
+    const val maxSpeech = 15000L
+    const val timeout = 5000L
+    const val API_KEY =  ""
+    const val API_SECRET = ""
 }

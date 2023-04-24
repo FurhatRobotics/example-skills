@@ -21,7 +21,7 @@ class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     fun resetForListen() {
         active = true
         index = 0
-        data = byteArrayOf()
+        data = byteArrayOf(0x00, 0x00, 0x00, 0x00)
     }
 
     /**
