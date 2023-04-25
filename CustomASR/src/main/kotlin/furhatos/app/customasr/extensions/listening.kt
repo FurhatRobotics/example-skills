@@ -2,10 +2,10 @@ package furhatos.app.customasr.extensions
 
 import furhatos.app.customasr.InterimResult
 import furhatos.app.customasr.ListenStarted
-import furhatos.app.customasr.NoSpeechDetected
 import furhatos.app.customasr.com.FurhatAudioStream
 import furhatos.app.customasr.aws.TranscribeApp
 import furhatos.app.customasr.com.params
+import furhatos.app.customasr.nlu.NoSpeechDetected
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.*
 import furhatos.monitor.FurhatAudioFeedStreamer

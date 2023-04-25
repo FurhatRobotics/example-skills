@@ -6,6 +6,9 @@ import org.zeromq.ZMQ
 import javax.sound.sampled.AudioFormat
 import kotlin.concurrent.thread
 
+/**
+ * Sends data from the audioFeed to all registered listeners.
+ */
 object FurhatAudioFeedStreamer {
 
     val logger = CommonUtils.getLogger(FurhatAudioFeedStreamer::class.java)

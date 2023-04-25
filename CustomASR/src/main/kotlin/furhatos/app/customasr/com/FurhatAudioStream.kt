@@ -4,6 +4,10 @@ import furhatos.monitor.FurhatAudioFeedStreamer
 import java.io.InputStream
 import java.nio.ByteBuffer
 
+/**
+ * Acts as a buffer to the AudioFeed.
+ * Only when the stream is active will it store the data send from the audioFeed.
+ */
 class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     InputStream() {
 
@@ -21,7 +25,7 @@ class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     fun resetForListen() {
         active = true
         index = 0
-        data = byteArrayOf(0x00, 0x00, 0x00, 0x00)
+        data = byteArrayOf()
     }
 
     /**

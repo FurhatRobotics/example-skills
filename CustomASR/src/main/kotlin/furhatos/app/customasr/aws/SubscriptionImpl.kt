@@ -15,6 +15,9 @@ import java.nio.ByteOrder
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicLong
 
+/**
+ * Sends data from the FurhatAudioStream to AWS for transcription
+ */
 class SubscriptionImpl internal constructor(
     private val subscriber: Subscriber<in AudioStream?>,
     private val inputStream: InputStream

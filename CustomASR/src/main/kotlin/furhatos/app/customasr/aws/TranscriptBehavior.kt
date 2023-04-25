@@ -14,6 +14,9 @@ import java.io.StringWriter
 
 private val logger = CommonUtils.getLogger("TranscriptResponseHandler")
 
+/**
+ * Handles the events returned by AWS transcribe. Mostly sends events back in the system.
+ */
 fun getTranscriptor(): StartStreamTranscriptionResponseHandler {
     return StartStreamTranscriptionResponseHandler.builder()
         .onResponse { _: StartStreamTranscriptionResponse ->

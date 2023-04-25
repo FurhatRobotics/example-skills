@@ -3,7 +3,6 @@ package furhatos.app.customasr.nlu
 import furhatos.app.customasr.InterimResult
 import furhatos.app.customasr.ListenDone
 import furhatos.app.customasr.ListenStarted
-import furhatos.app.customasr.NoSpeechDetected
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.state
 import furhatos.util.CommonUtils
