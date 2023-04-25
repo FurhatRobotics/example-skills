@@ -16,7 +16,7 @@ private val furStream = FurhatAudioStream()
 
 fun Furhat.enableStartAudioStream() {
     this.audioFeed.enable()
-    FurhatAudioFeedStreamer.start("127.0.0.1")
+    FurhatAudioFeedStreamer.start(params.IP_ADDRESS)
 }
 
 fun StateBuilder.onUserSilence(trigger: TriggerRunner<*>.(NoSpeechDetected) -> Unit) {

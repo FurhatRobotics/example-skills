@@ -6,6 +6,7 @@ object params {
     const val timeout = 5000L
     // AWS consumes audioData faster than we feed it, so we need to slow it down
     const val microphoneTimeoutInMillis = 50L
+    const val IP_ADDRESS = "127.0.0.1"
     const val API_KEY =  ""
     const val API_SECRET = ""
 }
