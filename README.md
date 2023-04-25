@@ -15,6 +15,7 @@ Interviewee | A fully wizarded skill where Furhat is getting interviewed by a jo
 JokeBot | A skill for the robot (does not work on SDK) that tells jokes and uses the user's reaction to assert if it is a good joke. | Gesture Detection, Storage of interaction data, Randomizing interactions
 Quiz | An example of a quiz skill | Wizarding
 demo-skill | A skill to demo Furhat | Wizarding
+CustomASR | How to implement a custom ASR and use extension functions | Audio Feed, Using 3rd party ASR
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`
