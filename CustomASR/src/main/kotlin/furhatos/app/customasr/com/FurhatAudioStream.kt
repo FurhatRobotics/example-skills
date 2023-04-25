@@ -2,8 +2,6 @@ package furhatos.app.customasr.com
 
 import furhatos.app.customasr.RMSResult
 import furhatos.event.EventSystem
-import furhatos.monitor.FurhatAudioFeedStreamer
-import furhatos.util.CommonUtils
 import java.io.InputStream
 import java.nio.ByteBuffer
 import kotlin.math.sqrt
@@ -15,7 +13,6 @@ import kotlin.math.sqrt
 class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     InputStream() {
 
-    var logger = CommonUtils.getLogger(FurhatAudioStream::class.java)
     var active = false // Whether this object should store microphoneData.
     internal var index = 0
     internal var data: ByteArray = byteArrayOf()

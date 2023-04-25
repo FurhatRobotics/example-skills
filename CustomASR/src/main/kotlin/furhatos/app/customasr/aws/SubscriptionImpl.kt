@@ -1,7 +1,6 @@
 package furhatos.app.customasr.aws
 
 import furhatos.app.customasr.com.params
-import furhatos.util.CommonUtils
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 import software.amazon.awssdk.core.SdkBytes

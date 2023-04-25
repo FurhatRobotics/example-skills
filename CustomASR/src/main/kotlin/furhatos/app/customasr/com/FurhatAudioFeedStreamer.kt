@@ -1,4 +1,4 @@
-package furhatos.monitor
+package furhatos.app.customasr.com
 
 import furhatos.util.CommonUtils
 import org.zeromq.SocketType
@@ -32,9 +32,9 @@ object FurhatAudioFeedStreamer {
     }
 
     fun start(ipaddr: String) {
-        if (ipaddr != this.ipaddr) {
+        if (ipaddr != FurhatAudioFeedStreamer.ipaddr) {
             stop()
-            this.ipaddr = ipaddr
+            FurhatAudioFeedStreamer.ipaddr = ipaddr
         } else if (running) {
             return
         }

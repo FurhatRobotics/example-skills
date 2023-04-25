@@ -8,7 +8,7 @@ import furhatos.app.customasr.com.params
 import furhatos.app.customasr.nlu.NoSpeechDetected
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.*
-import furhatos.monitor.FurhatAudioFeedStreamer
+import furhatos.app.customasr.com.FurhatAudioFeedStreamer
 import furhatos.util.CommonUtils
 import kotlin.concurrent.thread
 
