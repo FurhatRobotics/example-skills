@@ -1,5 +1,6 @@
 package furhatos.monitor
 
+import furhatos.util.CommonUtils
 import org.zeromq.SocketType
 import org.zeromq.ZMQ
 import javax.sound.sampled.AudioFormat
@@ -7,6 +8,7 @@ import kotlin.concurrent.thread
 
 object FurhatAudioFeedStreamer {
 
+    val logger = CommonUtils.getLogger(FurhatAudioFeedStreamer::class.java)
     val context: ZMQ.Context = ZMQ.context(1)
     var running = false
         private set
@@ -40,7 +42,7 @@ object FurhatAudioFeedStreamer {
         }
         running = true
         audioListeners.forEach { it.audioStreamingStarted() }
-        println("Starting thread for listening!")
+        logger.info("Starting FurhatAudioFeedStreamer!")
         runThread = thread(start = true) {
             while (running) {
                 val data = socket!!.recv()

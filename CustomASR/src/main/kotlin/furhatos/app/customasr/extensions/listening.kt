@@ -9,6 +9,7 @@ import furhatos.app.customasr.com.params
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.*
 import furhatos.monitor.FurhatAudioFeedStreamer
+import furhatos.util.CommonUtils
 import kotlin.concurrent.thread
 
 private val transcribeApp = TranscribeApp()
@@ -47,6 +48,7 @@ fun Furhat.customListen(
 fun listenState(timeout: Long, endSil: Long, maxSpeech: Long) = state {
     var speechWasRecognized = false
     var lastSpeechTime = -1L
+    val logger = CommonUtils.getLogger("ListenState")
 
     onEvent<InterimResult>(instant = true) { // Got recognized speech
         speechWasRecognized = true
@@ -61,7 +63,7 @@ fun listenState(timeout: Long, endSil: Long, maxSpeech: Long) = state {
             lastSpeechTime != -1L &&
             System.currentTimeMillis() - lastSpeechTime > endSil
         ) {
-            println("endSil for listen reached.")
+            logger.info("endSil for listen reached.")
             furStream.active = false
         }
     }
@@ -70,7 +72,7 @@ fun listenState(timeout: Long, endSil: Long, maxSpeech: Long) = state {
      * If it takes longer than initialTimeout for speech to be recognized, end the stream.
      */
     onTime(delay = timeout.toInt(), instant = true, cond = { !speechWasRecognized} ) {
-        println("timeout for listen reached.")
+        logger.info("timeout for listen reached.")
         furStream.active = false
     }
 
@@ -78,12 +80,12 @@ fun listenState(timeout: Long, endSil: Long, maxSpeech: Long) = state {
      * End the stream if maxSpeech timeout is reached.
      */
     onTime(delay = maxSpeech.toInt(), instant = true) {
-        println("maxSpeech for listen reached.")
+        logger.info("maxSpeech for listen reached.")
         furStream.active = false
     }
 
     onExit {
-        println("Exiting listen state")
+        logger.info("Exiting listen state")
         furStream.active = false
     }
 }

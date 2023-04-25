@@ -4,6 +4,7 @@ import furhatos.app.customasr.InterimResult
 import furhatos.app.customasr.ListenDone
 import furhatos.app.customasr.ListenStarted
 import furhatos.event.EventSystem
+import furhatos.util.CommonUtils
 import software.amazon.awssdk.services.transcribestreaming.model.StartStreamTranscriptionResponse
 import software.amazon.awssdk.services.transcribestreaming.model.StartStreamTranscriptionResponseHandler
 import software.amazon.awssdk.services.transcribestreaming.model.TranscriptEvent
@@ -11,22 +12,24 @@ import software.amazon.awssdk.services.transcribestreaming.model.TranscriptResul
 import java.io.PrintWriter
 import java.io.StringWriter
 
+private val logger = CommonUtils.getLogger("TranscriptResponseHandler")
+
 fun getTranscriptor(): StartStreamTranscriptionResponseHandler {
     return StartStreamTranscriptionResponseHandler.builder()
         .onResponse { _: StartStreamTranscriptionResponse ->
             EventSystem.send(ListenStarted())
-            println("=== Received Initial response ===")
+            logger.info("=== Received Initial response ===")
         }
         .onError { e: Throwable ->
-            println(e.message)
+            logger.warn(e.message)
             val sw = StringWriter()
             e.printStackTrace(PrintWriter(sw))
-            println("Error Occurred: $sw")
+            logger.warn("Error Occurred: $sw")
             EventSystem.send(ListenDone())
         }
         .onComplete {
             EventSystem.send(ListenDone())
-            println("=== All records stream successfully ===")
+            logger.info("=== All records stream successfully ===")
         }
         .subscriber { event: TranscriptResultStream ->
             val results = (event as TranscriptEvent).transcript().results()

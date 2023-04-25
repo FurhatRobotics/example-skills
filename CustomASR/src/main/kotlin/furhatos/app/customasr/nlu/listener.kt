@@ -6,7 +6,9 @@ import furhatos.app.customasr.ListenStarted
 import furhatos.app.customasr.NoSpeechDetected
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.state
+import furhatos.util.CommonUtils
 
+private val logger = CommonUtils.getLogger("ASR-EventListener")
 /**
  * Listens to event send by the [furhatos.app.customasr.com.getTranscriptor]
  */
@@ -16,7 +18,7 @@ val ListenState = state {
     var listenEnded = false
 
     onEvent<ListenStarted>(instant = true) {
-        println("Received listen started")
+        logger.info("A new listen has started, resetting state.")
         fullText = ""
         loudness = 0
         listenEnded = false
@@ -26,13 +28,13 @@ val ListenState = state {
         if (!it.isPartial) {
             fullText += "${it.interimText} "
         } else {
-            println("INTERIM: ${it.interimText}")
+            logger.info("INTERIM: ${it.interimText}")
         }
     }
 
     onEvent<ListenDone>(instant = true, cond = {!listenEnded}) {
         listenEnded = true
-        println("Listen done")
+        logger.info("Listen done")
         var eventSend = false
         if (fullText.isEmpty()) {
             EventSystem.send(NoSpeechDetected())
