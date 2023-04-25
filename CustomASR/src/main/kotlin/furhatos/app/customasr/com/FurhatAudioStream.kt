@@ -1,8 +1,12 @@
 package furhatos.app.customasr.com
 
+import furhatos.app.customasr.RMSResult
+import furhatos.event.EventSystem
 import furhatos.monitor.FurhatAudioFeedStreamer
+import furhatos.util.CommonUtils
 import java.io.InputStream
 import java.nio.ByteBuffer
+import kotlin.math.sqrt
 
 /**
  * Acts as a buffer to the AudioFeed.
@@ -11,7 +15,8 @@ import java.nio.ByteBuffer
 class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
     InputStream() {
 
-    var active = true // Whether this object should store microphoneData.
+    var logger = CommonUtils.getLogger(FurhatAudioStream::class.java)
+    var active = false // Whether this object should store microphoneData.
     internal var index = 0
     internal var data: ByteArray = byteArrayOf()
 
@@ -41,7 +46,18 @@ class FurhatAudioStream : FurhatAudioFeedStreamer.AudioStreamingListener,
                 buffer.put(audioData[i + 1])
             }
             this.data += buffer.array()
+            calculateAndSendRMS()
         }
+    }
+
+    /**
+     * Calculates the RMS of the sample for usage later.
+     */
+    fun calculateAndSendRMS() {
+        val squaredSum = data.fold(0.0) { acc, byte -> acc + byte * byte }
+        val meanSquared = squaredSum / data.size
+        val rms = sqrt(meanSquared)
+        EventSystem.send(RMSResult(rms))
     }
 
     override fun read(): Int {

@@ -3,6 +3,7 @@ package furhatos.app.customasr.nlu
 import furhatos.app.customasr.InterimResult
 import furhatos.app.customasr.ListenDone
 import furhatos.app.customasr.ListenStarted
+import furhatos.app.customasr.RMSResult
 import furhatos.event.EventSystem
 import furhatos.flow.kotlin.state
 import furhatos.util.CommonUtils
@@ -13,14 +14,18 @@ private val logger = CommonUtils.getLogger("ASR-EventListener")
  */
 val ListenState = state {
     var fullText = ""
-    var loudness = 0
     var listenEnded = false
+    var rms = 0.0
 
     onEvent<ListenStarted>(instant = true) {
         logger.info("A new listen has started, resetting state.")
         fullText = ""
-        loudness = 0
         listenEnded = false
+        rms = 0.0
+    }
+
+    onEvent<RMSResult> {
+        rms = it.rms
     }
 
     onEvent<InterimResult>(instant = true) {
@@ -45,12 +50,12 @@ val ListenState = state {
                 if(fullText.contains(example, ignoreCase = true)) {
                     eventSend = true
                     EventSystem.send(
-                        constructor.invoke(fullText, loudness) // Send the specific Intent Event
+                        constructor.invoke(fullText, rms) // Send the specific Intent Event
                     )
                 }
             }
             if (!eventSend) {
-                EventSystem.send(TextAndMetrics(fullText, loudness)) // If no specific intent was sent, send a generic one.
+                EventSystem.send(TextAndMetrics(fullText, rms)) // If no specific intent was sent, send a generic one.
             }
         }
     }

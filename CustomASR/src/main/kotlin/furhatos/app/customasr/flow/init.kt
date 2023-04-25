@@ -29,7 +29,11 @@ val Basic: State = state {
     }
 
     onEvent<No> {
-        furhat.say("No!")
+        if (it.loudness > 54.0) {
+            furhat.say("LOUD no!")
+        } else {
+            furhat.say("Silent no")
+        }
     }
 
     onEvent<TextAndMetrics> {
