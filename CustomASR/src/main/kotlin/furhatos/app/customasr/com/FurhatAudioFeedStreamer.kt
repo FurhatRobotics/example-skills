@@ -16,7 +16,6 @@ object FurhatAudioFeedStreamer {
     var running = false
         private set
     var runThread: Thread? = null
-    val audioFormat = AudioFormat(16000F, 16, 2, true, false)
     val audioListeners = mutableListOf<AudioStreamingListener>()
     var ipaddr = ""
 

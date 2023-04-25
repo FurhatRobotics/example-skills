@@ -23,7 +23,7 @@ class SubscriptionImpl internal constructor(
 ) : Subscription {
     private val executor = Executors.newFixedThreadPool(1)
     private val demand = AtomicLong(0)
-    internal var data: ByteArray = byteArrayOf()
+
 
     override fun request(n: Long) {
         if (n <= 0) {
