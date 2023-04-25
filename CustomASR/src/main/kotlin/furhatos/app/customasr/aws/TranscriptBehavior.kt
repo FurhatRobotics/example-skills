@@ -1,4 +1,4 @@
-package furhatos.app.customasr.com
+package furhatos.app.customasr.aws
 
 import furhatos.app.customasr.InterimResult
 import furhatos.app.customasr.ListenDone

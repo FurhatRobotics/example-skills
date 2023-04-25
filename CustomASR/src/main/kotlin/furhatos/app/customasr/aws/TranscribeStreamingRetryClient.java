@@ -10,7 +10,7 @@
    Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
    SPDX-License-Identifier: Apache-2.0
 */
-package furhatos.app.customasr.com;
+package furhatos.app.customasr.aws;
 
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;

@@ -1,5 +1,7 @@
-package furhatos.app.customasr.com;
+package furhatos.app.customasr.aws;
 
+import furhatos.app.customasr.com.FurhatAudioStream;
+import furhatos.app.customasr.com.params;
 import furhatos.util.Language;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -16,7 +18,7 @@ import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static furhatos.app.customasr.com.TranscriptBehaviorKt.getTranscriptor;
+import static furhatos.app.customasr.aws.TranscriptBehaviorKt.getTranscriptor;
 
 
 public class TranscribeApp {

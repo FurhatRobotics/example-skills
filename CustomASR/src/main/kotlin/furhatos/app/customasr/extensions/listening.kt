@@ -1,14 +1,12 @@
 package furhatos.app.customasr.extensions
 
 import furhatos.app.customasr.InterimResult
-import furhatos.app.customasr.ListenDone
 import furhatos.app.customasr.ListenStarted
 import furhatos.app.customasr.NoSpeechDetected
 import furhatos.app.customasr.com.FurhatAudioStream
-import furhatos.app.customasr.com.TranscribeApp
+import furhatos.app.customasr.aws.TranscribeApp
 import furhatos.app.customasr.com.params
 import furhatos.event.EventSystem
-import furhatos.event.senses.SenseSpeech
 import furhatos.flow.kotlin.*
 import furhatos.monitor.FurhatAudioFeedStreamer
 import kotlin.concurrent.thread

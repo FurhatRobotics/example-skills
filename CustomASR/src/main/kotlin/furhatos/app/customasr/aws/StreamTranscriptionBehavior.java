@@ -11,7 +11,7 @@
    SPDX-License-Identifier: Apache-2.0
 */
 // snippet-start:[transcribe.java-streaming-client-behavior]
-package furhatos.app.customasr.com;
+package furhatos.app.customasr.aws;
 
 import software.amazon.awssdk.services.transcribestreaming.model.StartStreamTranscriptionResponse;
 import software.amazon.awssdk.services.transcribestreaming.model.TranscriptResultStream;
