@@ -16,6 +16,13 @@ JokeBot | A skill for the robot (does not work on SDK) that tells jokes and uses
 Quiz | An example of a quiz skill | Wizarding
 demo-skill | A skill to demo Furhat | Wizarding
 CustomASR | How to implement a custom ASR and use extension functions | Audio Feed, Using 3rd party ASR
+FortuneTeller | A robot telling people their fortune | Demo of interaction that works well in noisy environments. 
+OpenAIAchat | talk to characters powered by GPT-3 | showcase integration with a Large Language Model
+
+See also skills examples from the community! 
+Skill                 | By                              | Link
+----------------------|---------------------------------------------|------------------------------------------------------
+SaharaInterview | Autoura | https://github.com/Autoura/SahraInterview
 
 # Running skills
 1. Clone the repository, `git clone https://github.com/FurhatRobotics/example-skills`
