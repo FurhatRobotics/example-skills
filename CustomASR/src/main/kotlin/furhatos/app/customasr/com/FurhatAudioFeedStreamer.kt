@@ -3,7 +3,6 @@ package furhatos.app.customasr.com
 import furhatos.util.CommonUtils
 import org.zeromq.SocketType
 import org.zeromq.ZMQ
-import javax.sound.sampled.AudioFormat
 import kotlin.concurrent.thread
 
 /**

@@ -1,4 +1,4 @@
-package furhatos.app.attentiongrabber
+package furhatos.app.attentionGrabber
 
 import furhatos.app.attentiongrabber.flow.*
 import furhatos.skills.Skill

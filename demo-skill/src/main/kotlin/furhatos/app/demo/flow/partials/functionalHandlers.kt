@@ -2,7 +2,7 @@ package furhatos.app.demo.flow.partials
 
 import furhatos.app.demo.flow.Active
 import furhatos.app.demo.flow.Sleeping
-import furhatos.app.demo.flow.snippetRunner
+import furhatos.app.demo.flow.actions.snippetRunner
 import furhatos.app.demo.nlu.ExitIntent
 import furhatos.app.demo.nlu.NoIntent
 import furhatos.app.demo.nlu.WakeupIntent
