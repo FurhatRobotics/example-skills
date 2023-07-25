@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.21'
     id 'com.github.johnrengelman.shadow' version '2.0.4'
 }
 
@@ -17,8 +17,8 @@ compileKotlin {
     kotlinOptions {
         //Defines what jvm bytecode to use, 1.8 rather than 1.6
         jvmTarget = "1.8"
-        apiVersion = "1.6"
-        languageVersion = "1.6"
+        apiVersion = "1.8"
+        languageVersion = "1.8"
     }
 }
 
@@ -30,8 +30,8 @@ compileTestKotlin {
     kotlinOptions {
         //Defines what jvm bytecode to use, 1.8 rather than 1.6
         jvmTarget = "1.8"
-        apiVersion = "1.6"
-        languageVersion = "1.6"
+        apiVersion = "1.8"
+        languageVersion = "1.8"
     }
 }
 
@@ -41,15 +41,15 @@ repositories {
     maven { url "https://s3-eu-west-1.amazonaws.com/furhat-maven/releases"}
     maven { url 'https://repo.gradle.org/gradle/libs-releases' }
     maven { url { "https://repo1.maven.org/maven2/" } }
-    jcenter()
 }
 
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.6.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
     implementation 'software.amazon.awssdk:transcribe:2.19.14'
     implementation 'software.amazon.awssdk:transcribestreaming:2.19.14'
     implementation 'software.amazon.awssdk:bom:2.19.14'
+    implementation 'org.zeromq:jeromq:0.5.3'
 }
 
 jar {

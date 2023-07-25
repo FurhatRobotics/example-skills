@@ -1,6 +1,7 @@
 package furhatos.app.demo.flow.partials
 
 import furhatos.app.demo.flow.*
+import furhatos.app.demo.flow.actions.ChatState
 import furhatos.app.demo.imported.quiz.Idle
 import furhatos.app.demo.nlu.*
 import furhatos.app.demo.personas.Persona

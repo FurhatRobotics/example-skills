@@ -1,6 +1,8 @@
-package furhatos.app.demo.flow
+package furhatos.app.demo.flow.actions
 
 import furhatos.app.chitchat.snippets.chatSnippets
+import furhatos.app.demo.flow.Active
+import furhatos.app.demo.flow.wizardButtons
 import furhatos.app.demo.nlu.ExitIntent
 import furhatos.app.demo.util.AttendUsers
 import furhatos.flow.kotlin.furhat

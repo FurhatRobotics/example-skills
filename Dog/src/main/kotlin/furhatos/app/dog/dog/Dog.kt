@@ -9,9 +9,9 @@ const val YAWN_INTERVAL_IN_MS = 5000
 enum class CurrentState {
     AWAKE,
     ASLEEP,
-    INSPECTING,
-    INTERACTING,
-    PLAYING,
+//    INSPECTING,
+//    INTERACTING,
+//    PLAYING,
 }
 
 const val GLOBAL_MAGNITUDE = 5
