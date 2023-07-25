@@ -71,7 +71,6 @@ fun FlowControlRunner.awakeIfAsleep(userId: String) {
             furhat.gesture(WakeUpWithHeadShake)
             delay(500)
             furhat.attend(userId)
-
         }
     }
 }

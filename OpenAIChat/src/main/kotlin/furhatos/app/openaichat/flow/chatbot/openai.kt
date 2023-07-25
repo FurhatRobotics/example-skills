@@ -43,16 +43,16 @@ class OpenAIChatbot(val description: String, val userName: String, val agentName
             .frequencyPenalty(frequencyPenalty)
             .presencePenalty(presencePenalty)
             .prompt(prompt)
-            .stop(listOf("\n", " $userName:", " $agentName:"))
-            .echo(true)
+            .stop(listOf("$userName:"))
+            .echo(false)
+            .model("text-davinci-003")
             .build();
-
         try {
-            val completion = service.createCompletion("davinci", completionRequest).getChoices().first().text
-            val response = completion.drop(prompt.length).trim()
+            val completion = service.createCompletion(completionRequest)
+            val response = completion.getChoices().first().text.trim()
             return response
         } catch (e: Exception) {
-            println("Problem with connection to OpenAI")
+            println("Problem with connection to OpenAI: " + e.message)
         }
         return "I am not sure what to say"
 
