@@ -27,8 +27,8 @@ val MainChat = state(Parent) {
         delay(2000)
         furhat.say {
             random {
-                +"I hope that was fun"
-                +"I hope you enjoyed that"
+                +"I hope that was an insightful demonstration of generative A I and social robots"
+                +"I hope you enjoyed conversing with a generative A I "
                 +"I hope you found that interesting"
             }
         }
