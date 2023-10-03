@@ -14,7 +14,7 @@ val Greeting = state(Parent) {
         askForAnything("Hi there")
         furhat.say("I'm here to show you an example of what state of the art generative AI can do for a social robot like me.")
         if (furhat.askYN("But before I start, can I tell you some important things about it? ") == true) {
-            furhat.say("We are going to use what is commonly known as a large language model to generate what the character should say next. We are going to use the model GPT-3.5 developed by open A I. It's highly creative model that can generate interesting dialogue based on a simple character description. However, this also means that it can occasionally produce text that is inappropriate, factually incorrect or in other ways problematic. Additionally, the experience of hearing such text from a humanoid robot can impact people in unexpected ways, so it's important to use AI responsibly and be mindful of its potential effects.")
+            furhat.say("We are going to use what is commonly known as a large language model to generate what the character should say next. We are going to use the model GPT-3.5 developed by open A I. It's highly creative model that can generate interesting dialogue based on a simple character description. However, this also means that it can occasionally produce text that is inappropriate, factually incorrect or in other ways problematic. And, the experience of hearing such text from a humanoid robot can impact people in unexpected ways, so it's important to use AI responsibly and be mindful of its potential effects.")
             furhat.say("What that said, ")
             if (furhat.askYN("are you ready to try it out?") == true) {
             } else {
