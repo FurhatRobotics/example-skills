@@ -7,7 +7,7 @@ import com.theokanning.openai.completion.chat.ChatMessage
 import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
 
-/** API Key to GPT3 language model. Get access to the API and genereate your key from: https://openai.com/api/ **/
+/** API Key to GPT3 language model. Get access to the API and generate your key from: https://openai.com/api/ **/
 val serviceKey = ""
 
 val service = OpenAiService("YOUR_SERVICE_KEY")
