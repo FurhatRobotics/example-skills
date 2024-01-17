@@ -2,11 +2,15 @@ package furhatos.app.openaichat.flow.chatbot
 
 import com.theokanning.openai.OpenAiService
 import com.theokanning.openai.completion.CompletionRequest
+import com.theokanning.openai.completion.chat.ChatCompletionRequest
+import com.theokanning.openai.completion.chat.ChatMessage
 import furhatos.flow.kotlin.DialogHistory
 import furhatos.flow.kotlin.Furhat
 
-/** API Key to GPT3 language model. Get access to the API and genereate your key from: https://openai.com/api/ **/
+/** API Key to GPT3 language model. Get access to the API and generate your key from: https://openai.com/api/ **/
 val serviceKey = ""
+
+val service = OpenAiService("YOUR_SERVICE_KEY")
 
 class OpenAIChatbot(val description: String, val userName: String, val agentName: String) {
 
@@ -45,7 +49,7 @@ class OpenAIChatbot(val description: String, val userName: String, val agentName
             .prompt(prompt)
             .stop(listOf("$userName:"))
             .echo(false)
-            .model("text-davinci-003")
+            .model("gpt-3.5-turbo-instruct")
             .build();
         try {
             val completion = service.createCompletion(completionRequest)
