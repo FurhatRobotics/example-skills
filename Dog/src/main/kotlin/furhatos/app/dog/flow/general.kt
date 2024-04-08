@@ -6,7 +6,8 @@ import furhatos.app.dog.extensions.randomGrowl
 import furhatos.app.dog.extensions.randomWhimpering
 import furhatos.app.dog.extensions.setDogCharacter
 import furhatos.app.dog.gestures.*
-import furhatos.app.dog.utils.*
+import furhatos.app.dog.utils.SmileBackState
+import furhatos.app.dog.utils.isVirtual
 import furhatos.flow.kotlin.*
 import furhatos.skills.UserManager
 import gestures.FallAsleep
@@ -26,6 +27,8 @@ val idleHeadMovements = partialState {
         furhat.gesture(gesture)
     }
 }
+
+val runningFromIntelliJ = false // set to true when testing skill from intelliJ to be abel to play the audio files locally
 
 val Main: State = state(Parent) {
 
@@ -373,7 +376,12 @@ val Interacting: State = state(Parent) {
     }
 }
 
+var continueWithoutMask = false
 
 val MissingMask: State = state(Parent) {
+    onButton("continue without mask") {
+        continueWithoutMask = true
+        goto(Main)
+    }
     // do nothing.
 }

@@ -1,6 +1,7 @@
 package furhatos.app.dog.utils
 
 import furhatos.app.dog.DogSkill
+import furhatos.app.dog.flow.runningFromIntelliJ
 import furhatos.gestures.*
 import furhatos.records.Pixel
 import furhatos.records.Record
@@ -24,7 +25,7 @@ fun getResourceGesture(filePath: String): Gesture {
 }
 
 fun getAudioURL(path: String) : String {
-    return if(isVirtual) {
+    return if(isVirtual && runningFromIntelliJ) {
         "file:${File(".").canonicalPath + "/src/main/resources/sounds/"}$path"
     } else {
         //"file:/home/furnix/dog/sounds/$path"
