@@ -28,9 +28,7 @@ fun getAudioURL(path: String) : String {
     return if(isVirtual && runningFromIntelliJ) {
         "file:${File(".").canonicalPath + "/src/main/resources/sounds/"}$path"
     } else {
-        //"file:/home/furnix/dog/sounds/$path"
         "classpath:sounds/$path"
-        //"classpath:$path"
     }
 }
 
