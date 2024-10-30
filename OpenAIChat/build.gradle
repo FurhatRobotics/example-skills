@@ -1,6 +1,6 @@
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.8.21"
-    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 apply plugin: 'java'
@@ -44,8 +44,8 @@ repositories {
 
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
-    implementation 'com.theokanning.openai-gpt3-java:client:0.12.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:+'
+    implementation 'io.github.sashirestela:simple-openai:3.8.2'
 }
 
 jar {

@@ -15,24 +15,18 @@ class Persona(
     val desc: String,
     val face: List<String>,
     val mask: String = "adult",
-    val voice: List<Voice>
+    val voice: Voice
 ) {
     val fullDesc = "$name, the $desc"
 
     val intent = SimpleIntent((listOf(name, desc, fullDesc) + otherNames))
 
     /** The prompt for the openAI language model **/
-    val chatbot =
-        OpenAIChatbot("The following is a conversation between $name, the $desc, and a Person", "Person", name)
+    val chatbot = OpenAIChatbot("You are $name, the $desc. You short talk in a conversational style, suitable for speech. Never say more than two sentences.")
 }
 
 fun FlowControlRunner.activate(persona: Persona) {
-    for (voice in persona.voice) {
-        if (voice.isAvailable) {
-            furhat.voice = voice
-            break
-        }
-    }
+    furhat.voice = persona.voice
 
     for (face in persona.face) {
         if (furhat.faces[persona.mask]?.contains(face)!!) {
@@ -46,7 +40,7 @@ val hostPersona = Persona(
     name = "Host",
     desc = "host",
     face = listOf("Alex", "default"),
-    voice = listOf(PollyNeuralVoice("Matthew"))
+    voice = PollyNeuralVoice("Matthew")
 )
 
 val personas = listOf(
@@ -54,29 +48,14 @@ val personas = listOf(
         name = "Marvin",
         desc = "depressed robot",
         face = listOf("Titan"),
-        voice = listOf(AcapelaVoice("WillSad"), PollyNeuralVoice("Kimberly"))
+        voice = PollyNeuralVoice("Kimberly")
     ),
     Persona(
         name = "Emma",
         desc = "personal trainer",
         intro = "How do you think I could help you?",
         face = listOf("Isabel"),
-        voice = listOf(PollyNeuralVoice("Olivia"))
-    ),
-    Persona(
-        name = "Jerry Seinfeld",
-        desc = "famous comedian",
-        otherNames = listOf("Seinfeld", "Jerry"),
-        intro = "You know, crankiness is at the essence of all comedy.",
-        face = listOf("Marty"),
-        voice = listOf(AcapelaVoice("WillFromAfar"), PollyNeuralVoice("Joey"))
-    ),
-    Persona(
-        name = "James",
-        desc = "guide at the British museum",
-        intro = "What can I help you with?",
-        face = listOf("Samuel"),
-        voice = listOf(PollyNeuralVoice("Brian"))
+        voice = PollyNeuralVoice("Olivia")
     ),
     Persona(
         name = "Albert Einstein",
@@ -84,6 +63,6 @@ val personas = listOf(
         desc = "famous scientist",
         intro = "What can I help you with?",
         face = listOf("James"),
-        voice = listOf(AcapelaVoice("WillOldMan"), PollyNeuralVoice("Brian"))
+        voice = PollyNeuralVoice("Brian")
     )
 )

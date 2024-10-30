@@ -14,7 +14,7 @@ val Idle : State = state {
 
     onUserEnter {
         furhat.attend(it)
-        goto(Greeting)
+        goto(ChoosePersona())
     }
 
 }
