@@ -22,7 +22,7 @@ class Persona(
     val intent = SimpleIntent((listOf(name, desc, fullDesc) + otherNames))
 
     /** The prompt for the openAI language model **/
-    val chatbot = OpenAIChatbot("You are $name, the $desc. You short talk in a conversational style, suitable for speech. Never say more than two sentences.")
+    val chatbot = OpenAIChatbot("You are $name, the $desc. You should speak in a conversational style. Never say more than two sentences.")
 }
 
 fun FlowControlRunner.activate(persona: Persona) {
