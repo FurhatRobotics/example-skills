@@ -43,7 +43,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
 }
 
 jar {
