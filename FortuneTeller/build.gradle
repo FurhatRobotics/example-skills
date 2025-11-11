@@ -1,6 +1,6 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.8.21"
-    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id "org.jetbrains.kotlin.jvm" version "1.9.24"
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 apply plugin: 'java'
@@ -44,30 +44,40 @@ repositories {
 
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.7.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.0'
 }
 
 jar {
-    def lowerCasedName = baseName.toLowerCase()
+    def lowerCasedName = archiveBaseName.get().toLowerCase()
     def normalizedName = lowerCasedName.substring(0,1).toUpperCase() + lowerCasedName.substring(1)
-    manifest.attributes(
-            'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '),
-            'Main-Class': "furhatos.app.${lowerCasedName}.${normalizedName}Skill"
-    )
+    manifest {
+        attributes(
+                'Class-Path': configurations.compileClasspath.collect { it.getName() }.join(' '),
+                'Main-Class': "furhatos.app.${lowerCasedName}.${normalizedName}Skill"
+        )
+    }
 }
 
 //ShadowJar depends on jar being finished properly.
 shadowJar {
-    manifest {
-        exclude '**/Log4j2Plugins.dat'
-        exclude '**/node_modules'
-    }
-    from "skill.properties"
-    from "assets"
-    extension 'skill'
-    Properties properties = new Properties()
+    exclude '**/Log4j2Plugins.dat'
+    exclude '**/node_modules'
+
+    from("skill.properties")
+    from("assets")
+
+    def properties = new Properties()
     properties.load(project.file('skill.properties').newDataInputStream())
     def version = properties.getProperty('version')
     def name = properties.getProperty('name')
-    archiveName = "${name}_${version}.skill"
+
+    archiveBaseName.set(name)
+    archiveVersion.set(version)
+    archiveExtension.set("skill")
+
+    manifest {
+        attributes(
+            'Main-Class': "furhatos.app.${project.name.toLowerCase()}.${project.name.capitalize()}Skill"
+        )
+    }
 }

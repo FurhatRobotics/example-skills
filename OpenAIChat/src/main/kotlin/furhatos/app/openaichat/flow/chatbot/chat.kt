@@ -38,7 +38,7 @@ val MainChat = state(Parent) {
     onResponse {
         furhat.gesture(GazeAversion(2.0))
         val response = call {
-            currentPersona.chatbot.getNextResponse()
+            currentPersona.chatbot.getResponse()
         } as String
         furhat.say(response)
         reentry()

@@ -3,11 +3,13 @@ package furhatos.app.dog.extensions
 import furhatos.app.dog.dog.CurrentState
 import furhatos.app.dog.dog.Dog
 import furhatos.app.dog.flow.MissingMask
+import furhatos.app.dog.flow.logger
 import furhatos.app.dog.gestures.*
 import furhatos.flow.kotlin.FlowControlRunner
 import furhatos.flow.kotlin.RandomPolicy
 import furhatos.flow.kotlin.furhat
 import gestures.WakeUpWithHeadShake
+import org.apache.logging.log4j.Level
 
 fun FlowControlRunner.setDogCharacter() {
     if (furhat.faces.get("pug") != null) {
@@ -15,6 +17,7 @@ fun FlowControlRunner.setDogCharacter() {
     } else if (furhat.faces.get("dog") != null) {
         furhat.setModel("dog", "default")
     } else {
+        logger.log(Level.WARN, "Missing dog mask!")
         furhat.say {
             +"This skill requires that you have the dog mask and the dog 3D model. "
             +"So you have to fix that, before I can take the shape of the dog called Lucky. "

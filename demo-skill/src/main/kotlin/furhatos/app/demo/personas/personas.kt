@@ -50,6 +50,7 @@ data class Persona(
                 Gender.MALE -> "he"
                 Gender.FEMALE -> "she"
                 Gender.NEUTRAL -> "it"
+                else -> "they"
             }
     }
 
@@ -59,6 +60,7 @@ data class Persona(
                 Gender.MALE -> "him"
                 Gender.FEMALE -> "her"
                 Gender.NEUTRAL -> "it"
+                else -> "them"
             }
         }
 

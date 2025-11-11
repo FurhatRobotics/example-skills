@@ -1,16 +1,20 @@
 package furhatos.app.dog.flow
 
+import furhatos.app.dog.DogSkill
 import furhatos.app.dog.dog.*
 import furhatos.app.dog.extensions.randomBark
 import furhatos.app.dog.extensions.randomGrowl
 import furhatos.app.dog.extensions.randomWhimpering
 import furhatos.app.dog.extensions.setDogCharacter
 import furhatos.app.dog.gestures.*
-import furhatos.app.dog.utils.*
+import furhatos.app.dog.utils.SmileBackState
+import furhatos.app.dog.utils.isVirtual
 import furhatos.flow.kotlin.*
 import furhatos.skills.UserManager
+import furhatos.util.CommonUtils
 import gestures.FallAsleep
 import gestures.WakeUpWithHeadShake
+import org.apache.logging.log4j.Level.INFO
 
 val idleHeadMovements = partialState {
     onTime(2000..2500, 3200..6000, instant = true) {
@@ -26,6 +30,11 @@ val idleHeadMovements = partialState {
         furhat.gesture(gesture)
     }
 }
+
+// Set your run configuration to use "-DIntelliJ=true" as a JVM argument when running the skill.
+// It will let the skill know you are running the skill from inside intelliJ, and will change the references to the audio files so they will play!
+val runningFromIntelliJ = System.getProperty("IntelliJ")?.toBoolean() ?: false
+val logger = CommonUtils.getLogger(DogSkill::class.java)
 
 val Main: State = state(Parent) {
 
@@ -373,7 +382,12 @@ val Interacting: State = state(Parent) {
     }
 }
 
+var continueWithoutMask = false
 
 val MissingMask: State = state(Parent) {
+    onButton("continue without mask") {
+        continueWithoutMask = true
+        goto(Main)
+    }
     // do nothing.
 }
