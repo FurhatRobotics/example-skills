@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.1'
 }
 
 //These new blocks are needed to package your project into a working skill file.

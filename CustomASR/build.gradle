@@ -45,7 +45,7 @@ repositories {
 
 
 dependencies {
-    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.0'
+    implementation 'com.furhatrobotics.furhatos:furhat-commons:2.9.1'
     implementation 'software.amazon.awssdk:transcribe:2.19.14'
     implementation 'software.amazon.awssdk:transcribestreaming:2.19.14'
     implementation 'software.amazon.awssdk:bom:2.19.14'
